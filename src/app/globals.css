@@ -39,7 +39,16 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  user-select: none;
+  -webkit-user-select: none;
   transition: background-color 0.15s ease-out, color 0.15s ease-out, border-color 0.15s ease-out;
+}
+
+input,
+textarea,
+[contenteditable] {
+  user-select: auto;
+  -webkit-user-select: auto;
 }
 
 h1, h2, h3, h4, h5, h6 {
