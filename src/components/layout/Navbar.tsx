@@ -83,7 +83,7 @@ export default function Navbar() {
                   IDEA Lab <span className="text-accent">@ KEC</span>
                 </span>
                 <span className="label text-text-secondary mt-1 leading-none">
-                  IEF @ KONGU
+                  IEF @ KEC
                 </span>
               </div>
             </Link>
