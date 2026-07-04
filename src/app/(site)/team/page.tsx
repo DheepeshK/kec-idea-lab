@@ -319,8 +319,8 @@ export default async function TeamPage() {
                     if (isSingle) {
                       return (
                         <ScrollReveal key={member._id} direction="up" delay={0.05}>
-                          <div className={`bg-bg-elevated/30 border border-border/60 rounded-2xl p-6 flex items-center gap-6 group ${cardBorder} hover:bg-bg-elevated/40 hover:shadow-xl hover:shadow-accent/10 transition-all duration-300`}>
-                            <div className="h-40 w-40 sm:h-48 sm:w-48 rounded-2xl overflow-hidden shrink-0 border-2 border-border/60 group-hover:border-accent/40 transition-colors shadow-xl shadow-black/25">
+                          <div className={`bg-bg-elevated/30 border border-border/60 rounded-2xl p-4 sm:p-6 flex flex-col sm:flex-row items-center sm:items-center gap-4 sm:gap-6 text-center sm:text-left group ${cardBorder} hover:bg-bg-elevated/40 hover:shadow-xl hover:shadow-accent/10 transition-all duration-300`}>
+                            <div className="h-32 w-32 sm:h-48 sm:w-48 rounded-2xl overflow-hidden shrink-0 border-2 border-border/60 group-hover:border-accent/40 transition-colors shadow-xl shadow-black/25">
                               <TeamMemberImage src={avatarUrl || ''} name={member.name} />
                             </div>
                             <div className="flex-1 min-w-0 space-y-1">
@@ -343,8 +343,8 @@ export default async function TeamPage() {
 
                     return (
                       <ScrollReveal key={member._id} direction="up" delay={idx * 0.05}>
-                        <div className={`bg-bg-elevated/30 border border-border/60 rounded-xl p-5 flex items-center gap-5 group ${cardBorder} hover:bg-bg-elevated/40 hover:shadow-lg hover:shadow-accent/10 transition-all duration-300`}>
-                          <div className="h-28 w-28 sm:h-32 sm:w-32 rounded-xl overflow-hidden shrink-0 border-2 border-border/60 group-hover:border-accent/30 transition-colors shadow-lg shadow-black/15">
+                        <div className={`bg-bg-elevated/30 border border-border/60 rounded-xl p-4 sm:p-5 flex flex-col sm:flex-row items-center sm:items-center gap-3 sm:gap-5 text-center sm:text-left group ${cardBorder} hover:bg-bg-elevated/40 hover:shadow-lg hover:shadow-accent/10 transition-all duration-300`}>
+                          <div className="h-24 w-24 sm:h-32 sm:w-32 rounded-xl overflow-hidden shrink-0 border-2 border-border/60 group-hover:border-accent/30 transition-colors shadow-lg shadow-black/15">
                             <TeamMemberImage src={avatarUrl || ''} name={member.name} />
                           </div>
                           <div className="flex-1 min-w-0 space-y-1">

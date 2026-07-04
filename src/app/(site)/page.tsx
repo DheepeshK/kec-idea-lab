@@ -170,7 +170,7 @@ export default async function HomePage() {
         <div className="absolute bottom-[20%] left-[15%] w-[400px] h-[400px] rounded-full bg-accent-2/10 blur-[100px] pointer-events-none -z-10" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-center">
             {/* Left Column: Copy */}
             <div className="lg:col-span-7 space-y-6 text-left">
               <ScrollReveal direction="right">
@@ -224,7 +224,7 @@ export default async function HomePage() {
       {/* SECTION 1.5: PARTNER LOGO STRIP */}
       <section className="bg-bg-elevated/40 border-b border-border/40 py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-center gap-10 md:gap-16 flex-wrap">
+          <div className="flex items-center justify-center gap-6 md:gap-12 flex-wrap">
             {[
               { src: '/AICTE.png', alt: 'AICTE' },
               { src: '/KEC_new2.png', alt: 'KEC' },
@@ -233,7 +233,7 @@ export default async function HomePage() {
               { src: '/EMDC.png', alt: 'EMDC' },
               { src: '/TBI.png', alt: 'TBI' },
             ].map((logo) => (
-              <div key={logo.alt} className="relative h-20 w-auto opacity-70 hover:opacity-100 transition-opacity">
+              <div key={logo.alt} className="relative h-16 sm:h-20 w-auto opacity-70 hover:opacity-100 transition-opacity">
                 <img
                   src={logo.src}
                   alt={logo.alt}
@@ -505,7 +505,7 @@ export default async function HomePage() {
         {/* Subtle grid pattern background detail */}
         <div className="absolute inset-0 opacity-[0.02] pointer-events-none -z-10" />
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-center relative z-10">
           <div className="lg:col-span-4 space-y-4 text-left">
             <ScrollReveal direction="up">
               <span className="label text-accent-3 block">Synergistic Alliance</span>

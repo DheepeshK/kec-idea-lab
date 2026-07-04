@@ -281,7 +281,7 @@ export default function EventsFilterableGrid({ events }: EventsFilterableGridPro
                 >
                   <div className="flex flex-col h-full">
                     {/* Media Display Area */}
-                    <div className="relative h-52 w-full bg-bg overflow-hidden shrink-0">
+                    <div className="relative h-40 sm:h-52 w-full bg-bg overflow-hidden shrink-0">
                       {displayImage ? (
                         // eslint-disable-next-line @next/next/no-img-element
                         <img

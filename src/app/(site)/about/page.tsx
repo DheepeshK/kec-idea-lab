@@ -52,7 +52,7 @@ export default function AboutPage() {
           <ScrollReveal direction="up">
             <div className="flex flex-col items-center gap-4">
               <span className="text-[10px] font-mono text-text-secondary uppercase tracking-widest font-semibold">The Contributors</span>
-              <div className="flex items-center justify-center gap-10 md:gap-16 flex-wrap">
+              <div className="flex items-center justify-center gap-6 md:gap-12 flex-wrap">
                 {[
                   { src: '/AICTE.png', alt: 'AICTE' },
                   { src: '/KEC_new2.png', alt: 'KEC' },
@@ -61,7 +61,7 @@ export default function AboutPage() {
                   { src: '/EMDC.png', alt: 'EMDC' },
                   { src: '/TBI.png', alt: 'TBI' },
                 ].map((logo) => (
-                  <div key={logo.alt} className="relative h-20 w-auto opacity-70 hover:opacity-100 transition-opacity">
+                  <div key={logo.alt} className="relative h-16 sm:h-20 w-auto opacity-70 hover:opacity-100 transition-opacity">
                     <img src={logo.src} alt={logo.alt} className="h-full w-auto object-contain" />
                   </div>
                 ))}

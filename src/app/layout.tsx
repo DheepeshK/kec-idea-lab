@@ -101,34 +101,34 @@ export default function RootLayout({
           {/* Center content */}
           <div style={{
             display: 'flex', flexDirection: 'column', alignItems: 'center',
-            position: 'relative', zIndex: 10,
+            position: 'relative', zIndex: 10, width: '100%', maxWidth: 400, padding: '0 16px',
           }}>
             {/* Orbital rings */}
-            <div style={{ position: 'relative', width: 400, height: 400, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <div style={{ ...ringStyles(0), width: 400, height: 400 }} />
-              <div style={{ ...ringStyles(1), width: 310, height: 310 }} />
-              <div style={{ ...ringStyles(2), width: 220, height: 220 }} />
+            <div style={{ position: 'relative', width: '100%', maxWidth: 400, aspectRatio: '1/1', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div style={{ ...ringStyles(0), width: '100%', height: '100%' }} />
+              <div style={{ ...ringStyles(1), width: '77.5%', height: '77.5%' }} />
+              <div style={{ ...ringStyles(2), width: '55%', height: '55%' }} />
 
               {/* Floating dots on rings */}
               <div style={{
-                position: 'absolute', width: 14, height: 14, borderRadius: '50%',
-                background: 'var(--accent)', top: 0, left: '50%', marginLeft: -7,
+                position: 'absolute', width: 'clamp(10px, 3.5vw, 14px)', height: 'clamp(10px, 3.5vw, 14px)', borderRadius: '50%',
+                background: 'var(--accent)', top: 0, left: '50%', transform: 'translateX(-50%)',
                 animation: 'ring-rotate 10s linear infinite', boxShadow: '0 0 16px color-mix(in srgb, var(--accent) 70%, transparent)',
               }} />
               <div style={{
-                position: 'absolute', width: 10, height: 10, borderRadius: '50%',
-                background: 'var(--accent-2)', bottom: 0, right: '50%', marginRight: -5,
+                position: 'absolute', width: 'clamp(7px, 2.5vw, 10px)', height: 'clamp(7px, 2.5vw, 10px)', borderRadius: '50%',
+                background: 'var(--accent-2)', bottom: 0, right: '50%', transform: 'translateX(50%)',
                 animation: 'ring-rotate-reverse 14s linear infinite', boxShadow: '0 0 12px color-mix(in srgb, var(--accent-2) 60%, transparent)',
               }} />
               <div style={{
-                position: 'absolute', width: 8, height: 8, borderRadius: '50%',
-                background: 'var(--accent-3)', top: '50%', left: 0, marginTop: -4,
+                position: 'absolute', width: 'clamp(6px, 2vw, 8px)', height: 'clamp(6px, 2vw, 8px)', borderRadius: '50%',
+                background: 'var(--accent-3)', top: '50%', left: 0, transform: 'translateY(-50%)',
                 animation: 'ring-rotate 18s linear infinite', boxShadow: '0 0 12px color-mix(in srgb, var(--accent-3) 60%, transparent)',
               }} />
 
               {/* Logo */}
               <div style={{
-                width: 180, height: 180, borderRadius: 32,
+                width: 'clamp(120px, 40vw, 180px)', height: 'clamp(120px, 40vw, 180px)', borderRadius: 'clamp(20px, 6vw, 32px)',
                 border: '2px solid color-mix(in srgb, var(--accent) 25%, transparent)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 position: 'relative', overflow: 'hidden', background: 'color-mix(in srgb, var(--bg-elevated) 80%, transparent)',
@@ -139,37 +139,37 @@ export default function RootLayout({
                   position: 'absolute', inset: 0,
                   background: 'linear-gradient(135deg, color-mix(in srgb, var(--accent) 15%, transparent), color-mix(in srgb, var(--accent-3) 15%, transparent))',
                 }} />
-                <img src="/IDEALab.png" alt="IDEA Lab" style={{ position: 'relative', width: 110, height: 110, objectFit: 'contain' }} />
+                <img src="/IDEALab.png" alt="IDEA Lab" style={{ position: 'relative', width: 'clamp(70px, 25vw, 110px)', height: 'clamp(70px, 25vw, 110px)', objectFit: 'contain' }} />
               </div>
             </div>
 
             {/* Brand text */}
             <p style={{
-              fontFamily: 'var(--font-display), sans-serif', fontWeight: 700, fontSize: 48,
+              fontFamily: 'var(--font-display), sans-serif', fontWeight: 700, fontSize: 'clamp(1.75rem, 10vw, 3rem)',
               letterSpacing: '-0.03em', color: 'var(--text)', marginTop: 36, textAlign: 'center',
             }}>
               IDEA Lab <span style={{ color: 'var(--accent)' }}>@ KEC</span>
             </p>
 
             <p style={{
-              fontSize: 15, color: 'var(--text-secondary)', fontFamily: 'var(--font-mono), monospace',
-              marginTop: 8, letterSpacing: '0.08em', textTransform: 'uppercase',
+              fontSize: 'clamp(11px, 3.5vw, 15px)', color: 'var(--text-secondary)', fontFamily: 'var(--font-mono), monospace',
+              marginTop: 8, letterSpacing: '0.08em', textTransform: 'uppercase', textAlign: 'center', width: '100%', padding: '0 16px',
             }}>
               Innovation, Development, Evaluation & Application Lab
             </p>
 
             {/* Partner logos row */}
             <div style={{
-              display: 'flex', alignItems: 'center', gap: 28, marginTop: 40, opacity: 0.7,
+              display: 'flex', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap', gap: 'clamp(16px, 4vw, 28px)', marginTop: 40, opacity: 0.7, width: '100%', padding: '0 16px',
             }}>
               {['/AICTE.png', '/KEC_new2.png', '/IIC.png', '/EMDC.png', '/TBI.png'].map((src, i) => (
-                <img key={i} src={src} alt="" style={{ height: 40, width: 'auto', objectFit: 'contain', opacity: 0.8 }} />
+                <img key={i} src={src} alt="" style={{ height: 'clamp(28px, 8vw, 40px)', width: 'auto', objectFit: 'contain', opacity: 0.8 }} />
               ))}
             </div>
 
             {/* Animated loading bar */}
             <div style={{
-              width: 300, height: 3, borderRadius: 3, background: 'color-mix(in srgb, var(--text) 8%, transparent)',
+              width: 'min(80vw, 300px)', height: 3, borderRadius: 3, background: 'color-mix(in srgb, var(--text) 8%, transparent)',
               marginTop: 44, overflow: 'hidden', position: 'relative',
             }}>
               <div style={{

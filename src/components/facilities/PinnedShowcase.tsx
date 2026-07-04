@@ -90,7 +90,7 @@ export default function PinnedShowcase({ items }: PinnedShowcaseProps) {
                   hoverEffect={true}
                 >
                   {/* Image Section */}
-                  <div className="relative h-52 w-full bg-bg-elevated overflow-hidden shrink-0">
+                  <div className="relative h-40 sm:h-52 w-full bg-bg-elevated overflow-hidden shrink-0">
                     {displayImage ? (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img
