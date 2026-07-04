@@ -1,7 +1,39 @@
 import fs from 'fs';
 import path from 'path';
 
-const DATA_DIR = path.join(process.cwd(), 'data');
+// Static imports so Vercel bundles the seed data
+import teamSeed from '../../data/team.json';
+import equipmentSeed from '../../data/equipment.json';
+import eventsSeed from '../../data/events.json';
+import registrationsSeed from '../../data/registrations.json';
+import contactSeed from '../../data/contact.json';
+
+const SEED: Record<string, any[]> = {
+  team: teamSeed as any[],
+  equipment: equipmentSeed as any[],
+  events: eventsSeed as any[],
+  registrations: registrationsSeed as any[],
+  contact: contactSeed as any[],
+};
+
+const isVercel = !!process.env.VERCEL;
+const DATA_DIR = isVercel ? '/tmp/data' : path.join(process.cwd(), 'data');
+
+let seeded = false;
+
+function ensureDir() {
+  if (seeded) return;
+  seeded = true;
+  if (!fs.existsSync(DATA_DIR)) {
+    fs.mkdirSync(DATA_DIR, { recursive: true });
+  }
+  for (const [name, data] of Object.entries(SEED)) {
+    const fp = path.join(DATA_DIR, `${name}.json`);
+    if (!fs.existsSync(fp)) {
+      fs.writeFileSync(fp, JSON.stringify(data, null, 2), 'utf-8');
+    }
+  }
+}
 
 function filePath(collection: string): string {
   return path.join(DATA_DIR, `${collection}.json`);
@@ -9,7 +41,10 @@ function filePath(collection: string): string {
 
 function readFile<T>(collection: string): T[] {
   const fp = filePath(collection);
-  if (!fs.existsSync(fp)) return [];
+  if (!fs.existsSync(fp)) {
+    if (SEED[collection]) return [...SEED[collection]] as T[];
+    return [];
+  }
   const raw = fs.readFileSync(fp, 'utf-8');
   try {
     return JSON.parse(raw) as T[];
@@ -19,7 +54,7 @@ function readFile<T>(collection: string): T[] {
 }
 
 function writeFile<T>(collection: string, data: T[]): void {
-  if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+  ensureDir();
   fs.writeFileSync(filePath(collection), JSON.stringify(data, null, 2), 'utf-8');
 }
 
