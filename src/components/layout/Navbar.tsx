@@ -8,8 +8,9 @@ import { Menu, X, Sun, Moon, LayoutDashboard } from 'lucide-react';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const { theme, setTheme } = useTheme();
+  const { setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const [isDark, setIsDark] = useState(true);
   const pathname = usePathname();
 
   const menuRef = useRef<HTMLDivElement>(null);
@@ -18,6 +19,20 @@ export default function Navbar() {
   // Prevent hydration mismatch
   useEffect(() => {
     setMounted(true);
+  }, []);
+
+  // Track resolved theme from DOM attribute (handles "system" mode correctly)
+  useEffect(() => {
+    const update = () => {
+      const attr = document.documentElement.getAttribute('data-theme');
+      setIsDark(attr !== 'light');
+    };
+
+    update();
+
+    const observer = new MutationObserver(update);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
@@ -60,7 +75,9 @@ export default function Navbar() {
   };
 
   const toggleTheme = () => {
-    setTheme(theme === 'dark' ? 'light' : 'dark');
+    const next = isDark ? 'light' : 'dark';
+    setTheme(next);
+    localStorage.setItem('idealab-theme', next);
   };
 
   return (
@@ -132,14 +149,14 @@ export default function Navbar() {
 
           {/* Action Area (Theme & Portal) */}
           <div className="hidden md:flex items-center gap-3">
-            {mounted && (
+              {mounted && (
               <button
                 onClick={toggleTheme}
                 className="p-2 rounded-lg border border-border/60 text-text-secondary hover:text-accent hover:border-accent/40 hover:bg-accent/5 transition-all duration-300"
                 aria-label="Toggle Theme"
                 id="navbar-theme-toggle"
               >
-                {theme === 'dark' ? (
+                {isDark ? (
                   <Sun className="h-4 w-4 text-warn" />
                 ) : (
                   <Moon className="h-4 w-4 text-accent" />
@@ -164,7 +181,7 @@ export default function Navbar() {
                 className="p-2 rounded-lg border border-border text-text hover:bg-border/20 transition-colors"
                 aria-label="Toggle Theme"
               >
-                {theme === 'dark' ? (
+                {isDark ? (
                   <Sun className="h-4 w-4 text-warn" />
                 ) : (
                   <Moon className="h-4 w-4 text-accent" />

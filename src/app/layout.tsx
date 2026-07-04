@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, DM_Sans, JetBrains_Mono, Playfair_Display } from "next/font/google";
 import "./globals.css";
+import Script from "next/script";
 import SessionWrapper from "@/components/layout/SessionWrapper";
 import ThemeProvider from "@/components/theme/ThemeProvider";
 import NavigationProgress from "@/components/layout/NavigationProgress";
@@ -76,6 +77,20 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body>
+        <Script id="theme-boot" strategy="beforeInteractive">{`
+          (function() {
+            var key = 'idealab-theme';
+            try {
+              var stored = localStorage.getItem(key);
+              if (!stored || stored === 'system') {
+                var mq = window.matchMedia('(prefers-color-scheme: light)');
+                document.documentElement.setAttribute('data-theme', mq.matches ? 'light' : 'dark');
+              } else {
+                document.documentElement.setAttribute('data-theme', stored);
+              }
+            } catch(e) {}
+          })();
+        `}</Script>
         <div id="splash" style={{
           position: 'fixed', inset: 0, zIndex: 99999, display: 'flex', flexDirection: 'column',
           alignItems: 'center', justifyContent: 'center', backgroundColor: 'var(--bg)',
