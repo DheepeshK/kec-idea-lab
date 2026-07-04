@@ -60,7 +60,7 @@ const particles = Array.from({ length: 30 }, (_, i) => part(i));
 const ringStyles = (index: number) => ({
   position: 'absolute' as const,
   borderRadius: '50%',
-  border: `1.5px solid ${['rgba(210,35,42,0.15)', 'rgba(249,160,27,0.12)', 'rgba(0,148,68,0.1)'][index]}`,
+  border: `1.5px solid ${['color-mix(in srgb, var(--accent) 15%, transparent)', 'color-mix(in srgb, var(--accent-2) 12%, transparent)', 'color-mix(in srgb, var(--accent-3) 10%, transparent)'][index]}`,
   animation: `${index === 1 ? 'ring-rotate-reverse' : 'ring-rotate'} ${6 + index * 2}s linear infinite`,
 });
 
@@ -78,19 +78,20 @@ export default function RootLayout({
       <body>
         <div id="splash" style={{
           position: 'fixed', inset: 0, zIndex: 99999, display: 'flex', flexDirection: 'column',
-          alignItems: 'center', justifyContent: 'center', backgroundColor: '#080b18',
+          alignItems: 'center', justifyContent: 'center', backgroundColor: 'var(--bg)',
           transition: 'opacity 0.6s ease-out', overflow: 'hidden',
         }}>
           {/* Animated gradient bg */}
           <div style={{
-            position: 'absolute', inset: 0, background: 'linear-gradient(135deg, #0a0e1a 0%, #0e1428 25%, #0a1628 50%, #0e1428 75%, #0a0e1a 100%)',
+            position: 'absolute', inset: 0,
+            background: 'linear-gradient(135deg, var(--bg) 0%, var(--bg-elevated) 25%, var(--bg) 50%, var(--bg-elevated) 75%, var(--bg) 100%)',
             backgroundSize: '200% 200%', animation: 'gradient-shift 8s ease infinite',
           }} />
 
           {/* Subtle grid overlay */}
           <div style={{
-            position: 'absolute', inset: 0, opacity: 0.03,
-            backgroundImage: 'linear-gradient(rgba(210,35,42,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(210,35,42,0.3) 1px, transparent 1px)',
+            position: 'absolute', inset: 0, opacity: 0.04,
+            backgroundImage: 'linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px)',
             backgroundSize: '60px 60px',
           }} />
 
@@ -111,31 +112,32 @@ export default function RootLayout({
               {/* Floating dots on rings */}
               <div style={{
                 position: 'absolute', width: 14, height: 14, borderRadius: '50%',
-                background: '#D2232A', top: 0, left: '50%', marginLeft: -7,
-                animation: 'ring-rotate 10s linear infinite', boxShadow: '0 0 16px rgba(210,35,42,0.7)',
+                background: 'var(--accent)', top: 0, left: '50%', marginLeft: -7,
+                animation: 'ring-rotate 10s linear infinite', boxShadow: '0 0 16px color-mix(in srgb, var(--accent) 70%, transparent)',
               }} />
               <div style={{
                 position: 'absolute', width: 10, height: 10, borderRadius: '50%',
-                background: '#F9A01B', bottom: 0, right: '50%', marginRight: -5,
-                animation: 'ring-rotate-reverse 14s linear infinite', boxShadow: '0 0 12px rgba(249,160,27,0.6)',
+                background: 'var(--accent-2)', bottom: 0, right: '50%', marginRight: -5,
+                animation: 'ring-rotate-reverse 14s linear infinite', boxShadow: '0 0 12px color-mix(in srgb, var(--accent-2) 60%, transparent)',
               }} />
               <div style={{
                 position: 'absolute', width: 8, height: 8, borderRadius: '50%',
-                background: '#009444', top: '50%', left: 0, marginTop: -4,
-                animation: 'ring-rotate 18s linear infinite', boxShadow: '0 0 12px rgba(0,148,68,0.6)',
+                background: 'var(--accent-3)', top: '50%', left: 0, marginTop: -4,
+                animation: 'ring-rotate 18s linear infinite', boxShadow: '0 0 12px color-mix(in srgb, var(--accent-3) 60%, transparent)',
               }} />
 
               {/* Logo */}
               <div style={{
-                width: 180, height: 180, borderRadius: 32, border: '2px solid rgba(210,35,42,0.2)',
+                width: 180, height: 180, borderRadius: 32,
+                border: '2px solid color-mix(in srgb, var(--accent) 25%, transparent)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                position: 'relative', overflow: 'hidden', background: 'rgba(14,20,40,0.8)',
+                position: 'relative', overflow: 'hidden', background: 'color-mix(in srgb, var(--bg-elevated) 80%, transparent)',
                 animation: 'pulse-glow 2.5s ease-in-out infinite',
-                boxShadow: '0 0 50px rgba(210,35,42,0.2), 0 0 100px rgba(210,35,42,0.08)',
+                boxShadow: '0 0 50px color-mix(in srgb, var(--accent) 20%, transparent), 0 0 100px color-mix(in srgb, var(--accent) 8%, transparent)',
               }}>
                 <div style={{
                   position: 'absolute', inset: 0,
-                  background: 'linear-gradient(135deg, rgba(210,35,42,0.15), rgba(0,148,68,0.15))',
+                  background: 'linear-gradient(135deg, color-mix(in srgb, var(--accent) 15%, transparent), color-mix(in srgb, var(--accent-3) 15%, transparent))',
                 }} />
                 <img src="/IDEALab.png" alt="IDEA Lab" style={{ position: 'relative', width: 110, height: 110, objectFit: 'contain' }} />
               </div>
@@ -144,13 +146,13 @@ export default function RootLayout({
             {/* Brand text */}
             <p style={{
               fontFamily: 'var(--font-display), sans-serif', fontWeight: 700, fontSize: 48,
-              letterSpacing: '-0.03em', color: '#f0f4f8', marginTop: 36, textAlign: 'center',
+              letterSpacing: '-0.03em', color: 'var(--text)', marginTop: 36, textAlign: 'center',
             }}>
-              IDEA Lab <span style={{ color: '#D2232A' }}>@ KEC</span>
+              IDEA Lab <span style={{ color: 'var(--accent)' }}>@ KEC</span>
             </p>
 
             <p style={{
-              fontSize: 15, color: '#94a3b8', fontFamily: 'var(--font-mono), monospace',
+              fontSize: 15, color: 'var(--text-secondary)', fontFamily: 'var(--font-mono), monospace',
               marginTop: 8, letterSpacing: '0.08em', textTransform: 'uppercase',
             }}>
               Innovation, Development, Evaluation & Application Lab
@@ -167,12 +169,12 @@ export default function RootLayout({
 
             {/* Animated loading bar */}
             <div style={{
-              width: 300, height: 3, borderRadius: 3, background: 'rgba(255,255,255,0.06)',
+              width: 300, height: 3, borderRadius: 3, background: 'color-mix(in srgb, var(--text) 8%, transparent)',
               marginTop: 44, overflow: 'hidden', position: 'relative',
             }}>
               <div style={{
                 height: '100%', borderRadius: 3,
-                background: 'linear-gradient(90deg, #D2232A, #F9A01B, #009444)',
+                background: 'linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3))',
                 backgroundSize: '200% 100%',
                 animation: 'gradient-shift 1s ease infinite, loading-fill 1.8s ease-out forwards',
               }} />
@@ -180,7 +182,7 @@ export default function RootLayout({
 
             {/* Status text */}
             <p style={{
-              fontSize: 10, color: '#64748b', fontFamily: 'var(--font-mono), monospace',
+              fontSize: 10, color: 'var(--text-secondary)', fontFamily: 'var(--font-mono), monospace',
               marginTop: 12, letterSpacing: '0.1em',
             }}>
               LOADING INNOVATION WORKSPACE...
