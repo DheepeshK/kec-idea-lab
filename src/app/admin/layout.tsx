@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import {
   LayoutDashboard,
   Calendar,
+  CalendarDays,
   Users,
   Wrench,
   ClipboardList,
@@ -15,6 +16,7 @@ import {
   User,
 } from 'lucide-react';
 import Button from '@/components/ui/Button';
+import { ToastProvider } from '@/components/ui/Toast';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const { data: session, status } = useSession();
@@ -54,6 +56,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     { name: 'Equipment', href: '/admin/equipment', icon: Wrench },
     { name: 'Team', href: '/admin/team', icon: Users },
     { name: 'Events', href: '/admin/events', icon: Calendar },
+    { name: 'Calendar', href: '/admin/calendar', icon: CalendarDays },
     { name: 'Registrations', href: '/admin/registrations', icon: ClipboardList },
   ];
 
@@ -148,7 +151,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
       {/* Main dashboard content area */}
       <main className="flex-grow p-6 sm:p-10 overflow-y-auto">
-        <div className="max-w-6xl mx-auto space-y-8">{children}</div>
+        <div className="max-w-6xl mx-auto space-y-8">
+          <ToastProvider>{children}</ToastProvider>
+        </div>
       </main>
     </div>
   );

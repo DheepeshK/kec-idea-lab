@@ -1,5 +1,7 @@
 'use client';
 
+import { useState, useEffect } from 'react';
+
 const YEAR = new Date().getFullYear();
 const START_YEAR = YEAR;
 const END_YEAR = YEAR + 1;
@@ -12,7 +14,7 @@ interface ScheduleRow {
   participation: string;
 }
 
-const rows: ScheduleRow[] = [
+const fallbackRows: ScheduleRow[] = [
   { quarter: 'Q1', month: 'June', event: 'Lab Inauguration & Orientation', focus: 'Lab induction, safety training', participation: 'All students & faculty' },
   { quarter: 'Q1', month: 'June', event: 'Summer Bootcamp — CAD/CAM', focus: '3D modelling, simulation, CAM', participation: 'Selected student teams' },
   { quarter: 'Q1', month: 'July', event: 'National Hackathon Qualifier', focus: 'Problem-solving, prototyping', participation: 'Open teams' },
@@ -79,7 +81,43 @@ const quarterTheme: Record<string, { color: string; rowBg: string; label: string
 };
 
 export default function YearSchedule() {
+  const [rows, setRows] = useState<ScheduleRow[]>(fallbackRows);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('/api/calendar')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success && data.data.length > 0) {
+          setRows(data.data as ScheduleRow[]);
+        }
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, []);
+
   const grouped = mergeSpans(rows);
+
+  if (loading) {
+    return (
+      <div className="overflow-x-auto rounded-xl border-2 border-border bg-bg shadow-xl">
+        <div className="text-center py-16">
+          <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-accent mx-auto mb-4"></div>
+          <p className="text-xs text-text-secondary font-mono">Loading schedule...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (rows.length === 0) {
+    return (
+      <div className="overflow-x-auto rounded-xl border-2 border-border bg-bg shadow-xl">
+        <div className="text-center py-16">
+          <p className="text-sm text-text-secondary">No schedule entries available.</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="overflow-x-auto rounded-xl border-2 border-border bg-bg shadow-xl">

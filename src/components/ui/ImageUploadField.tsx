@@ -87,24 +87,24 @@ export default function ImageUploadField({
 
   return (
     <div className="space-y-1.5 w-full">
-      <label className="block text-xs font-semibold text-slate-400">{label}</label>
+      <label className="block text-xs font-semibold text-text-secondary">{label}</label>
       
       {value ? (
-        <div className="relative group rounded-lg overflow-hidden border border-slate-800 bg-slate-950 aspect-video max-h-48 flex items-center justify-center">
+        <div className="relative group rounded-lg overflow-hidden border border-border bg-bg aspect-video max-h-48 flex items-center justify-center">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={value}
             alt="Uploaded preview"
             className="h-full w-full object-cover"
           />
-          <div className="absolute inset-0 bg-slate-950/70 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+          <div className="absolute inset-0 bg-bg/70 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
             <Button
               type="button"
               variant="outline"
               size="sm"
               onClick={triggerFileInput}
               disabled={disabled || uploading}
-              className="text-white border-slate-700 bg-slate-900/80 hover:bg-slate-900"
+              className="text-text border-border bg-bg-elevated/80 hover:bg-bg-elevated"
             >
               Change
             </Button>
@@ -127,20 +127,20 @@ export default function ImageUploadField({
           onClick={triggerFileInput}
           className={`border border-dashed rounded-lg p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-colors ${
             uploading
-              ? 'border-indigo-500/50 bg-indigo-500/5'
-              : 'border-slate-800 hover:border-slate-700 bg-slate-950/50 hover:bg-slate-950'
+              ? 'border-accent/50 bg-accent/5'
+              : 'border-border hover:border-text-secondary bg-bg/50 hover:bg-bg'
           }`}
         >
           {uploading ? (
-            <Loader2 className="h-8 w-8 text-indigo-500 animate-spin" />
+            <Loader2 className="h-8 w-8 text-accent animate-spin" />
           ) : (
-            <UploadCloud className="h-8 w-8 text-slate-500 mb-2" />
+            <UploadCloud className="h-8 w-8 text-text-secondary mb-2" />
           )}
           
-          <p className="text-xs text-slate-300 font-medium">
+          <p className="text-xs text-text font-medium">
             {uploading ? 'Uploading asset...' : 'Drag & drop image, or click to select'}
           </p>
-          <p className="text-[10px] text-slate-500 mt-1">
+          <p className="text-[10px] text-text-secondary mt-1">
             JPEG, PNG, GIF, WebP (Max 5MB)
           </p>
         </div>

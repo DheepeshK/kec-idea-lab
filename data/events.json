@@ -7,7 +7,8 @@
     "time": "09:00 AM - 04:00 PM",
     "location": "AICTE-KEC Idea Lab, 3D Printing Zone",
     "category": "Workshop",
-    "image": "https://images.unsplash.com/photo-1615840287214-7fe58a8f3685?auto=format&fit=crop&q=80&w=600"
+    "image": "https://images.unsplash.com/photo-1615840287214-7fe58a8f3685?auto=format&fit=crop&q=80&w=600",
+    "status": "published"
   },
   {
     "_id": "evt-2",
@@ -17,7 +18,8 @@
     "time": "10:00 AM - 01:00 PM",
     "location": "Heavy Machinery Room, Idea Lab",
     "category": "Workshop",
-    "image": "https://images.unsplash.com/photo-1534224039826-c7a0eda0e6b3?auto=format&fit=crop&q=80&w=600"
+    "image": "https://images.unsplash.com/photo-1534224039826-c7a0eda0e6b3?auto=format&fit=crop&q=80&w=600",
+    "status": "published"
   },
   {
     "_id": "evt-3",
@@ -27,7 +29,8 @@
     "time": "08:30 AM onwards",
     "location": "Idea Lab Main Hall & PCB Bay",
     "category": "Hackathon",
-    "image": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=600"
+    "image": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=600",
+    "status": "published"
   },
   {
     "_id": "evt-4",
@@ -37,7 +40,8 @@
     "time": "09:30 AM - 05:00 PM",
     "location": "Seminar Hall II, Kongu Campus",
     "category": "Ideathon",
-    "image": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=600"
+    "image": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=600",
+    "status": "published"
   },
   {
     "_id": "evt-5",
@@ -47,6 +51,7 @@
     "time": "10:00 AM - 04:00 PM",
     "location": "Entire AICTE-KEC Idea Lab Facility",
     "category": "Open Lab Day",
-    "image": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&q=80&w=600"
+    "image": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&q=80&w=600",
+    "status": "published"
   }
 ]

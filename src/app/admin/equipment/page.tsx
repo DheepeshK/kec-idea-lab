@@ -1,12 +1,18 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 import Badge from '@/components/ui/Badge';
 import ImageUploadField from '@/components/ui/ImageUploadField';
-import LoadingSpinner from '@/components/ui/LoadingSpinner';
-import { Wrench, Plus, CheckCircle2, AlertTriangle, Cpu, Trash2, Edit, X, PlusCircle } from 'lucide-react';
+import ConfirmDialog from '@/components/ui/ConfirmDialog';
+import SearchInput from '@/components/ui/SearchInput';
+import { SkeletonList } from '@/components/ui/Skeleton';
+import { useToast } from '@/components/ui/Toast';
+import { useAdminCrud } from '@/hooks/useAdminCrud';
+import { useUnsavedChanges } from '@/hooks/useUnsavedChanges';
+import { useCtrlSave } from '@/hooks/useCtrlSave';
+import { Wrench, Cpu, Trash2, Edit, X, PlusCircle, ChevronUp, ChevronDown, Menu, XCircle } from 'lucide-react';
 
 interface SpecItem {
   label: string;
@@ -22,19 +28,24 @@ interface EquipmentItem {
   category?: string;
   location?: string;
   imageUrl?: string;
-  image?: string; // fallback
+  image?: string;
   order: number;
   specs: SpecItem[];
 }
 
 export default function AdminEquipmentPage() {
-  const [equipment, setEquipment] = useState<EquipmentItem[]>([]);
-  const [loading, setLoading] = useState(true);
-  
-  // Edit mode tracking
-  const [editingId, setEditingId] = useState<string | null>(null);
+  const { data: equipment, loading, deleteItem, refresh } = useAdminCrud<EquipmentItem>('/api/equipment', '/api/equipment');
+  const { toast } = useToast();
 
-  // Form states
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [search, setSearch] = useState('');
+  const [deleteTarget, setDeleteTarget] = useState<{ id: string; name: string } | null>(null);
+  const [cancelTarget, setCancelTarget] = useState<boolean>(false);
+  const [showForm, setShowForm] = useState(false);
+  const [sortField, setSortField] = useState<'name' | 'order' | 'quantity'>('order');
+  const [sortDir, setSortDir] = useState<'asc' | 'desc'>('asc');
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [quantity, setQuantity] = useState(1);
@@ -44,27 +55,11 @@ export default function AdminEquipmentPage() {
   const [order, setOrder] = useState(0);
   const [imageUrl, setImageUrl] = useState('');
   const [specs, setSpecs] = useState<SpecItem[]>([]);
-  
+
   const [formSubmitting, setFormSubmitting] = useState(false);
-  const [formSuccess, setFormSuccess] = useState(false);
-  const [formError, setFormError] = useState<string | null>(null);
 
-  const fetchEquipment = () => {
-    setLoading(true);
-    fetch('/api/equipment')
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.success && data.data) {
-          setEquipment(data.data);
-        }
-      })
-      .catch((err) => console.error('Error fetching equipment:', err))
-      .finally(() => setLoading(false));
-  };
-
-  useEffect(() => {
-    fetchEquipment();
-  }, []);
+  const formDirty = name !== '' || description !== '' || imageUrl !== '' || specs.some((s) => s.label || s.value);
+  useUnsavedChanges(formDirty && editingId === null);
 
   const handleEditClick = (item: EquipmentItem) => {
     setEditingId(item._id);
@@ -77,13 +72,20 @@ export default function AdminEquipmentPage() {
     setOrder(item.order || 0);
     setImageUrl(item.imageUrl || item.image || '');
     setSpecs(item.specs || []);
-    
-    // Clear notifications
-    setFormSuccess(false);
-    setFormError(null);
   };
 
   const handleCancelEdit = () => {
+    if (editingId && isFormDirty()) {
+      setCancelTarget(true);
+      return;
+    }
+    doCancelEdit();
+  };
+
+  const isFormDirty = () =>
+    name !== '' || description !== '' || imageUrl !== '' || specs.some((s) => s.label || s.value);
+
+  const doCancelEdit = () => {
     setEditingId(null);
     setName('');
     setDescription('');
@@ -94,7 +96,7 @@ export default function AdminEquipmentPage() {
     setOrder(0);
     setImageUrl('');
     setSpecs([]);
-    setFormError(null);
+    setErrors({});
   };
 
   const handleAddSpecRow = () => {
@@ -113,11 +115,23 @@ export default function AdminEquipmentPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setFormSubmitting(true);
-    setFormSuccess(false);
-    setFormError(null);
 
-    // Validate specs array - filter out empty rows
+    const newErrors: Record<string, string> = {};
+    if (!name.trim()) newErrors.name = 'Equipment name is required.';
+    if (!description.trim()) newErrors.description = 'Description is required.';
+    if (quantity < 1) newErrors.quantity = 'Must be at least 1.';
+    if (available < 0) newErrors.available = 'Cannot be negative.';
+    if (available > quantity) newErrors.available = 'Cannot exceed total quantity.';
+    if (!location.trim()) newErrors.location = 'Location is required.';
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      toast('error', 'Please fix the validation errors below.');
+      return;
+    }
+    setErrors({});
+
+    setFormSubmitting(true);
+
     const cleanedSpecs = specs.filter((s) => s.label.trim() !== '' && s.value.trim() !== '');
 
     const payload = {
@@ -144,13 +158,8 @@ export default function AdminEquipmentPage() {
 
       const result = await response.json();
       if (result.success) {
-        setFormSuccess(true);
-        if (editingId) {
-          // Reset edit state
-          setEditingId(null);
-        }
-        
-        // Clear fields
+        toast('success', editingId ? 'Equipment updated successfully.' : 'Equipment registered successfully.');
+        setEditingId(null);
         setName('');
         setDescription('');
         setQuantity(1);
@@ -160,53 +169,107 @@ export default function AdminEquipmentPage() {
         setOrder(0);
         setImageUrl('');
         setSpecs([]);
-        
-        fetchEquipment();
+        refresh();
       } else {
-        setFormError(result.error || 'Failed to submit the equipment form.');
+        toast('error', result.error || 'Failed to submit the equipment form.');
       }
     } catch (err: any) {
-      setFormError(err.message || 'An unexpected error occurred.');
+      toast('error', err.message || 'An unexpected error occurred.');
     } finally {
       setFormSubmitting(false);
     }
   };
 
-  const handleDeleteClick = async (id: string, name: string) => {
-    if (!window.confirm(`Are you sure you want to delete "${name}" from the registry?`)) {
-      return;
-    }
-
+  const handleDeleteConfirm = async () => {
+    if (!deleteTarget) return;
     try {
-      const response = await fetch(`/api/equipment/${id}`, {
-        method: 'DELETE',
-      });
-      const result = await response.json();
-      if (result.success) {
-        fetchEquipment();
-        if (editingId === id) {
-          handleCancelEdit();
-        }
-      } else {
-        alert(result.error || 'Failed to delete equipment.');
-      }
+      await deleteItem(deleteTarget.id);
+      toast('success', `"${deleteTarget.name}" deleted successfully.`);
+      if (editingId === deleteTarget.id) handleCancelEdit();
     } catch (err: any) {
-      alert(err.message || 'Error occurred during deletion.');
+      toast('error', err.message || 'Failed to delete equipment.');
+    } finally {
+      setDeleteTarget(null);
     }
   };
 
+  const filtered = equipment.filter(
+    (item) =>
+      item.name.toLowerCase().includes(search.toLowerCase()) ||
+      item.category?.toLowerCase().includes(search.toLowerCase()) ||
+      item.location?.toLowerCase().includes(search.toLowerCase())
+  );
+
+  const sorted = [...filtered].sort((a, b) => {
+    let cmp = 0;
+    if (sortField === 'name') cmp = a.name.localeCompare(b.name);
+    else if (sortField === 'order') cmp = (a.order ?? 0) - (b.order ?? 0);
+    else if (sortField === 'quantity') cmp = (a.quantity ?? 0) - (b.quantity ?? 0);
+    return sortDir === 'asc' ? cmp : -cmp;
+  });
+
+  const toggleSort = (field: typeof sortField) => {
+    if (sortField === field) setSortDir((d) => (d === 'asc' ? 'desc' : 'asc'));
+    else { setSortField(field); setSortDir('asc'); }
+  };
+
+  const SortIcon = ({ field }: { field: typeof sortField }) => {
+    if (sortField !== field) return <ChevronUp className="h-3 w-3 opacity-30" />;
+    return sortDir === 'asc' ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />;
+  };
+
+  const submitHandler = useCallback((e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    handleSubmit(e || new Event('submit') as any);
+  }, [editingId, name, description, quantity, available, category, location, order, imageUrl, specs]);
+
+  useCtrlSave(() => submitHandler(), !!editingId || formDirty);
+
+  const availPercent = (item: EquipmentItem) =>
+    item.quantity > 0 ? Math.round((item.available / item.quantity) * 100) : 0;
+
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="stat-value">Manage Laboratory Equipment</h1>
-        <p className="text-xs sm:text-sm text-text-secondary mt-1">
-          Review, register, and update active machinery units inside Kongu Engineering College Idea Lab.
-        </p>
+      <ConfirmDialog
+        open={!!deleteTarget}
+        title="Delete Equipment"
+        message={`Are you sure you want to delete "${deleteTarget?.name}" from the registry?`}
+        confirmLabel="Delete"
+        variant="danger"
+        onConfirm={handleDeleteConfirm}
+        onCancel={() => setDeleteTarget(null)}
+      />
+
+      <ConfirmDialog
+        open={cancelTarget}
+        title="Discard Changes?"
+        message="You have unsaved changes in the edit form. Discard them?"
+        confirmLabel="Discard"
+        variant="danger"
+        onConfirm={() => { setCancelTarget(false); doCancelEdit(); }}
+        onCancel={() => setCancelTarget(false)}
+      />
+
+      <div className="flex items-center justify-between gap-4 flex-wrap">
+        <div>
+          <h1 className="stat-value">Manage Laboratory Equipment</h1>
+          <p className="text-xs sm:text-sm text-text-secondary mt-1">
+            Review, register, and update active machinery units inside Kongu Engineering College Idea Lab.
+          </p>
+        </div>
+        {/* Mobile form toggle */}
+        <button
+          onClick={() => setShowForm(!showForm)}
+          className="lg:hidden flex items-center gap-2 px-4 py-2 rounded-lg bg-accent text-text text-xs font-bold"
+        >
+          {showForm ? <XCircle className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+          {showForm ? 'Close Form' : (editingId ? 'Edit Asset' : 'Add Asset')}
+        </button>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        {/* Form Column */}
-        <div className="lg:col-span-5">
+        {/* Form Column - collapsible on mobile */}
+        <div className={`lg:col-span-5 ${!showForm && !editingId ? 'hidden lg:block' : 'block'}`}>
           <Card className="p-6 space-y-6 border border-border shadow-xl shadow-accent/5">
             <h2 className="text-lg font-bold text-text flex items-center justify-between">
               <span className="flex items-center gap-2">
@@ -214,55 +277,40 @@ export default function AdminEquipmentPage() {
                 {editingId ? 'Edit Asset' : 'Register New Asset'}
               </span>
               {editingId && (
-                <button 
-                  onClick={handleCancelEdit} 
+                <button
+                  onClick={handleCancelEdit}
                   className="text-xs text-text-secondary hover:text-text flex items-center gap-1 bg-bg-elevated border border-border px-2 py-1 rounded"
                 >
-                  <X className="h-3. w-3" /> Cancel Edit
+                  <X className="h-3 w-3" /> Cancel Edit
                 </button>
               )}
             </h2>
 
             <form onSubmit={handleSubmit} className="space-y-4">
-              {formSuccess && (
-                <div className="bg-success/10 border border-success/20 text-success text-xs p-3 rounded-lg flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 shrink-0" />
-                  <span>Equipment database updated successfully!</span>
-                </div>
-              )}
-
-              {formError && (
-                <div className="bg-accent/10 border border-accent/20 text-accent text-xs p-3 rounded-lg flex items-center gap-2">
-                  <AlertTriangle className="h-4 w-4 shrink-0" />
-                  <span>{formError}</span>
-                </div>
-              )}
-
               <div className="space-y-1.5">
                 <label className="block text-xs font-semibold text-text-secondary">Equipment Name</label>
                 <input
                   type="text"
-                  required
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="FDM 3D Printer XL"
-                  className="w-full bg-bg border border-border rounded-lg px-3 py-2 text-sm text-slate-100 placeholder-slate-700 focus:outline-none focus:border-accent transition-all duration-300 focus:shadow-lg focus:shadow-accent/5"
+                  className={`w-full bg-bg border rounded-lg px-3 py-2 text-sm text-text placeholder-text-secondary focus:outline-none transition-all duration-300 focus:shadow-lg focus:shadow-accent/5 ${errors.name ? 'border-accent' : 'border-border focus:border-accent'}`}
                 />
+                {errors.name && <p className="text-[10px] text-accent font-semibold mt-0.5">{errors.name}</p>}
               </div>
 
               <div className="space-y-1.5">
                 <label className="block text-xs font-semibold text-text-secondary">Description</label>
                 <textarea
-                  required
                   rows={3}
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   placeholder="High temperature extruder for engineering composites..."
-                  className="w-full bg-bg border border-border rounded-lg px-3 py-2 text-sm text-slate-100 placeholder-slate-700 focus:outline-none focus:border-accent transition-all duration-300 focus:shadow-lg focus:shadow-accent/5 resize-none"
+                  className={`w-full bg-bg border rounded-lg px-3 py-2 text-sm text-text placeholder-text-secondary focus:outline-none transition-all duration-300 focus:shadow-lg focus:shadow-accent/5 resize-none ${errors.description ? 'border-accent' : 'border-border focus:border-accent'}`}
                 />
+                {errors.description && <p className="text-[10px] text-accent font-semibold mt-0.5">{errors.description}</p>}
               </div>
 
-              {/* Dynamic Image Upload */}
               <ImageUploadField
                 label="Asset Image (Optional)"
                 value={imageUrl}
@@ -275,22 +323,22 @@ export default function AdminEquipmentPage() {
                   <input
                     type="number"
                     min={1}
-                    required
                     value={quantity}
                     onChange={(e) => setQuantity(Number(e.target.value))}
-                    className="w-full bg-bg border border-border rounded-lg px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-accent transition-all duration-300 focus:shadow-lg focus:shadow-accent/5"
+                    className={`w-full bg-bg border rounded-lg px-3 py-2 text-sm text-text focus:outline-none transition-all duration-300 focus:shadow-lg focus:shadow-accent/5 ${errors.quantity ? 'border-accent' : 'border-border focus:border-accent'}`}
                   />
+                  {errors.quantity && <p className="text-[10px] text-accent font-semibold mt-0.5">{errors.quantity}</p>}
                 </div>
                 <div className="space-y-1.5">
                   <label className="block text-xs font-semibold text-text-secondary">Available units</label>
                   <input
                     type="number"
                     min={0}
-                    required
                     value={available}
                     onChange={(e) => setAvailable(Number(e.target.value))}
-                    className="w-full bg-bg border border-border rounded-lg px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-accent transition-all duration-300 focus:shadow-lg focus:shadow-accent/5"
+                    className={`w-full bg-bg border rounded-lg px-3 py-2 text-sm text-text focus:outline-none transition-all duration-300 focus:shadow-lg focus:shadow-accent/5 ${errors.available ? 'border-accent' : 'border-border focus:border-accent'}`}
                   />
+                  {errors.available && <p className="text-[10px] text-accent font-semibold mt-0.5">{errors.available}</p>}
                 </div>
               </div>
 
@@ -300,7 +348,7 @@ export default function AdminEquipmentPage() {
                   <select
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
-                    className="w-full bg-bg border border-border rounded-lg px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-accent transition-all duration-300 focus:shadow-lg focus:shadow-accent/5"
+                    className="w-full bg-bg border border-border rounded-lg px-3 py-2 text-sm text-text focus:outline-none focus:border-accent transition-all duration-300 focus:shadow-lg focus:shadow-accent/5"
                   >
                     <option value="Rapid Prototyping">Rapid Prototyping</option>
                     <option value="Machining">Machining</option>
@@ -315,7 +363,7 @@ export default function AdminEquipmentPage() {
                     value={order}
                     onChange={(e) => setOrder(Number(e.target.value))}
                     placeholder="0"
-                    className="w-full bg-bg border border-border rounded-lg px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-accent transition-all duration-300 focus:shadow-lg focus:shadow-accent/5"
+                    className="w-full bg-bg border border-border rounded-lg px-3 py-2 text-sm text-text focus:outline-none focus:border-accent transition-all duration-300 focus:shadow-lg focus:shadow-accent/5"
                   />
                 </div>
               </div>
@@ -324,12 +372,12 @@ export default function AdminEquipmentPage() {
                 <label className="block text-xs font-semibold text-text-secondary">Lab Location Room</label>
                 <input
                   type="text"
-                  required
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
                   placeholder="3D Printing Zone"
-                  className="w-full bg-bg border border-border rounded-lg px-3 py-2 text-sm text-slate-100 placeholder-slate-700 focus:outline-none focus:border-accent transition-all duration-300 focus:shadow-lg focus:shadow-accent/5"
+                  className={`w-full bg-bg border rounded-lg px-3 py-2 text-sm text-text placeholder-text-secondary focus:outline-none transition-all duration-300 focus:shadow-lg focus:shadow-accent/5 ${errors.location ? 'border-accent' : 'border-border focus:border-accent'}`}
                 />
+                {errors.location && <p className="text-[10px] text-accent font-semibold mt-0.5">{errors.location}</p>}
               </div>
 
               {/* Specs array fields */}
@@ -353,19 +401,17 @@ export default function AdminEquipmentPage() {
                       <div key={i} className="flex gap-2 items-center">
                         <input
                           type="text"
-                          required
                           value={spec.label}
                           onChange={(e) => handleSpecChange(i, 'label', e.target.value)}
                           placeholder="Label (e.g. Build Volume)"
-                          className="flex-1 bg-bg border border-border rounded-lg px-2.5 py-1.5 text-xs text-slate-100 focus:outline-none focus:border-accent"
+                          className="flex-1 bg-bg border border-border rounded-lg px-2.5 py-1.5 text-xs text-text focus:outline-none focus:border-accent"
                         />
                         <input
                           type="text"
-                          required
                           value={spec.value}
                           onChange={(e) => handleSpecChange(i, 'value', e.target.value)}
                           placeholder="Value (e.g. 300x300mm)"
-                          className="flex-1 bg-bg border border-border rounded-lg px-2.5 py-1.5 text-xs text-slate-100 focus:outline-none focus:border-accent"
+                          className="flex-1 bg-bg border border-border rounded-lg px-2.5 py-1.5 text-xs text-text focus:outline-none focus:border-accent"
                         />
                         <button
                           type="button"
@@ -397,24 +443,46 @@ export default function AdminEquipmentPage() {
         {/* Database List Column */}
         <div className="lg:col-span-7 space-y-4">
           <Card className="p-6 border border-border">
-            <h2 className="text-lg font-bold text-text mb-4">Laboratory Asset Database</h2>
+            <div className="flex items-center justify-between mb-4 flex-wrap gap-3">
+              <div className="flex items-center gap-3">
+                <h2 className="text-lg font-bold text-text">Assets</h2>
+                <span className="text-[10px] text-text-secondary font-mono bg-bg-elevated px-2 py-0.5 rounded border border-border">{sorted.length}</span>
+              </div>
+              <div className="w-full sm:w-64">
+                <SearchInput value={search} onChange={setSearch} placeholder="Search by name, category, location..." />
+              </div>
+            </div>
+
+            {/* Sort controls */}
+            <div className="flex items-center gap-4 mb-4 text-[10px] text-text-secondary font-mono border-b border-border pb-2">
+              <span className="font-semibold uppercase tracking-wider">Sort:</span>
+              {(['name', 'order', 'quantity'] as const).map((field) => (
+                <button
+                  key={field}
+                  onClick={() => toggleSort(field)}
+                  className={`flex items-center gap-1 hover:text-text transition-colors ${sortField === field ? 'text-accent font-bold' : ''}`}
+                >
+                  {field === 'name' ? 'Name' : field === 'order' ? 'Order' : 'Qty'}
+                  <SortIcon field={field} />
+                </button>
+              ))}
+            </div>
 
             {loading ? (
-              <div className="text-center py-10">
-                <LoadingSpinner />
-                <p className="text-xs text-text-secondary mt-2">Querying database...</p>
-              </div>
-            ) : equipment.length === 0 ? (
+              <SkeletonList count={4} />
+            ) : sorted.length === 0 ? (
               <div className="text-center py-10 space-y-2 border border-dashed border-border rounded-xl">
-                <Wrench className="h-8 w-8 text-slate-700 mx-auto" />
-                <p className="text-xs text-text-secondary font-semibold uppercase">No machinery cataloged</p>
+                <Wrench className="h-8 w-8 text-text-secondary mx-auto" />
+                <p className="text-xs text-text-secondary font-semibold uppercase">
+                  {search ? 'No matching equipment found' : 'No machinery cataloged'}
+                </p>
                 <p className="text-[10px] text-text-secondary max-w-xs mx-auto">
-                  Add equipment assets on the left to populate the database and display them on the public portal.
+                  {search ? 'Try a different search term.' : 'Add equipment assets on the left to populate the database.'}
                 </p>
               </div>
             ) : (
               <div className="space-y-4 divide-y divide-border/60">
-                {equipment.map((item) => (
+                {sorted.map((item) => (
                   <div key={item._id} className="pt-4 first:pt-0 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div className="space-y-1.5 flex-1">
                       <div className="flex items-center gap-2 flex-wrap">
@@ -423,7 +491,7 @@ export default function AdminEquipmentPage() {
                         <span className="text-[10px] text-accent font-mono bg-accent/5 px-1.5 py-0.5 rounded border border-accent/10">Order: {item.order}</span>
                       </div>
                       <p className="text-xs text-text-secondary max-w-md line-clamp-1">{item.description}</p>
-                      
+
                       <div className="flex flex-wrap items-center gap-3 text-[10px] text-text-secondary font-mono">
                         <span className="flex items-center gap-1 bg-bg px-2 py-0.5 rounded border border-border">
                           <Cpu className="h-3 w-3" /> Location: <b>{item.location || 'Main Zone'}</b>
@@ -432,8 +500,23 @@ export default function AdminEquipmentPage() {
                           <span className="text-accent">({item.specs.length} specifications)</span>
                         )}
                       </div>
+
+                      {/* Availability bar */}
+                      <div className="flex items-center gap-2 mt-2">
+                        <div className="flex-1 h-1.5 bg-border/40 rounded-full overflow-hidden">
+                          <div
+                            className={`h-full rounded-full transition-all ${
+                              availPercent(item) >= 70 ? 'bg-success' : availPercent(item) >= 30 ? 'bg-accent-2' : 'bg-accent'
+                            }`}
+                            style={{ width: `${availPercent(item)}%` }}
+                          />
+                        </div>
+                        <span className="text-[10px] text-text-secondary font-mono">
+                          {item.available}/{item.quantity}
+                        </span>
+                      </div>
                     </div>
-                    
+
                     <div className="flex sm:flex-col items-end gap-3 justify-between sm:justify-start">
                       <div className="text-right">
                         <span className="text-xs text-accent font-bold block">
@@ -443,14 +526,14 @@ export default function AdminEquipmentPage() {
                       </div>
                       <div className="flex gap-2">
                         <button
-                          onClick={() => handleEditClick(item)}
+                          onClick={() => { setShowForm(true); handleEditClick(item); }}
                           className="p-1.5 hover:text-text text-text-secondary bg-bg-elevated hover:bg-border/20 border border-border rounded transition-colors"
                           title="Edit asset details"
                         >
                           <Edit className="h-3.5 w-3.5" />
                         </button>
                         <button
-                          onClick={() => handleDeleteClick(item._id, item.name)}
+                          onClick={() => setDeleteTarget({ id: item._id, name: item.name })}
                           className="p-1.5 text-accent-2 hover:text-rose-300 bg-accent-2/10 hover:bg-accent-2/20 border border-accent-2/20 rounded transition-colors"
                           title="Delete asset"
                         >

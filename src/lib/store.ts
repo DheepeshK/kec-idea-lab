@@ -7,6 +7,7 @@ import equipmentSeed from '../../data/equipment.json';
 import eventsSeed from '../../data/events.json';
 import registrationsSeed from '../../data/registrations.json';
 import contactSeed from '../../data/contact.json';
+import calendarSeed from '../../data/calendar.json';
 
 const SEED: Record<string, any[]> = {
   team: teamSeed as any[],
@@ -14,6 +15,7 @@ const SEED: Record<string, any[]> = {
   events: eventsSeed as any[],
   registrations: registrationsSeed as any[],
   contact: contactSeed as any[],
+  calendar: calendarSeed as any[],
 };
 
 const isVercel = !!process.env.VERCEL;

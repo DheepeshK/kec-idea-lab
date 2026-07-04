@@ -1,22 +1,42 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import {
   Wrench,
   Users,
   Calendar,
-  Layers,
   ArrowRight,
   ShieldCheck,
   Award,
 } from 'lucide-react';
 import Card from '@/components/ui/Card';
-import Button from '@/components/ui/Button';
+import { Skeleton } from '@/components/ui/Skeleton';
 
 export default function AdminDashboardPage() {
   const { data: session } = useSession();
   const router = useRouter();
+
+  const [counts, setCounts] = useState<{ equipment: number; team: number; events: number } | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    Promise.all([
+      fetch('/api/equipment').then((r) => r.json()),
+      fetch('/api/team').then((r) => r.json()),
+      fetch('/api/events').then((r) => r.json()),
+    ])
+      .then(([eq, tm, ev]) => {
+        setCounts({
+          equipment: eq.success ? eq.data.length : 0,
+          team: tm.success ? tm.data.length : 0,
+          events: ev.success ? ev.data.length : 0,
+        });
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, []);
 
   const handleQuickNav = (href: string) => {
     router.push(href);
@@ -25,7 +45,7 @@ export default function AdminDashboardPage() {
   const dashboardStats = [
     {
       name: 'Total Machinery Assets',
-      value: '25+',
+      value: loading ? '...' : `${counts?.equipment ?? 0}`,
       desc: '3D printers, CNC units, laser cutters',
       href: '/admin/equipment',
       color: 'text-accent',
@@ -33,7 +53,7 @@ export default function AdminDashboardPage() {
     },
     {
       name: 'Lab Mentors & Staff',
-      value: '6 Staff',
+      value: loading ? '...' : `${counts?.team ?? 0}`,
       desc: 'Faculty coordinators & ambassadors',
       href: '/admin/team',
       color: 'text-accent-2',
@@ -41,7 +61,7 @@ export default function AdminDashboardPage() {
     },
     {
       name: 'Scheduled Workshops',
-      value: '3 Active',
+      value: loading ? '...' : `${counts?.events ?? 0}`,
       desc: 'Bootcamps, safety training sessions',
       href: '/admin/events',
       color: 'text-accent-3',
@@ -101,7 +121,7 @@ export default function AdminDashboardPage() {
                   <p className="text-xs text-text-secondary mt-1">{stat.desc}</p>
                 </div>
               </div>
-              <div className="pt-6 border-t border-slate-900/40 mt-6">
+              <div className="pt-6 border-t border-border/40 mt-6">
                 <button
                   onClick={() => handleQuickNav(stat.href)}
                   className="text-xs text-accent hover:text-text font-semibold flex items-center gap-1.5 transition-all duration-300 hover:gap-2"

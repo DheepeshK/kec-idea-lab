@@ -9,7 +9,12 @@
     "designation": "Principal, Kongu Engineering College",
     "order": 1,
     "email": "principal@kongu.ac.in",
-    "socials": { "linkedin": "https://linkedin.com" }
+    "socials": {
+      "linkedin": "",
+      "github": "",
+      "twitter": ""
+    },
+    "bio": ""
   },
   {
     "_id": "tm-2",
@@ -20,8 +25,13 @@
     "photoUrl": "/images/team/praveenkumar.webp",
     "designation": "Associate Professor, Dept. of Mechatronics Engineering",
     "order": 2,
-    "email": "praveen.kumar@kongu.edu",
-    "socials": { "linkedin": "https://linkedin.com" }
+    "email": "praveenkumar@kongu.edu",
+    "socials": {
+      "linkedin": "",
+      "github": "",
+      "twitter": ""
+    },
+    "bio": ""
   },
   {
     "_id": "tm-3",
@@ -30,22 +40,32 @@
     "group": "Co-ordinator",
     "focusArea": "",
     "photoUrl": "/images/team/rajkumar.webp",
-    "designation": "Associate Professor, Dept. of Mechatronics",
+    "designation": "Associate Professor, Dept. of EIE",
     "order": 3,
-    "email": "mythili.mct@kongu.edu",
-    "socials": { "linkedin": "https://linkedin.com" }
+    "email": "rajkumarr.eie@kongu.edu",
+    "socials": {
+      "linkedin": "",
+      "github": "",
+      "twitter": ""
+    },
+    "bio": ""
   },
   {
     "_id": "tm-4",
     "name": "Mr.T.Prabhu",
-    "role": "Technical Guru",
+    "role": "Techn Guru",
     "group": "Implementation team: Tech gurus",
     "focusArea": "",
-    "photoUrl": "",
-    "designation": "CAD/CAM Specialist",
+    "photoUrl": "/uploads/b2177ad7-69b4-4259-b6dc-4a6ecd51cc53-techguru1-Photoroom-DSZLMbyK.jpg",
+    "designation": "Assistant Professor, Dept. of EEE",
     "order": 4,
     "email": "prabhu.eee@kongu.ac.in",
-    "socials": { "linkedin": "https://linkedin.com", "github": "https://github.com" }
+    "socials": {
+      "linkedin": "",
+      "github": "",
+      "twitter": ""
+    },
+    "bio": ""
   },
   {
     "_id": "tm-5",
@@ -53,11 +73,16 @@
     "role": "Tech Guru",
     "group": "Implementation team: Tech gurus",
     "focusArea": "",
-    "photoUrl": "",
-    "designation": "Additive Manufacturing Eng.",
+    "photoUrl": "/uploads/4d1e79ba-8d53-4f51-8d9e-c5b9f8a1e203-techguru2modified-Photoroom-DrDYRrnF.jpg",
+    "designation": "Assistant Professor, Dept. of ECE",
     "order": 5,
     "email": "rpkarthik.ece@kongu.ac.in",
-    "socials": { "linkedin": "https://linkedin.com" }
+    "socials": {
+      "linkedin": "https://linkedin.com",
+      "github": "",
+      "twitter": ""
+    },
+    "bio": ""
   },
   {
     "_id": "tm-6",
@@ -65,11 +90,16 @@
     "role": "Tech Guru",
     "group": "Implementation team: Tech gurus",
     "focusArea": "",
-    "photoUrl": "",
-    "designation": "PCB Design Lead",
+    "photoUrl": "/uploads/d3ab7f31-0a14-4c56-b538-7b809cfb915e-techguru2-Photoroom-CEuM3JMk.jpg",
+    "designation": "Assistant Professor,Dept. of CSE",
     "order": 6,
     "email": "gowsikrajapcse@gmail.com",
-    "socials": { "github": "https://github.com" }
+    "socials": {
+      "linkedin": "",
+      "github": "",
+      "twitter": ""
+    },
+    "bio": ""
   },
   {
     "_id": "tm-7",
@@ -78,45 +108,14 @@
     "group": "Implementation team: Tech gurus",
     "focusArea": "",
     "photoUrl": "/images/team/kamalakannan.webp",
-    "designation": "Firmware Engineer",
+    "designation": "Assistant Professor,Dept. of Mechanical Engineering",
     "order": 7,
     "email": "kamalakannan.mech@kongu.ac.in",
-    "socials": { "linkedin": "https://linkedin.com" }
-  },
-  {
-    "_id": "tm-8",
-    "name": "Adithya R",
-    "role": "Lead Student Tech-Ambassador",
-    "group": "Student Ambassadors",
-    "focusArea": "Autonomous Robotics & Pneumatics Automation Systems",
-    "photoUrl": "",
-    "designation": "Final Year, Dept. of Mechatronics",
-    "order": 8,
-    "email": "adithya.mct@kongu.edu",
-    "socials": { "linkedin": "https://linkedin.com", "github": "https://github.com" }
-  },
-  {
-    "_id": "tm-9",
-    "name": "Janani S",
-    "role": "Student Tech-Ambassador",
-    "group": "Student Ambassadors",
-    "focusArea": "Embedded Linux, Custom PCB Design & Signal Integrity",
-    "photoUrl": "",
-    "designation": "Pre-final Year, Dept. of ECE",
-    "order": 9,
-    "email": "janani.ece@kongu.edu",
-    "socials": { "linkedin": "https://linkedin.com", "github": "https://github.com" }
-  },
-  {
-    "_id": "tm-10",
-    "name": "Karthik M",
-    "role": "Student Tech-Ambassador",
-    "group": "Student Ambassadors",
-    "focusArea": "Generative AI Systems & Smart Smart-City Prototypes",
-    "photoUrl": "",
-    "designation": "Final Year, Dept. of Computer Science",
-    "order": 10,
-    "email": "karthik.cse@kongu.edu",
-    "socials": { "github": "https://github.com" }
+    "socials": {
+      "linkedin": "",
+      "github": "",
+      "twitter": ""
+    },
+    "bio": ""
   }
 ]

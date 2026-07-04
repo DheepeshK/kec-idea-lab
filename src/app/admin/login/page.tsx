@@ -86,7 +86,7 @@ export default function AdminLoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="admin@kec.ac.in"
-                className="w-full bg-bg border border-border rounded-lg px-3 py-2 text-sm text-text placeholder-slate-700 focus:outline-none focus:border-accent transition-all duration-300 focus:shadow-lg focus:shadow-accent/10"
+                className="w-full bg-bg border border-border rounded-lg px-3 py-2 text-sm text-text placeholder-text-secondary focus:outline-none focus:border-accent transition-all duration-300 focus:shadow-lg focus:shadow-accent/10"
               />
             </div>
 
@@ -101,7 +101,7 @@ export default function AdminLoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••••••"
-                className="w-full bg-bg border border-border rounded-lg px-3 py-2 text-sm text-text placeholder-slate-700 focus:outline-none focus:border-accent transition-all duration-300 focus:shadow-lg focus:shadow-accent/10"
+                className="w-full bg-bg border border-border rounded-lg px-3 py-2 text-sm text-text placeholder-text-secondary focus:outline-none focus:border-accent transition-all duration-300 focus:shadow-lg focus:shadow-accent/10"
               />
             </div>
 
