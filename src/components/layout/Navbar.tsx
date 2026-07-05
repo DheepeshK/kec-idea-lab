@@ -166,7 +166,7 @@ export default function Navbar() {
 
             <Link
               href="/admin/dashboard"
-              className="flex items-center gap-1.5 bg-bg/50 border border-border/60 hover:border-accent-3/40 hover:bg-accent-3/5 text-text-secondary hover:text-accent-3 px-3 py-1.5 rounded-lg text-xs font-mono tracking-wider uppercase transition-all duration-300"
+              className="flex items-center gap-1.5 bg-bg/50 border border-border/60 hover:border-accent-3/40 hover:bg-accent-3/5 text-text-secondary hover:text-accent-3 px-3 py-1.5 rounded-lg text-xs font-sans tracking-wider uppercase transition-all duration-300"
             >
               <LayoutDashboard className="h-3.5 w-3.5 text-accent-3" />
               <span>Admin</span>
@@ -231,7 +231,7 @@ export default function Navbar() {
           <div className="pt-3 border-t border-border">
             <Link
               href="/admin/dashboard"
-              className="flex items-center justify-center gap-2 w-full bg-bg border border-border hover:bg-border/10 text-text py-2.5 rounded-lg text-sm font-mono tracking-wider uppercase transition-colors"
+              className="flex items-center justify-center gap-2 w-full bg-bg border border-border hover:bg-border/10 text-text py-2.5 rounded-lg text-sm font-sans tracking-wider uppercase transition-colors"
             >
               <LayoutDashboard className="h-4 w-4 text-accent-2" />
               <span>Admin Workspace</span>

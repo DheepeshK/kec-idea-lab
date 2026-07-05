@@ -136,7 +136,7 @@ export default function ContactPage() {
                     <h2>Send an Enquiry</h2>
                     <p className="text-text-secondary text-xs">Fill in your details and we&apos;ll get back to you</p>
                   </div>
-                  <Badge variant="primary" className="text-[10px] font-mono tracking-wider">
+                  <Badge variant="primary" className="text-[10px] tracking-wider">
                     Client-Validated
                   </Badge>
                 </div>
@@ -179,7 +179,7 @@ export default function ContactPage() {
                         } rounded-lg px-3.5 py-2 text-sm text-text placeholder-slate-700 focus:outline-none focus:ring-1 focus:ring-accent/30 transition-colors font-sans`}
                       />
                       {errors.name && (
-                        <p className="text-rose-500 text-[11px] font-mono flex items-center gap-1">
+                        <p className="text-rose-500 text-[11px] flex items-center gap-1">
                           <AlertTriangle className="h-3 w-3 shrink-0" /> {errors.name}
                         </p>
                       )}
@@ -201,7 +201,7 @@ export default function ContactPage() {
                         } rounded-lg px-3.5 py-2 text-sm text-text placeholder-slate-700 focus:outline-none focus:ring-1 focus:ring-accent/30 transition-colors font-sans`}
                       />
                       {errors.rollNoDept && (
-                        <p className="text-rose-500 text-[11px] font-mono flex items-center gap-1">
+                        <p className="text-rose-500 text-[11px] flex items-center gap-1">
                           <AlertTriangle className="h-3 w-3 shrink-0" /> {errors.rollNoDept}
                         </p>
                       )}
@@ -223,7 +223,7 @@ export default function ContactPage() {
                         } rounded-lg px-3.5 py-2 text-sm text-text placeholder-slate-700 focus:outline-none focus:ring-1 focus:ring-accent/30 transition-colors resize-none`}
                       />
                       {errors.purpose && (
-                        <p className="text-rose-500 text-[11px] font-mono flex items-center gap-1">
+                        <p className="text-rose-500 text-[11px] flex items-center gap-1">
                           <AlertTriangle className="h-3 w-3 shrink-0" /> {errors.purpose}
                         </p>
                       )}
@@ -242,7 +242,7 @@ export default function ContactPage() {
 
                     {/* Submit Button */}
                     <MagneticButton className="w-full">
-                      <Button type="submit" variant="primary" fullWidth className="gap-2 font-mono uppercase tracking-wider text-xs font-bold h-11 shadow-lg shadow-accent/25">
+                      <Button type="submit" variant="primary" fullWidth className="gap-2 uppercase tracking-wider text-xs font-bold h-11 shadow-lg shadow-accent/25">
                         <Send className="h-4 w-4 text-accent-2" />
                         Launch Mail Application
                       </Button>
@@ -302,7 +302,7 @@ export default function ContactPage() {
                     </div>
                     <div className="space-y-0.5">
                       <h3 className="label text-text-secondary font-bold">Phone</h3>
-                      <p className="text-text text-xs sm:text-sm font-mono">
+                      <p className="text-text text-xs sm:text-sm">
                         {CONTACT_PHONE}
                       </p>
                       <p className="text-[10px] text-text-secondary">Available: Mon - Sat (9:00 AM to 5:00 PM)</p>

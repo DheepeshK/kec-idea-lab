@@ -446,7 +446,7 @@ export default function AdminEquipmentPage() {
             <div className="flex items-center justify-between mb-4 flex-wrap gap-3">
               <div className="flex items-center gap-3">
                 <h2 className="text-lg font-bold text-text">Assets</h2>
-                <span className="text-[10px] text-text-secondary font-mono bg-bg-elevated px-2 py-0.5 rounded border border-border">{sorted.length}</span>
+                <span className="text-[10px] text-text-secondary bg-bg-elevated px-2 py-0.5 rounded border border-border">{sorted.length}</span>
               </div>
               <div className="w-full sm:w-64">
                 <SearchInput value={search} onChange={setSearch} placeholder="Search by name, category, location..." />
@@ -454,7 +454,7 @@ export default function AdminEquipmentPage() {
             </div>
 
             {/* Sort controls */}
-            <div className="flex items-center gap-4 mb-4 text-[10px] text-text-secondary font-mono border-b border-border pb-2">
+            <div className="flex items-center gap-4 mb-4 text-[10px] text-text-secondary border-b border-border pb-2">
               <span className="font-semibold uppercase tracking-wider">Sort:</span>
               {(['name', 'order', 'quantity'] as const).map((field) => (
                 <button
@@ -488,11 +488,11 @@ export default function AdminEquipmentPage() {
                       <div className="flex items-center gap-2 flex-wrap">
                         <span className="font-bold text-sm text-text">{item.name}</span>
                         <Badge variant={item.category === 'Rapid Prototyping' ? 'primary' : item.category === 'Machining' ? 'warning' : item.category === 'Electronics & IoT' ? 'success' : 'danger'}>{item.category || 'General'}</Badge>
-                        <span className="text-[10px] text-accent font-mono bg-accent/5 px-1.5 py-0.5 rounded border border-accent/10">Order: {item.order}</span>
+                        <span className="text-[10px] text-accent bg-accent/5 px-1.5 py-0.5 rounded border border-accent/10">Order: {item.order}</span>
                       </div>
                       <p className="text-xs text-text-secondary max-w-md line-clamp-1">{item.description}</p>
 
-                      <div className="flex flex-wrap items-center gap-3 text-[10px] text-text-secondary font-mono">
+                      <div className="flex flex-wrap items-center gap-3 text-[10px] text-text-secondary">
                         <span className="flex items-center gap-1 bg-bg px-2 py-0.5 rounded border border-border">
                           <Cpu className="h-3 w-3" /> Location: <b>{item.location || 'Main Zone'}</b>
                         </span>
@@ -511,7 +511,7 @@ export default function AdminEquipmentPage() {
                             style={{ width: `${availPercent(item)}%` }}
                           />
                         </div>
-                        <span className="text-[10px] text-text-secondary font-mono">
+                        <span className="text-[10px] text-text-secondary">
                           {item.available}/{item.quantity}
                         </span>
                       </div>

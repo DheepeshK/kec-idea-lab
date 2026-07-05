@@ -257,7 +257,7 @@ export default function EventsFilterableGrid({ events }: EventsFilterableGridPro
             key={tab}
             id={`filter-tab-${tab.toLowerCase().replace(/\s+/g, '-')}`}
             onClick={() => setActiveTab(tab)}
-            className={`px-4 py-2 text-xs font-mono font-bold tracking-wider rounded-full border transition-all duration-300 uppercase focus:outline-none ${
+            className={`px-4 py-2 text-xs font-sans font-bold tracking-wider rounded-full border transition-all duration-300 uppercase focus:outline-none ${
               activeTab === tab
                 ? 'bg-accent text-white border-accent/60 shadow-md shadow-accent/20 scale-103'
                 : 'bg-bg-elevated/40 text-text-secondary border-border hover:text-text hover:border-text-secondary/30'
@@ -301,7 +301,7 @@ export default function EventsFilterableGrid({ events }: EventsFilterableGridPro
                         </Badge>
                       </div>
 
-                      <div className="absolute bottom-4 left-4 right-4 z-10 flex justify-between items-center bg-bg-elevated/80 backdrop-blur-md border border-border/60 rounded-lg px-3 py-1.5 font-mono text-[10px] text-text-secondary">
+                      <div className="absolute bottom-4 left-4 right-4 z-10 flex justify-between items-center bg-bg-elevated/80 backdrop-blur-md border border-border/60 rounded-lg px-3 py-1.5 text-[10px] text-text-secondary">
                         <span className="flex items-center gap-1">
                           <Calendar className="h-3 w-3 text-accent" />
                           {formatDate(evt.date)}
@@ -327,7 +327,7 @@ export default function EventsFilterableGrid({ events }: EventsFilterableGridPro
                       </div>
 
                       {evt.location && (
-                        <div className="flex items-center gap-2 text-[11px] text-text-secondary font-mono">
+                        <div className="flex items-center gap-2 text-[11px] text-text-secondary">
                           <MapPin className="h-3.5 w-3.5 text-text-secondary shrink-0" />
                           <span className="truncate">{evt.location}</span>
                         </div>
@@ -337,7 +337,7 @@ export default function EventsFilterableGrid({ events }: EventsFilterableGridPro
 
                   {/* Card Actions Footer */}
                   <div className="p-6 pt-0 flex items-center justify-between border-t border-border/30">
-                    <span className="text-[9px] text-text-secondary font-mono font-bold uppercase tracking-wider flex items-center gap-1">
+                    <span className="text-[9px] text-text-secondary font-sans font-bold uppercase tracking-wider flex items-center gap-1">
                       <Sparkles className="h-3 w-3 text-accent animate-pulse" />
                       Free Registration
                     </span>

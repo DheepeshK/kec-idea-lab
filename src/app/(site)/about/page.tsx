@@ -51,7 +51,7 @@ export default function AboutPage() {
         <section className="py-10">
           <ScrollReveal direction="up">
             <div className="flex flex-col items-center gap-4">
-              <span className="text-[10px] font-mono text-text-secondary uppercase tracking-widest font-semibold">The Contributors</span>
+              <span className="text-[10px] text-text-secondary uppercase tracking-widest font-semibold">The Contributors</span>
               <div className="flex items-center justify-center gap-6 md:gap-12 flex-wrap">
                 {[
                   { src: '/AICTE.png', alt: 'AICTE' },
@@ -303,7 +303,7 @@ export default function AboutPage() {
                   <div className="flex items-start justify-between gap-4">
                     <div>
                       <h3 className="font-extrabold text-text">Dr. R. Parameshwaran</h3>
-                      <p className="text-xs sm:text-sm text-accent font-mono mt-0.5">Chief Mentor, AICTE-KEC IDEA Lab</p>
+                      <p className="text-xs sm:text-sm text-accent mt-0.5">Chief Mentor, AICTE-KEC IDEA Lab</p>
                     </div>
                     <div className="bg-accent/10 text-accent p-2.5 rounded-xl border border-accent/15 shrink-0">
                       <ShieldCheck className="h-5 w-5" />
@@ -315,7 +315,7 @@ export default function AboutPage() {
                   </p>
                 </div>
 
-                <div className="border-t border-border/60 pt-6 grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm text-text-secondary font-mono">
+                <div className="border-t border-border/60 pt-6 grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm text-text-secondary">
                   <div className="flex items-center gap-3">
                     <Mail className="h-4 w-4 text-accent" />
                     <a href="mailto:princip@kongu.ac.in" className="hover:text-text transition-colors">principal@kongu.ac.in</a>

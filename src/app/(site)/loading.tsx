@@ -6,7 +6,7 @@ export default function SiteLoading() {
         <div className="h-2 w-2 rounded-full bg-accent-2 animate-bounce" style={{ animationDelay: '150ms' }} />
         <div className="h-2 w-2 rounded-full bg-accent-3 animate-bounce" style={{ animationDelay: '300ms' }} />
       </div>
-      <p className="mt-4 text-sm text-text-secondary font-mono">Loading...</p>
+      <p className="mt-4 text-sm text-text-secondary">Loading...</p>
     </div>
   );
 }

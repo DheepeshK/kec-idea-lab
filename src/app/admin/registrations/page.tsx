@@ -130,7 +130,7 @@ export default function AdminRegistrationsPage() {
                   <ClipboardList className="h-5 w-5 text-accent" />
                   Registrations
                 </h2>
-                <span className="text-[10px] text-text-secondary font-mono bg-bg-elevated px-2 py-0.5 rounded border border-border">{filtered.length}</span>
+                <span className="text-[10px] text-text-secondary bg-bg-elevated px-2 py-0.5 rounded border border-border">{filtered.length}</span>
               </div>
               <div className="w-full sm:w-64">
                 <SearchInput value={search} onChange={setSearch} placeholder="Search by name, email, event..." />
@@ -149,7 +149,7 @@ export default function AdminRegistrationsPage() {
                 <button
                   key={eid}
                   onClick={() => handleExport(eid)}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded bg-bg-elevated hover:bg-border/20 text-text-secondary text-[10px] font-mono border border-border transition-colors"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded bg-bg-elevated hover:bg-border/20 text-text-secondary text-[10px] border border-border transition-colors"
                 >
                   <Download className="h-3 w-3" /> {eTitle.slice(0, 24)}{eTitle.length > 24 ? '…' : ''}
                 </button>
@@ -176,7 +176,7 @@ export default function AdminRegistrationsPage() {
                             <Badge variant="primary">{reg.rollNoDept}</Badge>
                           </div>
 
-                          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-text-secondary font-mono">
+                          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-text-secondary">
                             <span className="flex items-center gap-1">
                               <Mail className="h-3 w-3" />
                               <a href={`mailto:${reg.email}`} className="hover:text-accent transition-colors">

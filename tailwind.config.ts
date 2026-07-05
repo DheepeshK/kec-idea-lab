@@ -27,7 +27,6 @@ const config: Config = {
         sans: ["var(--font-sans)", "sans-serif"],
         display: ["var(--font-display)", "sans-serif"],
         mono: ["var(--font-mono)", "monospace"],
-        serif: ["var(--font-serif)", "serif"],
       },
       fontSize: {
         "display-xl": ["clamp(3rem, 7vw, 6rem)", { lineHeight: "1.05", letterSpacing: "-0.04em", fontWeight: "800" }],

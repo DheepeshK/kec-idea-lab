@@ -253,7 +253,7 @@ export default async function TeamPage() {
         {/* Main Header */}
         <div className="text-center max-w-2xl mx-auto space-y-3">
           <ScrollReveal direction="up">
-            <span className="text-[11px] text-accent font-bold font-mono uppercase tracking-[0.2em] block">
+            <span className="text-[11px] text-accent font-bold uppercase tracking-[0.2em] block">
               Pillars of innovation
             </span>
             <h1 className="">
@@ -268,7 +268,7 @@ export default async function TeamPage() {
 
           {/* Affiliation logos */}
           <ScrollReveal direction="up" delay={0.14}>
-            <div className="flex items-center justify-center gap-6 pt-2 flex-wrap">
+            <div className="flex items-center justify-center gap-6 pt-2 flex-nowrap">
               {[
                 { src: '/AICTE.png', alt: 'AICTE' },
                 { src: '/KEC_new2.png', alt: 'KEC' },
@@ -277,7 +277,7 @@ export default async function TeamPage() {
                 { src: '/EMDC.png', alt: 'EMDC' },
                 { src: '/TBI.png', alt: 'TBI' },
               ].map((logo) => (
-                <div key={logo.alt} className="relative h-16 w-auto opacity-70 hover:opacity-100 transition-opacity">
+                <div key={logo.alt} className="relative h-12 w-auto opacity-70 hover:opacity-100 transition-opacity">
                   <img src={logo.src} alt={logo.alt} className="h-full w-auto object-contain" />
                 </div>
               ))}

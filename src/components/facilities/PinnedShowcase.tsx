@@ -67,7 +67,7 @@ export default function PinnedShowcase({ items }: PinnedShowcaseProps) {
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`px-4 py-2 text-xs font-mono font-bold tracking-wider rounded-full border transition-all duration-300 uppercase focus:outline-none ${
+            className={`px-4 py-2 text-xs font-sans font-bold tracking-wider rounded-full border transition-all duration-300 uppercase focus:outline-none ${
               activeTab === tab
                 ? 'bg-accent text-white border-accent/60 shadow-md shadow-accent/20 scale-103'
                 : 'bg-bg-elevated/40 text-text-secondary border-border hover:text-text hover:border-text-secondary/30'
@@ -111,7 +111,7 @@ export default function PinnedShowcase({ items }: PinnedShowcaseProps) {
                       {item.name}
                     </h3>
 
-                    <div className="flex flex-wrap gap-x-6 gap-y-1.5 text-xs font-mono text-text-secondary">
+                    <div className="flex flex-wrap gap-x-6 gap-y-1.5 text-xs text-text-secondary">
                       <span><span className="text-accent">Type:</span> {item.category || 'General'}</span>
                       <span><span className="text-accent">Available:</span> {item.available}/{item.quantity}</span>
                       {item.location && (

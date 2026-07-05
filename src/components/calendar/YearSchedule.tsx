@@ -103,7 +103,7 @@ export default function YearSchedule() {
       <div className="overflow-x-auto rounded-xl border-2 border-border bg-bg shadow-xl">
         <div className="text-center py-16">
           <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-accent mx-auto mb-4"></div>
-          <p className="text-xs text-text-secondary font-mono">Loading schedule...</p>
+          <p className="text-xs text-text-secondary font-sans">Loading schedule...</p>
         </div>
       </div>
     );
@@ -122,18 +122,18 @@ export default function YearSchedule() {
   return (
     <div className="overflow-x-auto rounded-xl border-2 border-border bg-bg shadow-xl">
       <div className="text-center py-6 px-6 border-b-2 border-border bg-gradient-to-r from-accent/5 via-accent/10 to-accent/5">
-        <span className="text-sm font-mono font-bold text-accent uppercase tracking-[0.2em]">Academic Year {START_YEAR} &ndash; {END_YEAR}</span>
+        <span className="text-sm font-sans font-bold text-accent uppercase tracking-[0.2em]">Academic Year {START_YEAR} &ndash; {END_YEAR}</span>
         <p className="text-text-secondary text-xs mt-1.5">Tentative annual schedule &mdash; subject to revision</p>
       </div>
 
       <table className="w-full text-left border-collapse">
         <thead>
           <tr>
-            <th className="px-5 py-4 text-[11px] font-mono font-bold text-text-secondary uppercase tracking-widest w-24 bg-bg-elevated border-b-2 border-border">Quarter</th>
-            <th className="px-5 py-4 text-[11px] font-mono font-bold text-text-secondary uppercase tracking-widest w-28 bg-bg-elevated border-b-2 border-border">Month</th>
-            <th className="px-5 py-4 text-[11px] font-mono font-bold text-text-secondary uppercase tracking-widest bg-bg-elevated border-b-2 border-border">Event Name</th>
-            <th className="px-5 py-4 text-[11px] font-mono font-bold text-text-secondary uppercase tracking-widest hidden sm:table-cell bg-bg-elevated border-b-2 border-border">Focus</th>
-            <th className="px-5 py-4 text-[11px] font-mono font-bold text-text-secondary uppercase tracking-widest hidden md:table-cell bg-bg-elevated border-b-2 border-border">Participation By</th>
+            <th className="px-5 py-4 text-[11px] font-sans font-bold text-text-secondary uppercase tracking-widest w-24 bg-bg-elevated border-b-2 border-border">Quarter</th>
+            <th className="px-5 py-4 text-[11px] font-sans font-bold text-text-secondary uppercase tracking-widest w-28 bg-bg-elevated border-b-2 border-border">Month</th>
+            <th className="px-5 py-4 text-[11px] font-sans font-bold text-text-secondary uppercase tracking-widest bg-bg-elevated border-b-2 border-border">Event Name</th>
+            <th className="px-5 py-4 text-[11px] font-sans font-bold text-text-secondary uppercase tracking-widest hidden sm:table-cell bg-bg-elevated border-b-2 border-border">Focus</th>
+            <th className="px-5 py-4 text-[11px] font-sans font-bold text-text-secondary uppercase tracking-widest hidden md:table-cell bg-bg-elevated border-b-2 border-border">Participation By</th>
           </tr>
         </thead>
         <tbody>
@@ -157,7 +157,7 @@ export default function YearSchedule() {
                         className="w-11 h-11 rounded-full flex items-center justify-center shadow-md shadow-black/20"
                         style={{ backgroundColor: qt.color }}
                       >
-                        <span className="text-sm font-mono font-bold text-white">{g.row.quarter}</span>
+                        <span className="text-sm font-bold text-white">{g.row.quarter}</span>
                       </div>
                     </div>
                   </td>
@@ -165,7 +165,7 @@ export default function YearSchedule() {
                 {g.monthSpan > 0 && (
                   <td
                     rowSpan={g.monthSpan}
-                    className="px-5 py-4 align-middle border-r border-white/10 font-mono text-xs font-bold"
+                    className="px-5 py-4 align-middle border-r border-white/10 text-xs font-bold"
                     style={{ color: qt.color }}
                   >
                     {g.row.month}
@@ -178,7 +178,7 @@ export default function YearSchedule() {
                   <span className="text-xs sm:text-sm text-text-secondary leading-relaxed">{g.row.focus}</span>
                 </td>
                 <td className="px-5 py-3.5 border-b border-white/5 hidden md:table-cell">
-                  <span className="text-xs sm:text-sm font-mono font-semibold" style={{ color: qt.color }}>{g.row.participation}</span>
+                  <span className="text-xs sm:text-sm text-text-secondary font-semibold" style={{ color: qt.color }}>{g.row.participation}</span>
                 </td>
               </tr>
             );
@@ -187,7 +187,7 @@ export default function YearSchedule() {
       </table>
 
       <div className="border-t-2 border-border px-6 py-4 bg-gradient-to-r from-accent/5 via-accent/10 to-accent/5">
-        <p className="text-xs text-text-secondary/50 font-mono text-center">
+        <p className="text-xs text-text-secondary/50 text-center">
           * Schedule is tentative and subject to revision. Registered participants will be notified of changes.
         </p>
       </div>

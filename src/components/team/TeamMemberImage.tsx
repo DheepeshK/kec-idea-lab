@@ -25,7 +25,7 @@ function AvatarPlaceholder({ name }: { name: string }) {
   const initials = getInitials(name);
   const colorClass = getAccentGradient(name);
   return (
-    <div className={`h-full w-full bg-gradient-to-br ${colorClass} flex items-center justify-center font-mono font-bold text-lg tracking-wider relative overflow-hidden shadow-inner`}>
+    <div className={`h-full w-full bg-gradient-to-br ${colorClass} flex items-center justify-center font-sans font-bold text-lg tracking-wider relative overflow-hidden shadow-inner`}>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(255,255,255,0.18),transparent)] pointer-events-none" />
       <div className="absolute h-12 w-12 rounded-full border border-white/5 scale-[1.7] pointer-events-none opacity-45" />
       <div className="absolute h-12 w-12 rounded-full border border-white/5 scale-[2.4] pointer-events-none opacity-20" />

@@ -262,7 +262,7 @@ export default function AdminCalendarPage() {
                     <Calendar className="h-5 w-5 text-accent" />
                     Schedule
                   </h2>
-                  <span className="text-[10px] text-text-secondary font-mono bg-bg-elevated px-2 py-0.5 rounded border border-border">{sorted.length}</span>
+                  <span className="text-[10px] text-text-secondary bg-bg-elevated px-2 py-0.5 rounded border border-border">{sorted.length}</span>
                 </div>
                 <div className="w-full sm:w-56">
                   <SearchInput value={search} onChange={setSearch} placeholder="Search events..." />
@@ -270,7 +270,7 @@ export default function AdminCalendarPage() {
               </div>
 
               {/* Sort controls */}
-              <div className="flex items-center gap-2 mb-3 text-[10px] font-mono text-text-secondary">
+              <div className="flex items-center gap-2 mb-3 text-[10px] text-text-secondary">
                 <span className="font-bold uppercase tracking-wider">Sort:</span>
                 {(['quarter', 'month', 'event'] as const).map((f) => (
                   <button key={f} onClick={() => toggleSort(f)}
@@ -300,12 +300,12 @@ export default function AdminCalendarPage() {
                           className="w-9 h-9 rounded-full flex items-center justify-center shrink-0 shadow-sm"
                           style={{ backgroundColor: qColor + '22' }}
                         >
-                          <span className="text-[10px] font-bold font-mono" style={{ color: qColor }}>{entry.quarter}</span>
+                          <span className="text-[10px] font-bold" style={{ color: qColor }}>{entry.quarter}</span>
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 flex-wrap">
                             <span className="text-xs font-bold text-text truncate">{entry.event}</span>
-                            <span className="text-[10px] font-mono text-text-secondary shrink-0" style={{ color: qColor }}>{entry.month}</span>
+                            <span className="text-[10px] text-text-secondary shrink-0" style={{ color: qColor }}>{entry.month}</span>
                           </div>
                           <p className="text-[10px] text-text-secondary truncate">{entry.focus} &middot; {entry.participation}</p>
                         </div>

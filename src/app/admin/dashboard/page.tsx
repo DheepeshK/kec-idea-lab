@@ -74,7 +74,7 @@ export default function AdminDashboardPage() {
       {/* Welcome Block */}
       <div className="bg-gradient-to-r from-accent/20 to-accent-3/10 border border-accent/30 rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6 animate-gradient">
         <div className="space-y-2">
-          <span className="text-[10px] bg-accent/10 text-accent font-bold px-2.5 py-1 rounded-full uppercase tracking-wider font-mono">
+          <span className="text-[10px] bg-accent/10 text-accent font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
             Authenticated Superuser Active
           </span>
           <h1 className="stat-value">

@@ -372,14 +372,14 @@ export default function AdminEventsPage() {
             <div className="flex items-center justify-between mb-4 flex-wrap gap-3">
               <div className="flex items-center gap-3">
                 <h2 className="text-lg font-bold text-text">Events</h2>
-                <span className="text-[10px] text-text-secondary font-mono bg-bg-elevated px-2 py-0.5 rounded border border-border">{sorted.length}</span>
+                <span className="text-[10px] text-text-secondary bg-bg-elevated px-2 py-0.5 rounded border border-border">{sorted.length}</span>
               </div>
               <div className="w-full sm:w-64">
                 <SearchInput value={search} onChange={setSearch} placeholder="Search by title, category, location..." />
               </div>
             </div>
 
-            <div className="flex items-center gap-4 mb-4 text-[10px] text-text-secondary font-mono border-b border-border pb-2">
+            <div className="flex items-center gap-4 mb-4 text-[10px] text-text-secondary border-b border-border pb-2">
               <span className="font-semibold uppercase tracking-wider">Sort:</span>
               {(['title', 'date', 'category'] as const).map((field) => (
                 <button
@@ -445,7 +445,7 @@ export default function AdminEventsPage() {
 
                       <p className="text-xs text-text-secondary line-clamp-2">{event.description}</p>
 
-                      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[10px] text-text-secondary font-mono">
+                      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[10px] text-text-secondary">
                         <span className="flex items-center gap-1">
                           <Calendar className="h-3 w-3" /> {formatEventDate(event.date)}
                         </span>

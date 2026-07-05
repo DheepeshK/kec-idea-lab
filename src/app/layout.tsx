@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, DM_Sans, JetBrains_Mono, Playfair_Display } from "next/font/google";
+import { Plus_Jakarta_Sans, DM_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
 import SessionWrapper from "@/components/layout/SessionWrapper";
@@ -22,12 +22,6 @@ const dmSans = DM_Sans({
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
-  display: "swap",
-});
-
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  variable: "--font-serif",
   display: "swap",
 });
 
@@ -73,7 +67,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${plusJakartaSans.variable} ${dmSans.variable} ${jetbrainsMono.variable} ${playfair.variable}`}
+      className={`${plusJakartaSans.variable} ${dmSans.variable} ${jetbrainsMono.variable}`}
       suppressHydrationWarning
     >
       <body>
@@ -167,8 +161,8 @@ export default function RootLayout({
             </p>
 
             <p style={{
-              fontSize: 'clamp(11px, 3.5vw, 15px)', color: 'var(--text-secondary)', fontFamily: 'var(--font-mono), monospace',
-              marginTop: 8, letterSpacing: '0.08em', textTransform: 'uppercase', textAlign: 'center', width: '100%', padding: '0 16px',
+              fontSize: 'clamp(11px, 3.5vw, 15px)', color: 'var(--text-secondary)', fontFamily: 'var(--font-display), sans-serif',
+              marginTop: 8, letterSpacing: '0.04em', textTransform: 'uppercase', textAlign: 'center', width: '100%', padding: '0 16px',
             }}>
               Innovation, Development, Evaluation & Application Lab
             </p>
@@ -197,7 +191,7 @@ export default function RootLayout({
 
             {/* Status text */}
             <p style={{
-              fontSize: 10, color: 'var(--text-secondary)', fontFamily: 'var(--font-mono), monospace',
+              fontSize: 10, color: 'var(--text-secondary)', fontFamily: 'var(--font-sans), sans-serif',
               marginTop: 12, letterSpacing: '0.1em',
             }}>
               LOADING INNOVATION WORKSPACE...

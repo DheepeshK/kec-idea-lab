@@ -443,14 +443,14 @@ export default function AdminTeamPage() {
             <div className="flex items-center justify-between mb-4 flex-wrap gap-3">
               <div className="flex items-center gap-3">
                 <h2 className="text-lg font-bold text-text">Team</h2>
-                <span className="text-[10px] text-text-secondary font-mono bg-bg-elevated px-2 py-0.5 rounded border border-border">{sorted.length}</span>
+                <span className="text-[10px] text-text-secondary bg-bg-elevated px-2 py-0.5 rounded border border-border">{sorted.length}</span>
               </div>
               <div className="w-full sm:w-64">
                 <SearchInput value={search} onChange={setSearch} placeholder="Search by name, role, group..." />
               </div>
             </div>
 
-            <div className="flex items-center gap-4 mb-4 text-[10px] text-text-secondary font-mono border-b border-border pb-2">
+            <div className="flex items-center gap-4 mb-4 text-[10px] text-text-secondary border-b border-border pb-2">
               <span className="font-semibold uppercase tracking-wider">Sort:</span>
               {(['name', 'order', 'group'] as const).map((field) => (
                 <button
@@ -481,7 +481,7 @@ export default function AdminTeamPage() {
                 {Object.entries(grouped).map(([g, members]) => (
                   <div key={g}>
                     <h3 className="text-xs font-bold text-accent uppercase tracking-wider mb-3 border-b border-border/40 pb-1">
-                      {g} <span className="text-text-secondary font-mono">({members.length})</span>
+                      {g} <span className="text-text-secondary">({members.length})</span>
                     </h3>
                     <div className="space-y-4">
                       {members.map((member) => (
@@ -525,7 +525,7 @@ export default function AdminTeamPage() {
                                 type="number"
                                 defaultValue={member.order}
                                 onBlur={(e) => handleInlineOrderChange(member._id, Number(e.target.value))}
-                                className="w-16 bg-bg border border-border rounded px-2 py-0.5 text-xs text-text text-center font-mono focus:outline-none focus:border-accent"
+                                className="w-16 bg-bg border border-border rounded px-2 py-0.5 text-xs text-text text-center focus:outline-none focus:border-accent"
                               />
                             </div>
                             <div className="flex gap-2">

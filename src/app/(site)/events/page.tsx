@@ -96,7 +96,7 @@ export default async function EventsPage() {
 
           {/* Affiliation logos */}
           <ScrollReveal direction="up" delay={0.14}>
-            <div className="flex items-center justify-center gap-4 sm:gap-6 pt-2 flex-wrap">
+            <div className="flex items-center justify-center gap-4 sm:gap-6 pt-2 flex-nowrap">
               {[
                 { src: '/AICTE.png', alt: 'AICTE' },
                 { src: '/KEC_new2.png', alt: 'KEC' },
@@ -105,7 +105,7 @@ export default async function EventsPage() {
                 { src: '/EMDC.png', alt: 'EMDC' },
                 { src: '/TBI.png', alt: 'TBI' },
               ].map((logo) => (
-                <div key={logo.alt} className="relative h-12 sm:h-16 w-auto opacity-70 hover:opacity-100 transition-opacity">
+                <div key={logo.alt} className="relative h-12 w-auto opacity-70 hover:opacity-100 transition-opacity">
                   <img src={logo.src} alt={logo.alt} className="h-full w-auto object-contain" />
                 </div>
               ))}
