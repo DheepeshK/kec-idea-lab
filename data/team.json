@@ -53,7 +53,7 @@
   {
     "_id": "tm-4",
     "name": "Mr.T.Prabhu",
-    "role": "Techn Guru",
+    "role": "Tech Guru",
     "group": "Implementation team: Tech gurus",
     "focusArea": "",
     "photoUrl": "/uploads/b2177ad7-69b4-4259-b6dc-4a6ecd51cc53-techguru1-Photoroom-DSZLMbyK.jpg",
@@ -117,5 +117,39 @@
       "twitter": ""
     },
     "bio": ""
+  },
+  {
+    "name": "Mr. Dheepesh. K",
+    "role": "Student Coordinator",
+    "group": "Student Ambassadors",
+    "focusArea": "",
+    "photoUrl": "",
+    "designation": "II - Year, Department of Mechatronics Engineering",
+    "bio": "",
+    "email": "dheepeshk.25mts@kongu.edu",
+    "order": 8,
+    "socials": {
+      "linkedin": "",
+      "github": "",
+      "twitter": ""
+    },
+    "_id": "mrhunmg8"
+  },
+  {
+    "name": "Ms. Prithisha. P. S",
+    "role": "Student Coordinator",
+    "group": "Student Ambassadors",
+    "focusArea": "",
+    "photoUrl": "",
+    "designation": "II - Year, Department of Computer Science & Design",
+    "bio": "",
+    "email": "prithishaps.25csd@kongu.edu",
+    "order": 9,
+    "socials": {
+      "linkedin": "",
+      "github": "",
+      "twitter": ""
+    },
+    "_id": "mrhuq4u2"
   }
 ]

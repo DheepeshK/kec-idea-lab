@@ -65,27 +65,21 @@ function EventImagePlaceholder({ category, title }: { category: string; title: s
   const grad = gradients[Math.abs(hash) % gradients.length];
 
   return (
-    <div className={`relative w-full h-full bg-gradient-to-br ${grad} flex flex-col items-center justify-center p-6 overflow-hidden`}>
+    <div
+      className={`relative w-full h-full bg-gradient-to-br ${grad} flex flex-col items-center justify-center p-6 overflow-hidden`}
+    >
       <div className="absolute inset-0 bg-[linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] bg-[size:1.5rem_1.5rem] opacity-20" />
       <div className="absolute h-32 w-32 rounded-full border border-accent/10 scale-[1.5] pointer-events-none" />
       <div className="absolute h-32 w-32 rounded-full border border-accent/5 scale-[2.2] pointer-events-none" />
-      <div className="relative z-10 p-4 rounded-full bg-bg-elevated/80 border border-border text-accent shadow-xl shadow-black/40 mb-3 group-hover:scale-105 transition-transform duration-300">
+      <div className="relative z-10 p-4 rounded-full bg-bg-elevated border border-border text-accent shadow-xl shadow-black/40 mb-3 group-hover:scale-105 transition-transform duration-300">
         <Calendar className="h-7 w-7 text-accent" />
       </div>
-      <span className="relative z-10 label text-text-secondary text-center">
-        {category || 'KEC IDEA LAB'}
-      </span>
+      <span className="relative z-10 label text-text-secondary text-center">{category || 'KEC IDEA LAB'}</span>
     </div>
   );
 }
 
-function RegistrationModal({
-  event,
-  onClose,
-}: {
-  event: EventItem;
-  onClose: () => void;
-}) {
+function RegistrationModal({ event, onClose }: { event: EventItem; onClose: () => void }) {
   const [name, setName] = useState('');
   const [rollNoDept, setRollNoDept] = useState('');
   const [email, setEmail] = useState('');
@@ -127,7 +121,10 @@ function RegistrationModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={onClose}>
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+      onClick={onClose}
+    >
       <div
         className="bg-bg border border-border rounded-2xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
@@ -148,7 +145,8 @@ function RegistrationModal({
               <div className="space-y-1">
                 <h4 className="font-bold text-text">Registration Submitted!</h4>
                 <p className="text-xs text-text-secondary">
-                  You are registered for <strong className="text-accent">{event.title}</strong>. We will contact you at <strong className="font-mono">{email}</strong> with further details.
+                  You are registered for <strong className="text-accent">{event.title}</strong>. We will contact you at{' '}
+                  <strong className="font-mono">{email}</strong> with further details.
                 </p>
               </div>
               <Button variant="primary" size="sm" onClick={onClose}>
@@ -159,7 +157,14 @@ function RegistrationModal({
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="bg-accent/5 border border-accent/10 rounded-lg p-3 mb-2">
                 <p className="text-xs font-bold text-text">{event.title}</p>
-                <p className="text-[10px] text-text-secondary">{event.category} &middot; {new Date(event.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</p>
+                <p className="text-[10px] text-text-secondary">
+                  {event.category} &middot;{' '}
+                  {new Date(event.date).toLocaleDateString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    year: 'numeric',
+                  })}
+                </p>
               </div>
 
               {error && (
@@ -277,7 +282,7 @@ export default function EventsFilterableGrid({ events }: EventsFilterableGridPro
               <ScrollReveal key={evt._id} direction="up" delay={idx * 0.04}>
                 <Card
                   id={`event-card-${evt._id}`}
-                  className="h-full flex flex-col justify-between p-0 overflow-hidden group hover:border-accent/20 hover:shadow-xl hover:shadow-accent/5 transition-all duration-300"
+                  className="h-full flex flex-col justify-between p-0 overflow-hidden group"
                 >
                   <div className="flex flex-col h-full">
                     {/* Media Display Area */}
@@ -301,34 +306,37 @@ export default function EventsFilterableGrid({ events }: EventsFilterableGridPro
                         </Badge>
                       </div>
 
-                      <div className="absolute bottom-4 left-4 right-4 z-10 flex justify-between items-center bg-bg-elevated/80 backdrop-blur-md border border-border/60 rounded-lg px-3 py-1.5 text-[10px] text-text-secondary">
-                        <span className="flex items-center gap-1">
-                          <Calendar className="h-3 w-3 text-accent" />
-                          {formatDate(evt.date)}
+                      <div className="absolute bottom-4 left-4 right-4 z-10 flex items-center gap-2 bg-bg-elevated border border-border/60 rounded-lg px-3 py-1.5 text-[11px] text-text-secondary shadow-lg shadow-black/20">
+                        <span className="flex items-center gap-1.5 min-w-0">
+                          <Calendar className="h-3.5 w-3.5 text-accent shrink-0" />
+                          <span className="truncate">{formatDate(evt.date)}</span>
                         </span>
                         {evt.time && (
-                          <span className="flex items-center gap-1">
-                            <Clock className="h-3 w-3 text-accent" />
-                            {evt.time}
-                          </span>
+                          <>
+                            <span className="h-1 w-1 rounded-full bg-border shrink-0" />
+                            <span className="flex items-center gap-1.5 shrink-0">
+                              <Clock className="h-3.5 w-3.5 text-accent shrink-0" />
+                              {evt.time}
+                            </span>
+                          </>
                         )}
                       </div>
                     </div>
 
                     {/* Content Section */}
-                    <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
-                      <div className="space-y-2">
-                        <h3 className="text-lg font-bold text-text group-hover:text-accent transition-colors leading-snug">
+                    <div className="p-5 flex-1 flex flex-col justify-between space-y-3">
+                      <div className="space-y-1.5">
+                        <h3 className="text-base font-bold text-text group-hover:text-accent transition-colors leading-snug">
                           {evt.title}
                         </h3>
-                        <p className="body-text text-xs sm:text-sm line-clamp-1">
+                        <p className="body-text text-xs leading-relaxed line-clamp-2 text-text-secondary/90">
                           {evt.description}
                         </p>
                       </div>
 
                       {evt.location && (
-                        <div className="flex items-center gap-2 text-[11px] text-text-secondary">
-                          <MapPin className="h-3.5 w-3.5 text-text-secondary shrink-0" />
+                        <div className="flex items-center gap-1.5 text-[11px] text-text-secondary">
+                          <MapPin className="h-3.5 w-3.5 text-accent/70 shrink-0" />
                           <span className="truncate">{evt.location}</span>
                         </div>
                       )}
@@ -336,17 +344,24 @@ export default function EventsFilterableGrid({ events }: EventsFilterableGridPro
                   </div>
 
                   {/* Card Actions Footer */}
-                  <div className="p-6 pt-0 flex items-center justify-between border-t border-border/30">
-                    <span className="text-[9px] text-text-secondary font-sans font-bold uppercase tracking-wider flex items-center gap-1">
-                      <Sparkles className="h-3 w-3 text-accent animate-pulse" />
+                  <div className="relative px-5 py-4 flex items-center justify-between border-t border-border/50 overflow-hidden">
+                    {/* Subtle accent glow */}
+                    <div className="absolute top-0 left-1/4 right-1/4 h-px bg-gradient-to-r from-transparent via-accent/20 to-transparent" />
+
+                    <span className="label text-text-secondary flex items-center gap-1.5">
+                      <span className="flex items-center justify-center w-5 h-5 rounded-full bg-accent/10 border border-accent/20">
+                        <Sparkles className="h-2.5 w-2.5 text-accent" />
+                      </span>
                       Free Registration
                     </span>
+
                     <button
                       id={`register-btn-${evt._id}`}
                       onClick={() => setRegisteringEvent(evt)}
-                      className="text-xs text-accent font-semibold hover:text-accent/80 inline-flex items-center gap-1.5 transition-colors focus:outline-none"
+                      className="group/btn inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-accent/10 border border-accent/20 text-accent label font-semibold hover:bg-accent hover:text-white hover:border-accent transition-all duration-300 focus:outline-none"
                     >
-                      Apply Now <ArrowRight className="h-3.5 w-3.5" />
+                      <span>Apply Now</span>
+                      <ArrowRight className="h-3 w-3 transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
                     </button>
                   </div>
                 </Card>
@@ -375,12 +390,7 @@ export default function EventsFilterableGrid({ events }: EventsFilterableGridPro
       )}
 
       {/* Registration Modal */}
-      {registeringEvent && (
-        <RegistrationModal
-          event={registeringEvent}
-          onClose={() => setRegisteringEvent(null)}
-        />
-      )}
+      {registeringEvent && <RegistrationModal event={registeringEvent} onClose={() => setRegisteringEvent(null)} />}
     </div>
   );
 }

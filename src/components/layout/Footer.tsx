@@ -15,32 +15,35 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-bg-elevated text-text-secondary border-t border-border/60 py-12 px-6 transition-colors duration-300 relative overflow-hidden" id="site-footer">
+    <footer
+      className="bg-bg-elevated text-text-secondary border-t border-border/60 py-12 px-6 transition-colors duration-300 relative overflow-hidden"
+      id="site-footer"
+    >
       {/* Subtle gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-accent/[0.02] to-accent-3/[0.02] pointer-events-none" />
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12">
-        
         {/* Lab Branding & Meta-description */}
         <div className="md:col-span-5 space-y-4">
           <div className="flex items-center gap-2.5 text-text">
             <div className="relative w-9 h-9 rounded-lg overflow-hidden border border-accent/20 shrink-0 bg-bg">
-              <img
-                src="/IDEALab.png"
-                alt="IDEA Lab"
-                className="w-full h-full object-contain p-1"
-              />
+              <img src="/IDEALab.png" alt="IDEA Lab" className="w-full h-full object-contain p-1" />
             </div>
             <span className="font-display font-extrabold text-base tracking-tight">
               IDEA Lab <span className="text-accent">@ KEC</span>
             </span>
           </div>
-          
+
           <p className="text-xs leading-relaxed max-w-sm">
-            AICTE-KEC IDEA Lab is a state-of-the-art co-creation, hardware fabrication, and rapid prototyping playground housed inside Kongu Engineering College. 
+            AICTE-KEC IDEA Lab is a state-of-the-art co-creation, hardware fabrication, and rapid prototyping playground
+            housed inside Kongu Engineering College.
           </p>
 
           <p className="text-xs font-semibold text-text-secondary">
-            IDEA Lab sits under <span className="text-text">IEF @ KEC</span> (Innovation and Entrepreneurship Forum) alongside the <span className="text-text">IIC</span> (Institution&apos;s Innovation Council) , <span className="text-text">EMDC</span> (Entrepreneurship and Management Development Center) and <span className="text-text">TBI</span> (Technology Business Incubator) to form a holistic innovation ecosystem for students and faculty.
+            IDEA Lab sits under <span className="text-text">IEF @ KEC</span> (Innovation and Entrepreneurship Forum)
+            alongside the <span className="text-text">IIC</span> (Institution&apos;s Innovation Council) ,{' '}
+            <span className="text-text">EMDC</span> (Entrepreneurship and Management Development Center) and{' '}
+            <span className="text-text">TBI</span> (Technology Business Incubator) to form a holistic innovation
+            ecosystem for students and faculty.
           </p>
 
           {/* Partner logos */}
@@ -53,12 +56,11 @@ export default function Footer() {
               { src: '/EMDC.png', alt: 'EMDC' },
               { src: '/TBI.png', alt: 'TBI' },
             ].map((logo) => (
-              <div key={logo.alt} className="relative w-14 h-14 rounded-md overflow-hidden opacity-85 hover:opacity-100 transition-opacity bg-bg border border-border/30">
-                <img
-                  src={logo.src}
-                  alt={logo.alt}
-                  className="w-full h-full object-contain p-1"
-                />
+              <div
+                key={logo.alt}
+                className="relative w-14 h-14 rounded-md overflow-hidden opacity-85 hover:opacity-100 transition-opacity bg-bg border border-border/30"
+              >
+                <img src={logo.src} alt={logo.alt} className="w-full h-full object-contain p-1" />
               </div>
             ))}
           </div>
@@ -66,8 +68,8 @@ export default function Footer() {
           {/* Social Icons Placeholders (Clearly marked as placeholder) */}
           <div className="flex items-center gap-3 pt-2">
             {/* SOCIAL LINK PLACEHOLDER - TWITTER */}
-            <a 
-              href="#" 
+            <a
+              href="#"
               className="p-2 rounded-lg border border-border hover:border-accent hover:text-accent transition-all duration-150"
               aria-label="Twitter / X Profile"
               rel="noopener noreferrer"
@@ -76,8 +78,8 @@ export default function Footer() {
             </a>
 
             {/* SOCIAL LINK PLACEHOLDER - LINKEDIN */}
-            <a 
-              href="#" 
+            <a
+              href="#"
               className="p-2 rounded-lg border border-border hover:border-accent-3 hover:text-accent-3 transition-all duration-150"
               aria-label="LinkedIn Profile"
               rel="noopener noreferrer"
@@ -86,8 +88,8 @@ export default function Footer() {
             </a>
 
             {/* SOCIAL LINK PLACEHOLDER - INSTAGRAM */}
-            <a 
-              href="#" 
+            <a
+              href="#"
               className="p-2 rounded-lg border border-border hover:border-accent-2 hover:text-accent-2 transition-all duration-150"
               aria-label="Instagram Profile"
               rel="noopener noreferrer"
@@ -96,8 +98,8 @@ export default function Footer() {
             </a>
 
             {/* SOCIAL LINK PLACEHOLDER - GITHUB */}
-            <a 
-              href="#" 
+            <a
+              href="#"
               className="p-2 rounded-lg border border-border hover:border-brand-navy hover:text-brand-navy transition-all duration-150"
               aria-label="GitHub Repository"
               rel="noopener noreferrer"
@@ -117,8 +119,17 @@ export default function Footer() {
               </div>
               <div>
                 <p className="font-semibold text-text">AICTE</p>
-                <p className="text-text-secondary/70">All India Council for Technical Education — governing body for technical education in India.</p>
-                <a href="https://www.aicte.gov.in/" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline text-[11px]">www.aicte.gov.in</a>
+                <p className="text-text-secondary/70">
+                  All India Council for Technical Education — governing body for technical education in India.
+                </p>
+                <a
+                  href="https://www.aicte.gov.in/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-accent hover:underline text-[11px]"
+                >
+                  www.aicte.gov.in
+                </a>
               </div>
             </div>
             <div className="flex items-start gap-2.5">
@@ -127,8 +138,17 @@ export default function Footer() {
               </div>
               <div>
                 <p className="font-semibold text-text">IDEALNET</p>
-                <p className="text-text-secondary/70">AICTE IDEA Lab Network — a pan-India network of innovation labs fostering hands-on learning.</p>
-                <a href="https://idealnet.aicte.gov.in/" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline text-[11px]">www.idealnet.aicte.gov.in</a>
+                <p className="text-text-secondary/70">
+                  AICTE IDEA Lab Network — a pan-India network of innovation labs fostering hands-on learning.
+                </p>
+                <a
+                  href="https://idealnet.aicte.gov.in/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-accent hover:underline text-[11px]"
+                >
+                  www.idealnet.aicte.gov.in
+                </a>
               </div>
             </div>
             <div className="flex items-start gap-2.5">
@@ -137,7 +157,14 @@ export default function Footer() {
               </div>
               <div>
                 <p className="font-semibold text-text">Kongu Engineering College</p>
-                <a href="https://www.kongu.ac.in" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">www.kongu.ac.in</a>
+                <a
+                  href="https://www.kongu.ac.in"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-accent hover:underline"
+                >
+                  www.kongu.ac.in
+                </a>
               </div>
             </div>
           </div>
@@ -149,7 +176,7 @@ export default function Footer() {
           <div className="space-y-3 text-xs">
             <div className="flex items-start gap-2.5">
               <MapPin className="h-4 w-4 text-accent shrink-0 mt-0.5" />
-              <span>AICTE-KEC Idea Lab, Kongu Engineering College, Perundurai, Erode - 638060, Tamil Nadu, India.</span>
+              <span>AICTE - IDEA Lab, Kongu Engineering College, Perundurai, Erode - 638060, Tamil Nadu, India.</span>
             </div>
             <div className="flex items-center gap-2.5">
               <Phone className="h-4 w-4 text-accent shrink-0" />
@@ -157,19 +184,16 @@ export default function Footer() {
             </div>
             <div className="flex items-center gap-2.5">
               <Mail className="h-4 w-4 text-accent shrink-0" />
-              <span>idealab@kongu.ac.in</span>
+              <span>kecidealab@kongu.ac.in</span>
             </div>
           </div>
         </div>
-
       </div>
 
       {/* Footer bottom bar */}
       <div className="max-w-7xl mx-auto mt-12 pt-6 border-t border-border/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
-        <p>&copy; {currentYear} AICTE-KEC IDEA Lab. Built for co-creation.</p>
-        <p className="text-text-secondary/70">
-          Affiliated to Anna University &amp; approved by AICTE.
-        </p>
+        <p>&copy; {currentYear} AICTE - IDEA Lab. Built for co-creation.</p>
+        <p className="text-text-secondary/70">Affiliated to Anna University &amp; approved by AICTE.</p>
       </div>
     </footer>
   );

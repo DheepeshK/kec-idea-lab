@@ -1,6 +1,7 @@
 export const metadata = {
   title: 'Team | AICTE IDEA Lab @ KEC',
-  description: 'The dedicated faculty coordinators, expert technical mentors, and passionate student leaders driving the AICTE IDEA Lab at Kongu Engineering College.',
+  description:
+    'The dedicated faculty coordinators, expert technical mentors, and passionate student leaders driving the AICTE IDEA Lab at Kongu Engineering College.',
 };
 
 import ScrollReveal from '@/components/motion/ScrollReveal';
@@ -42,7 +43,7 @@ const fallbackTeam: DBTeamMember[] = [
     designation: 'Principal, Kongu Engineering College',
     order: 1,
     email: 'principal@kongu.ac.in',
-    socials: { linkedin: 'https://linkedin.com' }
+    socials: { linkedin: 'https://linkedin.com' },
   },
   // 2. Coordinator (1)
   {
@@ -55,7 +56,7 @@ const fallbackTeam: DBTeamMember[] = [
     designation: 'Associate Professor, Dept. of Mechatronics Engineering',
     order: 2,
     email: 'praveen.kumar@kongu.edu',
-    socials: { linkedin: 'https://linkedin.com' }
+    socials: { linkedin: 'https://linkedin.com' },
   },
   // 3. Co-ordinator (1)
   {
@@ -67,8 +68,8 @@ const fallbackTeam: DBTeamMember[] = [
     photoUrl: '/images/team/rajkumar.webp',
     designation: 'Associate Professor, Dept. of Mechatronics',
     order: 3,
-    email: 'mythili.mct@kongu.edu',
-    socials: { linkedin: 'https://linkedin.com' }
+    email: 'rajkumarr.eie@kongu.edu',
+    socials: { linkedin: 'https://linkedin.com' },
   },
   // 4. Implementation team: Tech gurus (4)
   {
@@ -81,7 +82,7 @@ const fallbackTeam: DBTeamMember[] = [
     designation: 'CAD/CAM Specialist',
     order: 4,
     email: 'prabhu.eee@kongu.ac.in',
-    socials: { linkedin: 'https://linkedin.com', github: 'https://github.com' }
+    socials: { linkedin: 'https://linkedin.com', github: 'https://github.com' },
   },
   {
     _id: 'fallback-guru-2',
@@ -93,7 +94,7 @@ const fallbackTeam: DBTeamMember[] = [
     designation: 'Additive Manufacturing Eng.',
     order: 5,
     email: 'karthik.ece@kongu.ac.in',
-    socials: { linkedin: 'https://linkedin.com' }
+    socials: { linkedin: 'https://linkedin.com' },
   },
   {
     _id: 'fallback-guru-3',
@@ -105,7 +106,7 @@ const fallbackTeam: DBTeamMember[] = [
     designation: 'PCB Design Lead',
     order: 6,
     email: 'gowsikrajapcse@gmail.com',
-    socials: { github: 'https://github.com' }
+    socials: { github: 'https://github.com' },
   },
   {
     _id: 'fallback-guru-4',
@@ -117,7 +118,7 @@ const fallbackTeam: DBTeamMember[] = [
     designation: 'Firmware Engineer',
     order: 7,
     email: 'kamalakannan.mech@kongu.ac.in',
-    socials: { linkedin: 'https://linkedin.com' }
+    socials: { linkedin: 'https://linkedin.com' },
   },
   // 5. Student Ambassadors (3)
   {
@@ -130,7 +131,7 @@ const fallbackTeam: DBTeamMember[] = [
     designation: 'Final Year, Dept. of Mechatronics',
     order: 8,
     email: 'adithya.mct@kongu.edu',
-    socials: { linkedin: 'https://linkedin.com', github: 'https://github.com' }
+    socials: { linkedin: 'https://linkedin.com', github: 'https://github.com' },
   },
   {
     _id: 'fallback-amb-2',
@@ -142,7 +143,7 @@ const fallbackTeam: DBTeamMember[] = [
     designation: 'Pre-final Year, Dept. of ECE',
     order: 9,
     email: 'janani.ece@kongu.edu',
-    socials: { linkedin: 'https://linkedin.com', github: 'https://github.com' }
+    socials: { linkedin: 'https://linkedin.com', github: 'https://github.com' },
   },
   {
     _id: 'fallback-amb-3',
@@ -154,11 +155,9 @@ const fallbackTeam: DBTeamMember[] = [
     designation: 'Final Year, Dept. of Computer Science',
     order: 10,
     email: 'karthik.cse@kongu.edu',
-    socials: { github: 'https://github.com' }
-  }
+    socials: { github: 'https://github.com' },
+  },
 ];
-
-
 
 export default async function TeamPage() {
   const dbTeam = getAll<DBTeamMember>('team', (a, b) => a.order - b.order);
@@ -166,13 +165,13 @@ export default async function TeamPage() {
 
   const finalGrouped: { [key: string]: DBTeamMember[] } = {
     'Chief Mentor': [],
-    'Coordinator': [],
+    Coordinator: [],
     'Co-ordinator': [],
     'Implementation team: Tech gurus': [],
     'Student Ambassadors': [],
-    'Faculty': [],
-    'Mentor': [],
-    'Student': []
+    Faculty: [],
+    Mentor: [],
+    Student: [],
   };
 
   for (const member of teamList) {
@@ -180,8 +179,6 @@ export default async function TeamPage() {
       finalGrouped[member.group].push({ ...member });
     }
   }
-
-
 
   // Helper config for visual headers
   const sectionMeta: { [key: string]: { label: string; sub: string; icon: any; maxCount: number } } = {
@@ -191,7 +188,7 @@ export default async function TeamPage() {
       icon: Award,
       maxCount: 1,
     },
-    'Coordinator': {
+    Coordinator: {
       label: 'Coordinator',
       sub: 'Directing resource deployment and project alignment',
       icon: Shield,
@@ -211,15 +208,15 @@ export default async function TeamPage() {
     },
     'Student Ambassadors': {
       label: 'Student Ambassadors',
-      sub: 'Elite peer-mentors coordinating hackathons and active project designs',
+      sub: 'Elite peer-mentors leading at the ground level and coordinating hackathons and active project designs',
       icon: Code,
       maxCount: 3,
-    }
+    },
   };
 
   const iconColorMap: Record<string, string> = {
     'Chief Mentor': 'text-accent',
-    'Coordinator': 'text-accent-2',
+    Coordinator: 'text-accent-2',
     'Co-ordinator': 'text-accent-3',
     'Implementation team: Tech gurus': 'text-brand-navy',
     'Student Ambassadors': 'text-brand-red',
@@ -227,7 +224,7 @@ export default async function TeamPage() {
 
   const borderColorMap: Record<string, string> = {
     'Chief Mentor': 'hover:border-accent/30',
-    'Coordinator': 'hover:border-accent-2/30',
+    Coordinator: 'hover:border-accent-2/30',
     'Co-ordinator': 'hover:border-accent-3/30',
     'Implementation team: Tech gurus': 'hover:border-brand-navy/30',
     'Student Ambassadors': 'hover:border-brand-red/30',
@@ -238,7 +235,7 @@ export default async function TeamPage() {
     'Coordinator',
     'Co-ordinator',
     'Implementation team: Tech gurus',
-    'Student Ambassadors'
+    'Student Ambassadors',
   ];
 
   return (
@@ -254,15 +251,14 @@ export default async function TeamPage() {
         <div className="text-center max-w-2xl mx-auto space-y-3">
           <ScrollReveal direction="up">
             <span className="text-[11px] text-accent font-bold uppercase tracking-[0.2em] block">
-              Pillars of innovation
+              Pillars of Innovation
             </span>
-            <h1 className="">
-              Meet the KEC Idea Lab Team
-            </h1>
+            <h1 className="">Meet the AICTE KEC IDEA Lab Team</h1>
           </ScrollReveal>
           <ScrollReveal direction="up" delay={0.08}>
             <p className="body-text max-w-lg mx-auto">
-              The dedicated faculty coordinators, expert technical mentors, and passionate student leaders driving the AICTE IDEA Lab at Kongu Engineering College.
+              The dedicated faculty coordinators, expert technical mentors, and passionate student leaders driving the
+              AICTE IDEA Lab at Kongu Engineering College.
             </p>
           </ScrollReveal>
 
@@ -309,9 +305,7 @@ export default async function TeamPage() {
                 </div>
 
                 {/* Cards */}
-                <div className={`grid ${
-                  isSingle ? 'grid-cols-1' : 'grid-cols-1 sm:grid-cols-2'
-                } gap-5`}>
+                <div className={`grid ${isSingle ? 'grid-cols-1' : 'grid-cols-1 sm:grid-cols-2'} gap-5`}>
                   {list.map((member, idx) => {
                     const avatarUrl = member.photoUrl || member.image;
                     const cardBorder = borderColorMap[sectionKey] || 'hover:border-accent/20';
@@ -319,18 +313,25 @@ export default async function TeamPage() {
                     if (isSingle) {
                       return (
                         <ScrollReveal key={member._id} direction="up" delay={0.05}>
-                          <div className={`bg-bg-elevated/30 border border-border/60 rounded-2xl p-4 sm:p-6 flex flex-col sm:flex-row items-center sm:items-center gap-4 sm:gap-6 text-center sm:text-left group ${cardBorder} hover:bg-bg-elevated/40 hover:shadow-xl hover:shadow-accent/10 transition-all duration-300`}>
+                          <div
+                            className={`bg-bg-elevated/30 border border-border/60 rounded-2xl p-4 sm:p-6 flex flex-col sm:flex-row items-center sm:items-center gap-4 sm:gap-6 text-center sm:text-left group ${cardBorder} hover:bg-bg-elevated/40 hover:shadow-xl hover:shadow-accent/10 transition-all duration-300`}
+                          >
                             <div className="h-32 w-32 sm:h-48 sm:w-48 rounded-2xl overflow-hidden shrink-0 border-2 border-border/60 group-hover:border-accent/40 transition-colors shadow-xl shadow-black/25">
                               <TeamMemberImage src={avatarUrl || ''} name={member.name} />
                             </div>
                             <div className="flex-1 min-w-0 space-y-1">
-                              <h3 className="font-bold text-text group-hover:text-accent transition-colors">{member.name}</h3>
+                              <h3 className="font-bold text-text group-hover:text-accent transition-colors">
+                                {member.name}
+                              </h3>
                               <p className="text-accent text-sm font-semibold">{member.role}</p>
                               {member.designation && (
                                 <p className="text-text-secondary text-xs">{member.designation}</p>
                               )}
                               {member.email && (
-                                <a href={`mailto:${member.email}`} className="text-xs text-text-secondary hover:text-accent font-mono inline-flex items-center gap-1.5 transition-colors pt-1">
+                                <a
+                                  href={`mailto:${member.email}`}
+                                  className="text-xs text-text-secondary hover:text-accent font-mono inline-flex items-center gap-1.5 transition-colors pt-1"
+                                >
                                   <Mail className="h-3.5 w-3.5" />
                                   <span>{member.email}</span>
                                 </a>
@@ -343,18 +344,25 @@ export default async function TeamPage() {
 
                     return (
                       <ScrollReveal key={member._id} direction="up" delay={idx * 0.05}>
-                        <div className={`bg-bg-elevated/30 border border-border/60 rounded-xl p-4 sm:p-5 flex flex-col sm:flex-row items-center sm:items-center gap-3 sm:gap-5 text-center sm:text-left group ${cardBorder} hover:bg-bg-elevated/40 hover:shadow-lg hover:shadow-accent/10 transition-all duration-300`}>
+                        <div
+                          className={`bg-bg-elevated/30 border border-border/60 rounded-xl p-4 sm:p-5 flex flex-col sm:flex-row items-center sm:items-center gap-3 sm:gap-5 text-center sm:text-left group ${cardBorder} hover:bg-bg-elevated/40 hover:shadow-lg hover:shadow-accent/10 transition-all duration-300`}
+                        >
                           <div className="h-24 w-24 sm:h-32 sm:w-32 rounded-xl overflow-hidden shrink-0 border-2 border-border/60 group-hover:border-accent/30 transition-colors shadow-lg shadow-black/15">
                             <TeamMemberImage src={avatarUrl || ''} name={member.name} />
                           </div>
                           <div className="flex-1 min-w-0 space-y-1">
-                            <h3 className="font-bold text-text group-hover:text-accent transition-colors">{member.name}</h3>
+                            <h3 className="font-bold text-text group-hover:text-accent transition-colors">
+                              {member.name}
+                            </h3>
                             <p className="text-accent text-xs font-semibold">{member.role}</p>
                             {member.designation && (
                               <p className="text-text-secondary text-[11px]">{member.designation}</p>
                             )}
                             {member.email && (
-                              <a href={`mailto:${member.email}`} className="text-[11px] text-text-secondary hover:text-accent font-mono inline-flex items-center gap-1 transition-colors pt-1">
+                              <a
+                                href={`mailto:${member.email}`}
+                                className="text-[11px] text-text-secondary hover:text-accent font-mono inline-flex items-center gap-1 transition-colors pt-1"
+                              >
                                 <Mail className="h-3 w-3" />
                                 <span className="truncate max-w-[180px]">{member.email}</span>
                               </a>

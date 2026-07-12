@@ -65,6 +65,7 @@ export default function Navbar() {
     { name: 'Calendar', href: '/calendar' },
     { name: 'Events', href: '/events' },
     { name: 'Contact', href: '/contact' },
+    { name: 'Design', href: '/design-system' },
   ];
 
   const isActive = (path: string) => {
@@ -81,27 +82,23 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="sticky top-0 z-50 w-full glass border-b border-border/60 transition-colors duration-300" id="site-navbar">
+    <nav
+      className="sticky top-0 z-50 w-full glass border-b border-border/60 transition-colors duration-300"
+      id="site-navbar"
+    >
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-center justify-between h-16">
-          
           {/* Logo Brand area */}
           <div className="flex items-center gap-3">
             <Link href="/" className="flex items-center gap-2.5 group">
               <div className="relative w-9 h-9 rounded-lg overflow-hidden border border-accent/20 group-hover:border-accent/40 transition-all duration-300 shrink-0 bg-bg-elevated">
-                <img
-                  src="/IDEALab.png"
-                  alt="IDEA Lab"
-                  className="w-full h-full object-contain p-1"
-                />
+                <img src="/IDEALab.png" alt="IDEA Lab" className="w-full h-full object-contain p-1" />
               </div>
               <div className="flex flex-col">
                 <span className="font-display font-extrabold text-sm sm:text-base tracking-tight text-text leading-none">
                   IDEA Lab <span className="text-accent">@ KEC</span>
                 </span>
-                <span className="label text-text-secondary mt-1 leading-none">
-                  IEF @ KEC
-                </span>
+                <span className="label text-text-secondary mt-1 leading-none">IEF @ KEC</span>
               </div>
             </Link>
             {/* Partner logo strip */}
@@ -113,12 +110,11 @@ export default function Navbar() {
                 { src: '/EMDC.png', alt: 'EMDC' },
                 { src: '/TBI.png', alt: 'TBI' },
               ].map((logo) => (
-                <div key={logo.alt} className="relative w-10 h-10 rounded overflow-hidden opacity-85 hover:opacity-100 transition-opacity bg-bg-elevated border border-border/20">
-                  <img
-                    src={logo.src}
-                    alt={logo.alt}
-                    className="w-full h-full object-contain p-0.5"
-                  />
+                <div
+                  key={logo.alt}
+                  className="relative w-10 h-10 rounded overflow-hidden opacity-85 hover:opacity-100 transition-opacity bg-bg-elevated border border-border/20"
+                >
+                  <img src={logo.src} alt={logo.alt} className="w-full h-full object-contain p-0.5" />
                 </div>
               ))}
             </div>
@@ -133,15 +129,11 @@ export default function Navbar() {
                   key={link.name}
                   href={link.href}
                   className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-150 relative ${
-                    active 
-                      ? 'text-accent' 
-                      : 'text-text-secondary hover:text-accent hover:bg-accent/5'
+                    active ? 'text-accent' : 'text-text-secondary hover:text-accent hover:bg-accent/5'
                   }`}
                 >
                   <span>{link.name}</span>
-                  {active && (
-                    <span className="absolute bottom-0 left-3 right-3 h-0.5 bg-accent rounded-full" />
-                  )}
+                  {active && <span className="absolute bottom-0 left-3 right-3 h-0.5 bg-accent rounded-full" />}
                 </Link>
               );
             })}
@@ -149,18 +141,14 @@ export default function Navbar() {
 
           {/* Action Area (Theme & Portal) */}
           <div className="hidden md:flex items-center gap-3">
-              {mounted && (
+            {mounted && (
               <button
                 onClick={toggleTheme}
                 className="p-2 rounded-lg border border-border/60 text-text-secondary hover:text-accent hover:border-accent/40 hover:bg-accent/5 transition-all duration-300"
                 aria-label="Toggle Theme"
                 id="navbar-theme-toggle"
               >
-                {isDark ? (
-                  <Sun className="h-4 w-4 text-warn" />
-                ) : (
-                  <Moon className="h-4 w-4 text-accent" />
-                )}
+                {isDark ? <Sun className="h-4 w-4 text-warn" /> : <Moon className="h-4 w-4 text-accent" />}
               </button>
             )}
 
@@ -181,11 +169,7 @@ export default function Navbar() {
                 className="p-2 rounded-lg border border-border text-text hover:bg-border/20 transition-colors"
                 aria-label="Toggle Theme"
               >
-                {isDark ? (
-                  <Sun className="h-4 w-4 text-warn" />
-                ) : (
-                  <Moon className="h-4 w-4 text-accent" />
-                )}
+                {isDark ? <Sun className="h-4 w-4 text-warn" /> : <Moon className="h-4 w-4 text-accent" />}
               </button>
             )}
 
@@ -198,7 +182,6 @@ export default function Navbar() {
               {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
           </div>
-
         </div>
       </div>
 

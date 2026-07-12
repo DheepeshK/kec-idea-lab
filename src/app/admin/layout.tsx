@@ -10,6 +10,7 @@ import {
   Users,
   Wrench,
   ClipboardList,
+  MessageSquare,
   LogOut,
   Home,
   ShieldCheck,
@@ -58,6 +59,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     { name: 'Events', href: '/admin/events', icon: Calendar },
     { name: 'Calendar', href: '/admin/calendar', icon: CalendarDays },
     { name: 'Registrations', href: '/admin/registrations', icon: ClipboardList },
+    { name: 'Enquiries', href: '/admin/enquiries', icon: MessageSquare },
   ];
 
   const handleNavigate = (href: string) => {
@@ -89,7 +91,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 { src: '/EMDC.png', alt: 'EMDC' },
                 { src: '/TBI.png', alt: 'TBI' },
               ].map((logo) => (
-                <div key={logo.alt} className="relative w-10 h-10 rounded overflow-hidden opacity-75 hover:opacity-100 transition-opacity bg-bg border border-border/20">
+                <div
+                  key={logo.alt}
+                  className="relative w-10 h-10 rounded overflow-hidden opacity-75 hover:opacity-100 transition-opacity bg-bg border border-border/20"
+                >
                   <img src={logo.src} alt={logo.alt} className="w-full h-full object-contain p-[2px]" />
                 </div>
               ))}
@@ -121,9 +126,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         {/* User context footer */}
         <div className="p-6 border-t border-accent-2/20 bg-bg-elevated/40 space-y-3">
           <div className="flex items-center gap-3">
-             <div className="h-8 w-8 rounded-full bg-border/30 flex items-center justify-center text-accent animate-pulse">
-               <User className="h-4 w-4" />
-             </div>
+            <div className="h-8 w-8 rounded-full bg-border/30 flex items-center justify-center text-accent animate-pulse">
+              <User className="h-4 w-4" />
+            </div>
             <div className="overflow-hidden">
               <p className="text-xs font-bold text-text truncate">{session?.user?.name || 'Administrator'}</p>
               <p className="text-[10px] text-text-secondary truncate">{session?.user?.email || 'admin@kec.ac.in'}</p>
@@ -158,4 +163,3 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     </div>
   );
 }
-
