@@ -1,14 +1,11 @@
 interface SkeletonProps {
   className?: string;
   rows?: number;
+  style?: React.CSSProperties;
 }
 
-export function Skeleton({ className = '' }: SkeletonProps) {
-  return (
-    <div
-      className={`animate-pulse rounded bg-border/40 ${className}`}
-    />
-  );
+export function Skeleton({ className = '', style }: SkeletonProps) {
+  return <div className={`animate-pulse rounded bg-border/40 ${className}`} style={style} />;
 }
 
 export function SkeletonCard({ rows = 3 }: SkeletonProps) {
@@ -22,7 +19,7 @@ export function SkeletonCard({ rows = 3 }: SkeletonProps) {
         </div>
       </div>
       {Array.from({ length: rows }, (_, i) => (
-        <Skeleton key={i} className={`h-3 w-${i % 2 === 0 ? '4/5' : '3/5'}`} />
+        <Skeleton key={i} className="h-3" style={{ width: i % 2 === 0 ? '80%' : '60%' }} />
       ))}
     </div>
   );

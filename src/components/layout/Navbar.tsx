@@ -65,7 +65,6 @@ export default function Navbar() {
     { name: 'Calendar', href: '/calendar' },
     { name: 'Events', href: '/events' },
     { name: 'Contact', href: '/contact' },
-    { name: 'Design', href: '/design-system' },
   ];
 
   const isActive = (path: string) => {

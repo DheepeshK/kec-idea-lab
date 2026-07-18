@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { z } from 'zod';
 import ScrollReveal from '@/components/motion/ScrollReveal';
 import Card from '@/components/ui/Card';
 import Badge from '@/components/ui/Badge';
@@ -79,6 +80,13 @@ function EventImagePlaceholder({ category, title }: { category: string; title: s
   );
 }
 
+const registrationSchema = z.object({
+  name: z.string().trim().min(2, 'Name must be at least 2 characters'),
+  rollNoDept: z.string().trim().min(3, 'Roll Number / Department is required'),
+  email: z.string().trim().email('Please enter a valid email address'),
+  phone: z.string().trim().optional(),
+});
+
 function RegistrationModal({ event, onClose }: { event: EventItem; onClose: () => void }) {
   const [name, setName] = useState('');
   const [rollNoDept, setRollNoDept] = useState('');
@@ -87,11 +95,32 @@ function RegistrationModal({ event, onClose }: { event: EventItem; onClose: () =
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitting(true);
     setError(null);
+    setFieldErrors({});
+
+    const result = registrationSchema.safeParse({ name, rollNoDept, email, phone });
+    if (!result.success) {
+      const errors: Record<string, string> = {};
+      result.error.issues.forEach((issue) => {
+        if (issue.path[0]) errors[issue.path[0] as string] = issue.message;
+      });
+      setFieldErrors(errors);
+      return;
+    }
+
+    setSubmitting(true);
 
     try {
       const res = await fetch('/api/register', {
@@ -120,10 +149,23 @@ function RegistrationModal({ event, onClose }: { event: EventItem; onClose: () =
     }
   };
 
+  const clearFieldError = (field: string) => {
+    if (fieldErrors[field]) {
+      setFieldErrors((prev) => {
+        const next = { ...prev };
+        delete next[field];
+        return next;
+      });
+    }
+  };
+
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
       onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Register for event"
     >
       <div
         className="bg-bg border border-border rounded-2xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto"
@@ -180,10 +222,20 @@ function RegistrationModal({ event, onClose }: { event: EventItem; onClose: () =
                   type="text"
                   required
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={(e) => {
+                    setName(e.target.value);
+                    clearFieldError('name');
+                  }}
                   placeholder="e.g. Adithyan S"
-                  className="w-full bg-bg border border-border rounded-lg px-3 py-2 text-sm text-text placeholder-text-secondary/50 focus:outline-none focus:border-accent transition-colors"
+                  className={`w-full bg-bg border ${
+                    fieldErrors.name ? 'border-rose-500/80' : 'border-border'
+                  } rounded-lg px-3 py-2 text-sm text-text placeholder-text-secondary/50 focus:outline-none focus:border-accent transition-colors`}
                 />
+                {fieldErrors.name && (
+                  <p className="text-rose-500 text-[11px] flex items-center gap-1">
+                    <AlertTriangle className="h-3 w-3 shrink-0" /> {fieldErrors.name}
+                  </p>
+                )}
               </div>
 
               <div className="space-y-1.5">
@@ -192,10 +244,20 @@ function RegistrationModal({ event, onClose }: { event: EventItem; onClose: () =
                   type="text"
                   required
                   value={rollNoDept}
-                  onChange={(e) => setRollNoDept(e.target.value)}
+                  onChange={(e) => {
+                    setRollNoDept(e.target.value);
+                    clearFieldError('rollNoDept');
+                  }}
                   placeholder="e.g. 21MCR001 - Mechatronics"
-                  className="w-full bg-bg border border-border rounded-lg px-3 py-2 text-sm text-text placeholder-text-secondary/50 focus:outline-none focus:border-accent transition-colors"
+                  className={`w-full bg-bg border ${
+                    fieldErrors.rollNoDept ? 'border-rose-500/80' : 'border-border'
+                  } rounded-lg px-3 py-2 text-sm text-text placeholder-text-secondary/50 focus:outline-none focus:border-accent transition-colors`}
                 />
+                {fieldErrors.rollNoDept && (
+                  <p className="text-rose-500 text-[11px] flex items-center gap-1">
+                    <AlertTriangle className="h-3 w-3 shrink-0" /> {fieldErrors.rollNoDept}
+                  </p>
+                )}
               </div>
 
               <div className="space-y-1.5">
@@ -204,10 +266,20 @@ function RegistrationModal({ event, onClose }: { event: EventItem; onClose: () =
                   type="email"
                   required
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    clearFieldError('email');
+                  }}
                   placeholder="you@kongu.edu"
-                  className="w-full bg-bg border border-border rounded-lg px-3 py-2 text-sm text-text placeholder-text-secondary/50 focus:outline-none focus:border-accent transition-colors"
+                  className={`w-full bg-bg border ${
+                    fieldErrors.email ? 'border-rose-500/80' : 'border-border'
+                  } rounded-lg px-3 py-2 text-sm text-text placeholder-text-secondary/50 focus:outline-none focus:border-accent transition-colors`}
                 />
+                {fieldErrors.email && (
+                  <p className="text-rose-500 text-[11px] flex items-center gap-1">
+                    <AlertTriangle className="h-3 w-3 shrink-0" /> {fieldErrors.email}
+                  </p>
+                )}
               </div>
 
               <div className="space-y-1.5">
@@ -222,7 +294,14 @@ function RegistrationModal({ event, onClose }: { event: EventItem; onClose: () =
               </div>
 
               <Button type="submit" variant="primary" fullWidth disabled={submitting}>
-                {submitting ? 'Submitting...' : 'Submit Registration'}
+                {submitting ? (
+                  <span className="flex items-center gap-2">
+                    <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-white" />
+                    Submitting...
+                  </span>
+                ) : (
+                  'Submit Registration'
+                )}
               </Button>
             </form>
           )}
@@ -262,7 +341,7 @@ export default function EventsFilterableGrid({ events }: EventsFilterableGridPro
             key={tab}
             id={`filter-tab-${tab.toLowerCase().replace(/\s+/g, '-')}`}
             onClick={() => setActiveTab(tab)}
-            className={`px-4 py-2 text-xs font-sans font-bold tracking-wider rounded-full border transition-all duration-300 uppercase focus:outline-none ${
+            className={`px-4 py-2 text-xs font-sans font-bold tracking-wider rounded-full border transition-all duration-300 uppercase focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2 focus-visible:outline-none ${
               activeTab === tab
                 ? 'bg-accent text-white border-accent/60 shadow-md shadow-accent/20 scale-103'
                 : 'bg-bg-elevated/40 text-text-secondary border-border hover:text-text hover:border-text-secondary/30'

@@ -68,44 +68,40 @@ export default function Footer() {
           {/* Social Icons Placeholders (Clearly marked as placeholder) */}
           <div className="flex items-center gap-3 pt-2">
             {/* SOCIAL LINK PLACEHOLDER - TWITTER */}
-            <a
-              href="#"
-              className="p-2 rounded-lg border border-border hover:border-accent hover:text-accent transition-all duration-150"
-              aria-label="Twitter / X Profile"
-              rel="noopener noreferrer"
+            <span
+              className="p-2 rounded-lg border border-border opacity-50 cursor-not-allowed"
+              aria-label="Twitter / X Profile (coming soon)"
+              role="img"
             >
               <Twitter className="h-4 w-4" />
-            </a>
+            </span>
 
             {/* SOCIAL LINK PLACEHOLDER - LINKEDIN */}
-            <a
-              href="#"
-              className="p-2 rounded-lg border border-border hover:border-accent-3 hover:text-accent-3 transition-all duration-150"
-              aria-label="LinkedIn Profile"
-              rel="noopener noreferrer"
+            <span
+              className="p-2 rounded-lg border border-border opacity-50 cursor-not-allowed"
+              aria-label="LinkedIn Profile (coming soon)"
+              role="img"
             >
               <Linkedin className="h-4 w-4" />
-            </a>
+            </span>
 
             {/* SOCIAL LINK PLACEHOLDER - INSTAGRAM */}
-            <a
-              href="#"
-              className="p-2 rounded-lg border border-border hover:border-accent-2 hover:text-accent-2 transition-all duration-150"
-              aria-label="Instagram Profile"
-              rel="noopener noreferrer"
+            <span
+              className="p-2 rounded-lg border border-border opacity-50 cursor-not-allowed"
+              aria-label="Instagram Profile (coming soon)"
+              role="img"
             >
               <Instagram className="h-4 w-4" />
-            </a>
+            </span>
 
             {/* SOCIAL LINK PLACEHOLDER - GITHUB */}
-            <a
-              href="#"
-              className="p-2 rounded-lg border border-border hover:border-brand-navy hover:text-brand-navy transition-all duration-150"
-              aria-label="GitHub Repository"
-              rel="noopener noreferrer"
+            <span
+              className="p-2 rounded-lg border border-border opacity-50 cursor-not-allowed"
+              aria-label="GitHub Repository (coming soon)"
+              role="img"
             >
               <Github className="h-4 w-4" />
-            </a>
+            </span>
           </div>
         </div>
 

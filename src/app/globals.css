@@ -24,7 +24,7 @@
   --accent: #0b4c8c;
   --accent-2: #d2232a;
   --accent-3: #009444;
-  --warn: #f9a01b;
+  --warn: #b45309;
   --success: #009444;
 }
 
@@ -88,7 +88,7 @@ samp {
 
 .label {
   font-family: var(--font-sans), sans-serif;
-  font-size: clamp(0.625rem, 0.5vw, 0.75rem);
+  font-size: clamp(0.6875rem, 0.5vw, 0.75rem);
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.13em;
@@ -122,6 +122,7 @@ a {
 * {
   box-sizing: border-box;
   border-color: var(--border);
+  caret-color: transparent;
 }
 
 @keyframes float {

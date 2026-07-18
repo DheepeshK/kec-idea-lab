@@ -1,1 +1,26 @@
-[]
+[
+  {
+    "name": "3D Printer",
+    "description": "Advanced 3D printing",
+    "quantity": 1,
+    "available": 1,
+    "category": "Rapid Prototyping",
+    "location": "Digital Fabrication Lab",
+    "order": 1,
+    "imageUrl": "",
+    "specs": [],
+    "_id": "mrpv1av7"
+  },
+  {
+    "name": "3D Scanner",
+    "description": "3D Model real time scanner",
+    "quantity": 1,
+    "available": 1,
+    "category": "Rapid Prototyping",
+    "location": "Digital Fabrication Lab",
+    "order": 0,
+    "imageUrl": "",
+    "specs": [],
+    "_id": "mrpv2u2w"
+  }
+]

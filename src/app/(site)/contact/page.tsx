@@ -9,15 +9,14 @@ import Badge from '@/components/ui/Badge';
 import MagneticButton from '@/components/motion/MagneticButton';
 import { Mail, Phone, MapPin, Send, Cpu, AlertTriangle, CheckCircle2 } from 'lucide-react';
 
-const CONTACT_EMAIL = 'idealab@kongu.ac.in'; 
-const CONTACT_PHONE = '+91 4294 226555'; 
+const CONTACT_EMAIL = 'idealab@kongu.ac.in';
+const CONTACT_PHONE = '+91 4294 226555';
 
 // Zod Schema for robust client-side validation
 const contactSchema = z.object({
   name: z.string().trim().min(2, 'Name must be at least 2 characters long.'),
   rollNoDept: z.string().trim().min(3, 'Roll Number / Department identifier is required.'),
   purpose: z.string().trim().min(10, 'Please specify your purpose in at least 10 characters.'),
-
 });
 
 type FormDataType = z.infer<typeof contactSchema>;
@@ -111,12 +110,8 @@ export default function ContactPage() {
         {/* Header Block */}
         <div className="text-center max-w-3xl mx-auto space-y-4">
           <ScrollReveal direction="up">
-            <span className="label text-accent block mb-1">
-              Connect & Co-create
-            </span>
-            <h1>
-              Contact Us
-            </h1>
+            <span className="label text-accent block mb-1">Connect & Co-create</span>
+            <h1>Contact Us</h1>
           </ScrollReveal>
           <ScrollReveal direction="up" delay={0.08}>
             <p className="body-text">
@@ -130,7 +125,10 @@ export default function ContactPage() {
           {/* Form Column */}
           <div className="lg:col-span-7">
             <ScrollReveal direction="right">
-              <Card id="contact-form-card" className="p-6 sm:p-8 border border-border bg-bg-elevated/10 shadow-xl shadow-accent/5 relative overflow-hidden">
+              <Card
+                id="contact-form-card"
+                className="p-6 sm:p-8 border border-border bg-bg-elevated/10 shadow-xl shadow-accent/5 relative overflow-hidden"
+              >
                 <div className="flex items-center justify-between border-b border-border/60 pb-4 mb-6">
                   <div>
                     <h2>Send an Enquiry</h2>
@@ -149,7 +147,9 @@ export default function ContactPage() {
                     <div className="space-y-2">
                       <h3 className="text-lg font-bold text-text">Email Pre-Filled Successfully!</h3>
                       <p className="body-text text-xs sm:text-sm max-w-md mx-auto">
-                        Your device&apos;s mail client was triggered. If it did not open, click the button below to retry or compose manually to <code className="text-accent font-mono text-xs">{CONTACT_EMAIL}</code>.
+                        Your device&apos;s mail client was triggered. If it did not open, click the button below to
+                        retry or compose manually to{' '}
+                        <code className="text-accent font-mono text-xs">{CONTACT_EMAIL}</code>.
                       </p>
                     </div>
                     <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2">
@@ -176,7 +176,7 @@ export default function ContactPage() {
                         placeholder="e.g. Adithyan S"
                         className={`w-full bg-bg border ${
                           errors.name ? 'border-rose-500/80 focus:border-rose-500' : 'border-border focus:border-accent'
-                        } rounded-lg px-3.5 py-2 text-sm text-text placeholder-slate-700 focus:outline-none focus:ring-1 focus:ring-accent/30 transition-colors font-sans`}
+                        } rounded-lg px-3.5 py-2 text-sm text-text placeholder-text-secondary/50 focus:outline-none focus:ring-1 focus:ring-accent/30 transition-colors font-sans`}
                       />
                       {errors.name && (
                         <p className="text-rose-500 text-[11px] flex items-center gap-1">
@@ -197,8 +197,10 @@ export default function ContactPage() {
                         onChange={handleChange}
                         placeholder="e.g. 21MCR001 - B.E. Mechatronics or ABC Corp"
                         className={`w-full bg-bg border ${
-                          errors.rollNoDept ? 'border-rose-500/80 focus:border-rose-500' : 'border-border focus:border-accent'
-                        } rounded-lg px-3.5 py-2 text-sm text-text placeholder-slate-700 focus:outline-none focus:ring-1 focus:ring-accent/30 transition-colors font-sans`}
+                          errors.rollNoDept
+                            ? 'border-rose-500/80 focus:border-rose-500'
+                            : 'border-border focus:border-accent'
+                        } rounded-lg px-3.5 py-2 text-sm text-text placeholder-text-secondary/50 focus:outline-none focus:ring-1 focus:ring-accent/30 transition-colors font-sans`}
                       />
                       {errors.rollNoDept && (
                         <p className="text-rose-500 text-[11px] flex items-center gap-1">
@@ -219,8 +221,10 @@ export default function ContactPage() {
                         onChange={handleChange}
                         placeholder="Tell us about your enquiry, project, or reason for reaching out..."
                         className={`w-full bg-bg border ${
-                          errors.purpose ? 'border-rose-500/80 focus:border-rose-500' : 'border-border focus:border-accent'
-                        } rounded-lg px-3.5 py-2 text-sm text-text placeholder-slate-700 focus:outline-none focus:ring-1 focus:ring-accent/30 transition-colors resize-none`}
+                          errors.purpose
+                            ? 'border-rose-500/80 focus:border-rose-500'
+                            : 'border-border focus:border-accent'
+                        } rounded-lg px-3.5 py-2 text-sm text-text placeholder-text-secondary/50 focus:outline-none focus:ring-1 focus:ring-accent/30 transition-colors resize-none`}
                       />
                       {errors.purpose && (
                         <p className="text-rose-500 text-[11px] flex items-center gap-1">
@@ -235,16 +239,32 @@ export default function ContactPage() {
                       <div className="space-y-1">
                         <p className="text-xs font-bold text-text">Email Dispatch</p>
                         <p className="text-[11px] text-text-secondary leading-normal font-sans">
-                          Your device&apos;s default email application will open pre-filled with your details. Review and send from your mail client.
+                          Your device&apos;s default email application will open pre-filled with your details. Review
+                          and send from your mail client.
                         </p>
                       </div>
                     </div>
 
                     {/* Submit Button */}
                     <MagneticButton className="w-full">
-                      <Button type="submit" variant="primary" fullWidth className="gap-2 uppercase tracking-wider text-xs font-bold h-11 shadow-lg shadow-accent/25">
-                        <Send className="h-4 w-4 text-accent-2" />
-                        Launch Mail Application
+                      <Button
+                        type="submit"
+                        variant="primary"
+                        fullWidth
+                        className="gap-2 uppercase tracking-wider text-xs font-bold h-11 shadow-lg shadow-accent/25"
+                        disabled={submitting}
+                      >
+                        {submitting ? (
+                          <>
+                            <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-accent-2" />
+                            Sending...
+                          </>
+                        ) : (
+                          <>
+                            <Send className="h-4 w-4 text-accent-2" />
+                            Launch Mail Application
+                          </>
+                        )}
                       </Button>
                     </MagneticButton>
                   </form>
@@ -258,9 +278,7 @@ export default function ContactPage() {
             {/* Laboratory Location Card */}
             <ScrollReveal direction="left">
               <Card id="contact-info-card" className="p-6 border border-border bg-bg-elevated/10 space-y-6">
-                <h2 className="border-b border-border pb-3">
-                  Laboratory Info
-                </h2>
+                <h2 className="border-b border-border pb-3">Laboratory Info</h2>
 
                 {/* Partner logo strip */}
                 <div className="flex items-center justify-center gap-4 pb-4 flex-wrap border-b border-border/40">
@@ -272,7 +290,10 @@ export default function ContactPage() {
                     { src: '/EMDC.png', alt: 'EMDC' },
                     { src: '/TBI.png', alt: 'TBI' },
                   ].map((logo) => (
-                    <div key={logo.alt} className="relative h-14 w-auto opacity-70 hover:opacity-100 transition-opacity">
+                    <div
+                      key={logo.alt}
+                      className="relative h-14 w-auto opacity-70 hover:opacity-100 transition-opacity"
+                    >
                       <img src={logo.src} alt={logo.alt} className="h-full w-auto object-contain" />
                     </div>
                   ))}
@@ -302,9 +323,7 @@ export default function ContactPage() {
                     </div>
                     <div className="space-y-0.5">
                       <h3 className="label text-text-secondary font-bold">Phone</h3>
-                      <p className="text-text text-xs sm:text-sm">
-                        {CONTACT_PHONE}
-                      </p>
+                      <p className="text-text text-xs sm:text-sm">{CONTACT_PHONE}</p>
                       <p className="text-[10px] text-text-secondary">Available: Mon - Sat (9:00 AM to 5:00 PM)</p>
                     </div>
                   </div>
@@ -316,9 +335,7 @@ export default function ContactPage() {
                     </div>
                     <div className="space-y-0.5">
                       <h3 className="label text-text-secondary font-bold">Primary Email</h3>
-                      <p className="text-text text-xs sm:text-sm font-mono">
-                        {CONTACT_EMAIL}
-                      </p>
+                      <p className="text-text text-xs sm:text-sm font-mono">{CONTACT_EMAIL}</p>
                     </div>
                   </div>
                 </div>
@@ -327,7 +344,10 @@ export default function ContactPage() {
 
             {/* Google Maps Embed iframe */}
             <ScrollReveal direction="left" delay={0.08}>
-              <Card id="maps-embed-card" className="p-0 overflow-hidden border border-border bg-bg-elevated/10 shadow-xl shadow-accent/5 group">
+              <Card
+                id="maps-embed-card"
+                className="p-0 overflow-hidden border border-border bg-bg-elevated/10 shadow-xl shadow-accent/5 group"
+              >
                 <div className="p-4 border-b border-border bg-bg/40">
                   <h3 className="label text-text-secondary font-bold flex items-center gap-1.5">
                     <MapPin className="h-4 w-4 text-accent" />

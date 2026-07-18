@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 
-const MIN_DISPLAY_MS = 1800;
+const MIN_DISPLAY_MS = 800;
 
 export default function SplashScreen() {
   useEffect(() => {

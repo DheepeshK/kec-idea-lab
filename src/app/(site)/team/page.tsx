@@ -364,7 +364,9 @@ export default async function TeamPage() {
                                 className="text-[11px] text-text-secondary hover:text-accent font-mono inline-flex items-center gap-1 transition-colors pt-1"
                               >
                                 <Mail className="h-3 w-3" />
-                                <span className="truncate max-w-[180px]">{member.email}</span>
+                                <span className="truncate max-w-[180px]" title={member.email}>
+                                  {member.email}
+                                </span>
                               </a>
                             )}
                           </div>
