@@ -8,7 +8,8 @@ export async function GET() {
     const items = getAll('events');
     return NextResponse.json({ success: true, data: items });
   } catch (error: any) {
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+    console.error('Failed to fetch events:', error);
+    return NextResponse.json({ success: false, error: 'Internal server error.' }, { status: 500 });
   }
 }
 
@@ -20,6 +21,7 @@ export async function POST(req: NextRequest) {
     const newItem = create('events', body);
     return NextResponse.json({ success: true, data: newItem }, { status: 201 });
   } catch (error: any) {
-    return NextResponse.json({ success: false, error: error.message }, { status: 400 });
+    console.error('Failed to create event:', error);
+    return NextResponse.json({ success: false, error: 'Internal server error.' }, { status: 400 });
   }
 }

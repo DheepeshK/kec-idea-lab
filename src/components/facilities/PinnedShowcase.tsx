@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import ScrollReveal from '@/components/motion/ScrollReveal';
 import Card from '@/components/ui/Card';
 import { MapPin, HardDrive, Inbox } from 'lucide-react';
@@ -40,16 +41,16 @@ function EquipmentPlaceholderImage({ category, name }: { category: string; name:
   const grad = gradients[Math.abs(hash) % gradients.length];
 
   return (
-    <div className={`relative w-full h-full bg-gradient-to-br ${grad} flex flex-col items-center justify-center p-6 overflow-hidden`}>
+    <div
+      className={`relative w-full h-full bg-gradient-to-br ${grad} flex flex-col items-center justify-center p-6 overflow-hidden`}
+    >
       <div className="absolute inset-0 bg-[linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] bg-[size:1.5rem_1.5rem] opacity-20" />
       <div className="absolute h-32 w-32 rounded-full border border-accent/10 scale-[1.5] pointer-events-none" />
       <div className="absolute h-32 w-32 rounded-full border border-accent/5 scale-[2.2] pointer-events-none" />
       <div className="relative z-10 p-4 rounded-full bg-bg-elevated/80 border border-border text-accent shadow-xl shadow-black/40 mb-3 group-hover:scale-105 transition-transform duration-300">
         <HardDrive className="h-7 w-7 text-accent" />
       </div>
-      <span className="relative z-10 label text-text-secondary text-center">
-        {category || 'Equipment'}
-      </span>
+      <span className="relative z-10 label text-text-secondary text-center">{category || 'Equipment'}</span>
     </div>
   );
 }
@@ -85,24 +86,21 @@ export default function PinnedShowcase({ items }: PinnedShowcaseProps) {
             const displayImage = item.imageUrl || item.image;
             return (
               <ScrollReveal key={item._id} direction="up" delay={idx * 0.04}>
-                <Card
-                  className="h-full flex flex-col p-0 overflow-hidden group"
-                  hoverEffect={true}
-                >
+                <Card className="h-full flex flex-col p-0 overflow-hidden group" hoverEffect={true}>
                   {/* Image Section */}
                   <div className="relative h-40 sm:h-52 w-full bg-bg-elevated overflow-hidden shrink-0">
                     {displayImage ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
+                      <Image
                         src={displayImage}
                         alt={item.name}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
                         referrerPolicy="no-referrer"
                       />
                     ) : (
                       <EquipmentPlaceholderImage category={item.category || ''} name={item.name} />
                     )}
-
                   </div>
 
                   {/* Content Section */}
@@ -112,8 +110,12 @@ export default function PinnedShowcase({ items }: PinnedShowcaseProps) {
                     </h3>
 
                     <div className="flex flex-wrap gap-x-6 gap-y-1.5 text-xs text-text-secondary">
-                      <span><span className="text-accent">Type:</span> {item.category || 'General'}</span>
-                      <span><span className="text-accent">Available:</span> {item.available}/{item.quantity}</span>
+                      <span>
+                        <span className="text-accent">Type:</span> {item.category || 'General'}
+                      </span>
+                      <span>
+                        <span className="text-accent">Available:</span> {item.available}/{item.quantity}
+                      </span>
                       {item.location && (
                         <span className="flex items-center gap-1">
                           <MapPin className="h-3 w-3 shrink-0" />

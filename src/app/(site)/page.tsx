@@ -1,21 +1,23 @@
 export const metadata = {
   title: 'Home | AICTE IDEA Lab @ KEC',
-  description: 'Innovation and Entrepreneurship Development Lab at Kongu Engineering College — fostering creativity, hands-on learning, and industry collaboration.',
+  description:
+    'Innovation and Entrepreneurship Development Lab at Kongu Engineering College — fostering creativity, hands-on learning, and industry collaboration.',
 };
 
 import Link from 'next/link';
-import { 
-  ArrowRight, 
-  Layers, 
-  Scissors, 
-  Cpu, 
-  Wrench, 
-  Activity, 
-  Rocket, 
-  GraduationCap, 
-  Calendar, 
-  MapPin, 
-  Workflow
+import Image from 'next/image';
+import {
+  ArrowRight,
+  Layers,
+  Scissors,
+  Cpu,
+  Wrench,
+  Activity,
+  Rocket,
+  GraduationCap,
+  Calendar,
+  MapPin,
+  Workflow,
 } from 'lucide-react';
 import Counter from '@/components/motion/Counter';
 import ScrollReveal from '@/components/motion/ScrollReveal';
@@ -27,19 +29,33 @@ import MagneticButton from '@/components/motion/MagneticButton';
 import { getAll } from '@/lib/store';
 
 // Helper to slugify equipment names to match the facilities anchors
-const slugify = (text: string) => text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+const slugify = (text: string) =>
+  text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
 
 // Helper to map equipment categories/names to standard Lucide icons
 function getEquipmentIcon(name: string, category?: string) {
   const lowerName = name.toLowerCase();
   const lowerCat = (category || '').toLowerCase();
-  if (lowerName.includes('3d printer') || lowerName.includes('printing') || lowerCat.includes('print') || lowerCat.includes('rapid')) {
+  if (
+    lowerName.includes('3d printer') ||
+    lowerName.includes('printing') ||
+    lowerCat.includes('print') ||
+    lowerCat.includes('rapid')
+  ) {
     return Layers;
   }
   if (lowerName.includes('laser') || lowerName.includes('cutter') || lowerCat.includes('subtractive')) {
     return Scissors;
   }
-  if (lowerName.includes('soldering') || lowerName.includes('smd') || lowerCat.includes('electronics') || lowerCat.includes('iot')) {
+  if (
+    lowerName.includes('soldering') ||
+    lowerName.includes('smd') ||
+    lowerCat.includes('electronics') ||
+    lowerCat.includes('iot')
+  ) {
     return Cpu;
   }
   if (lowerName.includes('cnc') || lowerName.includes('router') || lowerName.includes('milling')) {
@@ -73,7 +89,8 @@ const fallbackEquipment: HomeEquipment[] = [
   {
     _id: 'fallback-1',
     name: 'Industrial FDM 3D Printer',
-    description: 'High-precision dual-extruder 3D printer for ABS, PLA, and Carbon Fiber composite filament fabrication.',
+    description:
+      'High-precision dual-extruder 3D printer for ABS, PLA, and Carbon Fiber composite filament fabrication.',
     category: 'Rapid Prototyping',
   },
   {
@@ -85,7 +102,8 @@ const fallbackEquipment: HomeEquipment[] = [
   {
     _id: 'fallback-3',
     name: 'Smart Soldering & SMD Station',
-    description: 'State-of-the-art SMD rework station with hot-air guns, smart micro-soldering irons, and digital microscope.',
+    description:
+      'State-of-the-art SMD rework station with hot-air guns, smart micro-soldering irons, and digital microscope.',
     category: 'Electronics & IoT',
   },
   {
@@ -97,7 +115,8 @@ const fallbackEquipment: HomeEquipment[] = [
   {
     _id: 'fallback-5',
     name: 'Mixed Signal Digital Oscilloscope',
-    description: '4-channel 100MHz digital oscilloscope with built-in logic analyzers for debugging complex IoT circuit boards.',
+    description:
+      '4-channel 100MHz digital oscilloscope with built-in logic analyzers for debugging complex IoT circuit boards.',
     category: 'Electronics & IoT',
   },
 ];
@@ -106,7 +125,8 @@ const fallbackEvents: HomeEvent[] = [
   {
     _id: 'fallback-evt-1',
     title: '3D Printer Operation & Maintenance Bootcamp',
-    description: 'Learn the fundamentals of slicer configurations, bed leveling, advanced dual-extrusion, and standard FDM hardware troubleshooting in this certified hands-on lab.',
+    description:
+      'Learn the fundamentals of slicer configurations, bed leveling, advanced dual-extrusion, and standard FDM hardware troubleshooting in this certified hands-on lab.',
     date: '2026-07-15T09:00:00.000Z',
     time: '09:00 AM - 04:00 PM',
     location: 'AICTE-KEC Idea Lab, 3D Printing Zone',
@@ -116,7 +136,8 @@ const fallbackEvents: HomeEvent[] = [
   {
     _id: 'fallback-evt-2',
     title: 'Industrial Laser Cutting SOP Workshop',
-    description: 'Safety-first instruction on operating CO2 Laser cutters. Participants will learn material limitations, vector paths, and engrave their custom wood designs.',
+    description:
+      'Safety-first instruction on operating CO2 Laser cutters. Participants will learn material limitations, vector paths, and engrave their custom wood designs.',
     date: '2026-07-22T10:00:00.000Z',
     time: '10:00 AM - 01:00 PM',
     location: 'Heavy Machinery Room, Idea Lab',
@@ -126,7 +147,8 @@ const fallbackEvents: HomeEvent[] = [
   {
     _id: 'fallback-evt-3',
     title: 'IoT Embedded Systems & Micro-Soldering Hack',
-    description: 'An intense 24-hour hardware hackathon targeting agricultural and health problems. Free development boards provided for selected student project teams.',
+    description:
+      'An intense 24-hour hardware hackathon targeting agricultural and health problems. Free development boards provided for selected student project teams.',
     date: '2026-08-05T08:30:00.000Z',
     time: '08:30 AM onwards',
     location: 'Idea Lab Main Hall & PCB Bay',
@@ -189,7 +211,8 @@ export default async function HomePage() {
 
               <ScrollReveal direction="right" delay={0.16}>
                 <p className="body-text text-base sm:text-lg max-w-2xl">
-                  IDEA Lab @ KEC is Kongu Engineering College&apos;s AICTE-established  facility — under the Innovation & Entrepreneurship Forum @ KEC. We bridge the gap between imagination and physical engineering.
+                  IDEA Lab @ KEC is Kongu Engineering College&apos;s AICTE-established facility — under the Innovation &
+                  Entrepreneurship Forum @ KEC. We bridge the gap between imagination and physical engineering.
                 </p>
               </ScrollReveal>
 
@@ -233,12 +256,11 @@ export default async function HomePage() {
               { src: '/EMDC.png', alt: 'EMDC' },
               { src: '/TBI.png', alt: 'TBI' },
             ].map((logo) => (
-              <div key={logo.alt} className="relative h-16 sm:h-20 w-auto opacity-70 hover:opacity-100 transition-opacity">
-                <img
-                  src={logo.src}
-                  alt={logo.alt}
-                  className="h-full w-auto object-contain"
-                />
+              <div
+                key={logo.alt}
+                className="relative h-16 sm:h-20 w-auto opacity-70 hover:opacity-100 transition-opacity"
+              >
+                <img src={logo.src} alt={logo.alt} className="h-full w-auto object-contain" />
               </div>
             ))}
           </div>
@@ -295,7 +317,8 @@ export default async function HomePage() {
           </ScrollReveal>
           <ScrollReveal direction="up" delay={0.08}>
             <p className="body-text">
-              We guide hardware concepts from raw ideation, through certified training and machine access, into commercially viable products.
+              We guide hardware concepts from raw ideation, through certified training and machine access, into
+              commercially viable products.
             </p>
           </ScrollReveal>
         </div>
@@ -310,7 +333,8 @@ export default async function HomePage() {
                 </div>
                 <h3 className="text-lg font-bold text-text group-hover:text-accent transition-colors">Prototype</h3>
                 <p className="body-text text-xs sm:text-sm">
-                  Turn your raw concepts into functional hardware models. Access advanced CAD workstations and expert engineering guidance to refine your designs.
+                  Turn your raw concepts into functional hardware models. Access advanced CAD workstations and expert
+                  engineering guidance to refine your designs.
                 </p>
               </div>
             </Card>
@@ -325,7 +349,8 @@ export default async function HomePage() {
                 </div>
                 <h3 className="text-lg font-bold text-text group-hover:text-accent-2 transition-colors">Fabricate</h3>
                 <p className="body-text text-xs sm:text-sm">
-                  Leverage industrial-grade FDM/SLA 3D printers, CO2 laser engravers, high-speed CNC routers, and micro-soldering bays to build with sub-millimeter precision.
+                  Leverage industrial-grade FDM/SLA 3D printers, CO2 laser engravers, high-speed CNC routers, and
+                  micro-soldering bays to build with sub-millimeter precision.
                 </p>
               </div>
             </Card>
@@ -340,7 +365,8 @@ export default async function HomePage() {
                 </div>
                 <h3 className="text-lg font-bold text-text group-hover:text-accent-3 transition-colors">Incubate</h3>
                 <p className="body-text text-xs sm:text-sm">
-                  Bridge the gap between working prototype and commercial product. Receive seed-funding guidance, corporate connections, and direct support for patent filing.
+                  Bridge the gap between working prototype and commercial product. Receive seed-funding guidance,
+                  corporate connections, and direct support for patent filing.
                 </p>
               </div>
             </Card>
@@ -355,7 +381,8 @@ export default async function HomePage() {
                 </div>
                 <h3 className="text-lg font-bold text-text group-hover:text-brand-navy transition-colors">Mentor</h3>
                 <p className="body-text text-xs sm:text-sm">
-                  Gain custom 1-on-1 advice from AICTE-trained faculty members, core student mentors, and hardware industry specialists to cross execution hurdles.
+                  Gain custom 1-on-1 advice from AICTE-trained faculty members, core student mentors, and hardware
+                  industry specialists to cross execution hurdles.
                 </p>
               </div>
             </Card>
@@ -375,13 +402,17 @@ export default async function HomePage() {
               </ScrollReveal>
               <ScrollReveal direction="up" delay={0.08}>
                 <p className="body-text">
-                  Operate industrial-grade machinery in a controlled, educational environment under expert guidance. Check live booking states in each link.
+                  Operate industrial-grade machinery in a controlled, educational environment under expert guidance.
+                  Check live booking states in each link.
                 </p>
               </ScrollReveal>
             </div>
             <div className="shrink-0 text-left">
               <ScrollReveal direction="up" delay={0.12}>
-                <Link href="/facilities" className="label text-accent hover:text-accent font-semibold flex items-center gap-1.5 border border-accent/20 px-4 py-2 rounded-lg hover:bg-accent/5 transition-all">
+                <Link
+                  href="/facilities"
+                  className="label text-accent hover:text-accent font-semibold flex items-center gap-1.5 border border-accent/20 px-4 py-2 rounded-lg hover:bg-accent/5 transition-all"
+                >
                   Full Machinery Catalog <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
               </ScrollReveal>
@@ -398,19 +429,22 @@ export default async function HomePage() {
                   <Link href={`/facilities#${targetSlug}`} className="block h-full group">
                     <Card className="h-full p-5 flex flex-col justify-between transition-all duration-300 border-border/60 bg-bg/60 group-hover:border-accent/30 group-hover:bg-bg-elevated/40 group-hover:shadow-accent/5">
                       <div className="space-y-4">
-                        <div className={`bg-bg-elevated border border-border ${['text-accent', 'text-accent-2', 'text-accent-3', 'text-brand-navy'][idx % 4]} p-2.5 rounded-lg w-fit transition-all duration-300 ${['group-hover:bg-accent/10 group-hover:border-accent/20', 'group-hover:bg-accent-2/10 group-hover:border-accent-2/20', 'group-hover:bg-accent-3/10 group-hover:border-accent-3/20', 'group-hover:bg-brand-navy/10 group-hover:border-brand-navy/20'][idx % 4]}`}>
+                        <div
+                          className={`bg-bg-elevated border border-border ${['text-accent', 'text-accent-2', 'text-accent-3', 'text-brand-navy'][idx % 4]} p-2.5 rounded-lg w-fit transition-all duration-300 ${['group-hover:bg-accent/10 group-hover:border-accent/20', 'group-hover:bg-accent-2/10 group-hover:border-accent-2/20', 'group-hover:bg-accent-3/10 group-hover:border-accent-3/20', 'group-hover:bg-brand-navy/10 group-hover:border-brand-navy/20'][idx % 4]}`}
+                        >
                           <IconComponent className="h-5 w-5" />
                         </div>
                         <div>
                           <span className="label text-text-secondary block mb-0.5">{item.category}</span>
-                          <h3 className="text-sm font-bold text-text group-hover:text-accent transition-colors line-clamp-1">{item.name}</h3>
+                          <h3 className="text-sm font-bold text-text group-hover:text-accent transition-colors line-clamp-1">
+                            {item.name}
+                          </h3>
                         </div>
-                        <p className="body-text text-xs line-clamp-3">
-                          {item.description}
-                        </p>
+                        <p className="body-text text-xs line-clamp-3">{item.description}</p>
                       </div>
                       <div className="pt-4 flex items-center gap-1 label text-accent/80 group-hover:text-accent transition-colors">
-                        View Spec sheet <ArrowRight className="h-3 w-3 transition-transform duration-200 group-hover:translate-x-0.5" />
+                        View Spec sheet{' '}
+                        <ArrowRight className="h-3 w-3 transition-transform duration-200 group-hover:translate-x-0.5" />
                       </div>
                     </Card>
                   </Link>
@@ -428,14 +462,18 @@ export default async function HomePage() {
                   <h2 className="mt-1">Upcoming Events & Bootcamps</h2>
                 </ScrollReveal>
                 <ScrollReveal direction="up" delay={0.08}>
-                <p className="body-text">
-                    Check out our latest hands-on training workshops, national hackathons, and certifications designed to expand your practical knowledge.
+                  <p className="body-text">
+                    Check out our latest hands-on training workshops, national hackathons, and certifications designed
+                    to expand your practical knowledge.
                   </p>
                 </ScrollReveal>
               </div>
               <div className="shrink-0 text-left">
                 <ScrollReveal direction="up" delay={0.12}>
-                  <Link href="/events" className="label text-warn hover:text-warn font-semibold flex items-center gap-1.5 border border-warn/20 px-4 py-2 rounded-lg hover:bg-warn/5 transition-all">
+                  <Link
+                    href="/events"
+                    className="label text-warn hover:text-warn font-semibold flex items-center gap-1.5 border border-warn/20 px-4 py-2 rounded-lg hover:bg-warn/5 transition-all"
+                  >
                     All Events Calendar <ArrowRight className="h-3.5 w-3.5" />
                   </Link>
                 </ScrollReveal>
@@ -450,17 +488,16 @@ export default async function HomePage() {
                     <div>
                       {/* Photo banner */}
                       <div className="relative h-44 w-full bg-bg overflow-hidden">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
+                        <Image
                           src={evt.image}
                           alt={evt.title}
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          fill
+                          sizes="(max-width: 768px) 100vw, 33vw"
+                          className="object-cover transition-transform duration-500 group-hover:scale-105"
                           referrerPolicy="no-referrer"
                         />
                         <div className="absolute top-3 left-3">
-                          <span className="label bg-warn/90 text-slate-950 px-2 py-0.5 rounded">
-                            {evt.category}
-                          </span>
+                          <span className="label bg-warn/90 text-slate-950 px-2 py-0.5 rounded">{evt.category}</span>
                         </div>
                       </div>
 
@@ -469,9 +506,7 @@ export default async function HomePage() {
                         <h3 className="text-base font-bold text-text group-hover:text-warn transition-colors line-clamp-1">
                           {evt.title}
                         </h3>
-                        <p className="body-text text-xs line-clamp-2">
-                          {evt.description}
-                        </p>
+                        <p className="body-text text-xs line-clamp-2">{evt.description}</p>
 
                         <div className="space-y-1.5 pt-2 label text-text-secondary">
                           <div className="flex items-center gap-2">
@@ -488,7 +523,10 @@ export default async function HomePage() {
 
                     <div className="p-5 pt-0 mt-2 flex items-center justify-between border-t border-border/60">
                       <span className="label text-text-secondary">Registrations Open</span>
-                      <a href="mailto:idealab@kongu.ac.in" className="label text-warn font-semibold hover:text-warn inline-flex items-center gap-1.5">
+                      <a
+                        href="mailto:idealab@kongu.ac.in"
+                        className="label text-warn font-semibold hover:text-warn inline-flex items-center gap-1.5"
+                      >
                         Register <ArrowRight className="h-3 w-3" />
                       </a>
                     </div>
@@ -512,13 +550,18 @@ export default async function HomePage() {
               <h2 className="mt-1">The IEF Ecosystem</h2>
             </ScrollReveal>
             <ScrollReveal direction="up" delay={0.08}>
-            <p className="body-text">
-                The AICTE IDEA Lab @ KEC operates alongside core development cells under the <strong>Innovation & Entrepreneurship Forum (IEF) @ KEC</strong> to fuel comprehensive innovation and entrepreneurial pipelines.
+              <p className="body-text">
+                The AICTE IDEA Lab @ KEC operates alongside core development cells under the{' '}
+                <strong>Innovation & Entrepreneurship Forum (IEF) @ KEC</strong> to fuel comprehensive innovation and
+                entrepreneurial pipelines.
               </p>
             </ScrollReveal>
             <div className="pt-2">
               <ScrollReveal direction="up" delay={0.12}>
-                <Link href="/about" className="label text-accent hover:text-accent font-semibold inline-flex items-center gap-1.5">
+                <Link
+                  href="/about"
+                  className="label text-accent hover:text-accent font-semibold inline-flex items-center gap-1.5"
+                >
                   Explore IEF Ecosystem <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
               </ScrollReveal>
@@ -538,7 +581,8 @@ export default async function HomePage() {
                   </div>
                   <h3 className="text-base font-bold text-text mb-2">Institution&apos;s Innovation Council</h3>
                   <p className="body-text text-xs">
-                    Fosters an active, vibrant local hardware and software startup culture. Directs national hackathons, ideations, and coordinates national innovation rankings.
+                    Fosters an active, vibrant local hardware and software startup culture. Directs national hackathons,
+                    ideations, and coordinates national innovation rankings.
                   </p>
                 </Card>
               </ScrollReveal>
@@ -554,7 +598,8 @@ export default async function HomePage() {
                   </div>
                   <h3 className="text-base font-bold text-text mb-2">Entrepreneurship Development Centre</h3>
                   <p className="body-text text-xs">
-                    Provides comprehensive training on modern management, patent regulations, legal procedures, marketing strategies, and startup operational basics.
+                    Provides comprehensive training on modern management, patent regulations, legal procedures,
+                    marketing strategies, and startup operational basics.
                   </p>
                 </Card>
               </ScrollReveal>
@@ -570,7 +615,8 @@ export default async function HomePage() {
                   </div>
                   <h3 className="text-base font-bold text-text mb-2">Technology Business Incubator</h3>
                   <p className="body-text text-xs">
-                    Establishes physical workspace, administrative services, and technical support. Directs funding channels and guides pre-incubation stages into viable entities.
+                    Establishes physical workspace, administrative services, and technical support. Directs funding
+                    channels and guides pre-incubation stages into viable entities.
                   </p>
                 </Card>
               </ScrollReveal>
@@ -586,7 +632,8 @@ export default async function HomePage() {
                   </div>
                   <h3 className="text-base font-bold text-text mb-2">IDEA Hub</h3>
                   <p className="body-text text-xs">
-                    Provides the heavy machinery, 3D printing equipment, raw CNC tools, and hands-on validation expertise required to manufacture the actual hardware.
+                    Provides the heavy machinery, 3D printing equipment, raw CNC tools, and hands-on validation
+                    expertise required to manufacture the actual hardware.
                   </p>
                 </Card>
               </ScrollReveal>
@@ -607,7 +654,8 @@ export default async function HomePage() {
           </ScrollReveal>
           <ScrollReveal direction="up" delay={0.08}>
             <p className="body-text max-w-2xl mx-auto">
-              Join our equipment orientation workshops, partner with a core student mentor, and start operating industrial-grade machinery safely and confidently.
+              Join our equipment orientation workshops, partner with a core student mentor, and start operating
+              industrial-grade machinery safely and confidently.
             </p>
           </ScrollReveal>
           <ScrollReveal direction="up" delay={0.16}>

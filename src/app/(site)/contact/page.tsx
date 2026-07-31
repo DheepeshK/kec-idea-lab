@@ -19,17 +19,19 @@ const contactSchema = z.object({
   purpose: z.string().trim().min(10, 'Please specify your purpose in at least 10 characters.'),
 });
 
-type FormDataType = z.infer<typeof contactSchema>;
+type FormDataType = z.infer<typeof contactSchema> & { website?: string };
 
 export default function ContactPage() {
   const [formData, setFormData] = useState<FormDataType>({
     name: '',
     rollNoDept: '',
     purpose: '',
+    website: '',
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -49,6 +51,7 @@ export default function ContactPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrors({});
+    setSubmitError(null);
     setSubmitting(true);
 
     const result = contactSchema.safeParse(formData);
@@ -72,13 +75,22 @@ export default function ContactPage() {
     }
 
     try {
-      await fetch('/api/contact', {
+      const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(result.data),
+        body: JSON.stringify({ ...result.data, website: formData.website || '' }),
       });
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        setSubmitError(data.error || 'Something went wrong while submitting. Please try again.');
+        setSubmitting(false);
+        return;
+      }
     } catch {
-      // API error is non-blocking — mailto still works
+      setSubmitError('Network error. Please try again.');
+      setSubmitting(false);
+      return;
     }
 
     const emailSubject = `${formData.name} - KEC Idea Lab`;
@@ -97,6 +109,7 @@ export default function ContactPage() {
       purpose: '',
     });
     setErrors({});
+    setSubmitError(null);
     setSubmitSuccess(false);
   };
 
@@ -163,6 +176,19 @@ export default function ContactPage() {
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-6">
+                    {/* Honeypot (hidden from humans, bots fill it) */}
+                    <div className="absolute -left-[9999px] top-auto" aria-hidden="true">
+                      <label htmlFor="website">Website</label>
+                      <input
+                        type="text"
+                        id="website"
+                        name="website"
+                        tabIndex={-1}
+                        autoComplete="off"
+                        value={formData.website}
+                        onChange={(e) => setFormData((prev) => ({ ...prev, website: e.target.value }))}
+                      />
+                    </div>
                     {/* Name */}
                     <div id="field-name" className="space-y-1.5">
                       <label className="block text-xs font-semibold text-text-secondary">
@@ -184,7 +210,6 @@ export default function ContactPage() {
                         </p>
                       )}
                     </div>
-
                     {/* Roll No / Dept */}
                     <div id="field-rollNoDept" className="space-y-1.5">
                       <label className="block text-xs font-semibold text-text-secondary">
@@ -208,7 +233,6 @@ export default function ContactPage() {
                         </p>
                       )}
                     </div>
-
                     {/* Purpose */}
                     <div id="field-purpose" className="space-y-1.5">
                       <label className="block text-xs font-semibold text-text-secondary">
@@ -232,8 +256,7 @@ export default function ContactPage() {
                         </p>
                       )}
                     </div>
-
-                    {/* Student Expectations Note */}
+                    {/* Student Expectations Note */}{' '}
                     <div className="bg-accent-3/5 border border-accent-3/20 rounded-xl p-4 flex gap-3 items-start">
                       <Cpu className="h-5 w-5 text-accent-3 shrink-0 mt-0.5" />
                       <div className="space-y-1">
@@ -244,8 +267,13 @@ export default function ContactPage() {
                         </p>
                       </div>
                     </div>
-
                     {/* Submit Button */}
+                    {submitError && (
+                      <div className="bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs p-3 rounded-lg flex items-center gap-2">
+                        <AlertTriangle className="h-4 w-4 shrink-0" />
+                        <span>{submitError}</span>
+                      </div>
+                    )}
                     <MagneticButton className="w-full">
                       <Button
                         type="submit"

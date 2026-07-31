@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useCallback } from 'react';
+import Image from 'next/image';
 import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 import Badge from '@/components/ui/Badge';
@@ -11,7 +12,20 @@ import { SkeletonList } from '@/components/ui/Skeleton';
 import { useToast } from '@/components/ui/Toast';
 import { useAdminCrud } from '@/hooks/useAdminCrud';
 import { useCtrlSave } from '@/hooks/useCtrlSave';
-import { Calendar, MapPin, Clock, Edit, Trash2, X, ChevronUp, ChevronDown, Menu, XCircle, Eye, EyeOff } from 'lucide-react';
+import {
+  Calendar,
+  MapPin,
+  Clock,
+  Edit,
+  Trash2,
+  X,
+  ChevronUp,
+  ChevronDown,
+  Menu,
+  XCircle,
+  Eye,
+  EyeOff,
+} from 'lucide-react';
 
 interface EventItem {
   _id: string;
@@ -181,13 +195,18 @@ export default function AdminEventsPage() {
         toast('success', `Event is now ${newStatus}.`);
         refresh();
       }
-    } catch { toast('error', 'Failed to toggle status.'); }
+    } catch {
+      toast('error', 'Failed to toggle status.');
+    }
   };
 
-  const submitHandler = useCallback((e?: React.FormEvent) => {
-    if (e) e.preventDefault();
-    handleSubmit(e || new Event('submit') as any);
-  }, [editingId, title, description, date, time, location, category, imageUrl]);
+  const submitHandler = useCallback(
+    (e?: React.FormEvent) => {
+      if (e) e.preventDefault();
+      handleSubmit(e || (new Event('submit') as any));
+    },
+    [editingId, title, description, date, time, location, category, imageUrl],
+  );
 
   useCtrlSave(() => submitHandler(), !!editingId || !!(title || description || date));
 
@@ -195,7 +214,7 @@ export default function AdminEventsPage() {
     (ev) =>
       ev.title.toLowerCase().includes(search.toLowerCase()) ||
       ev.category.toLowerCase().includes(search.toLowerCase()) ||
-      ev.location?.toLowerCase().includes(search.toLowerCase())
+      ev.location?.toLowerCase().includes(search.toLowerCase()),
   );
 
   const sorted = [...filtered].sort((a, b) => {
@@ -208,7 +227,10 @@ export default function AdminEventsPage() {
 
   const toggleSort = (field: typeof sortField) => {
     if (sortField === field) setSortDir((d) => (d === 'asc' ? 'desc' : 'asc'));
-    else { setSortField(field); setSortDir('asc'); }
+    else {
+      setSortField(field);
+      setSortDir('asc');
+    }
   };
 
   const SortIcon = ({ field }: { field: typeof sortField }) => {
@@ -234,7 +256,10 @@ export default function AdminEventsPage() {
         message="You have unsaved changes in the edit form. Discard them?"
         confirmLabel="Discard"
         variant="danger"
-        onConfirm={() => { setCancelTarget(false); doCancelEdit(); }}
+        onConfirm={() => {
+          setCancelTarget(false);
+          doCancelEdit();
+        }}
         onCancel={() => setCancelTarget(false)}
       />
 
@@ -250,7 +275,7 @@ export default function AdminEventsPage() {
           className="lg:hidden flex items-center gap-2 px-4 py-2 rounded-lg bg-accent text-text text-xs font-bold"
         >
           {showForm ? <XCircle className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
-          {showForm ? 'Close Form' : (editingId ? 'Edit Event' : 'Add Event')}
+          {showForm ? 'Close Form' : editingId ? 'Edit Event' : 'Add Event'}
         </button>
       </div>
 
@@ -294,7 +319,9 @@ export default function AdminEventsPage() {
                   placeholder="Comprehensive introduction to SLA printing, parameter settings, slicing engines, and post-processing..."
                   className={`w-full bg-bg border rounded-lg px-3 py-2 text-sm text-text placeholder-text-secondary focus:outline-none transition-all duration-300 focus:shadow-lg focus:shadow-accent/5 resize-none ${errors.description ? 'border-accent' : 'border-border focus:border-accent'}`}
                 />
-                {errors.description && <p className="text-[10px] text-accent font-semibold mt-0.5">{errors.description}</p>}
+                {errors.description && (
+                  <p className="text-[10px] text-accent font-semibold mt-0.5">{errors.description}</p>
+                )}
               </div>
 
               <div className="space-y-1.5">
@@ -311,11 +338,7 @@ export default function AdminEventsPage() {
                 </select>
               </div>
 
-              <ImageUploadField
-                label="Promo Banner Image"
-                value={imageUrl}
-                onChange={setImageUrl}
-              />
+              <ImageUploadField label="Promo Banner Image" value={imageUrl} onChange={setImageUrl} />
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1.5">
@@ -359,7 +382,13 @@ export default function AdminEventsPage() {
                     Cancel
                   </Button>
                 )}
-                <Button type="submit" variant="primary" fullWidth={!editingId} className="flex-1 text-xs gap-2" disabled={formSubmitting}>
+                <Button
+                  type="submit"
+                  variant="primary"
+                  fullWidth={!editingId}
+                  className="flex-1 text-xs gap-2"
+                  disabled={formSubmitting}
+                >
                   {formSubmitting ? 'Processing...' : editingId ? 'Update Event' : 'Schedule Event'}
                 </Button>
               </div>
@@ -372,7 +401,9 @@ export default function AdminEventsPage() {
             <div className="flex items-center justify-between mb-4 flex-wrap gap-3">
               <div className="flex items-center gap-3">
                 <h2 className="text-lg font-bold text-text">Events</h2>
-                <span className="text-[10px] text-text-secondary bg-bg-elevated px-2 py-0.5 rounded border border-border">{sorted.length}</span>
+                <span className="text-[10px] text-text-secondary bg-bg-elevated px-2 py-0.5 rounded border border-border">
+                  {sorted.length}
+                </span>
               </div>
               <div className="w-full sm:w-64">
                 <SearchInput value={search} onChange={setSearch} placeholder="Search by title, category, location..." />
@@ -402,20 +433,26 @@ export default function AdminEventsPage() {
                   {search ? 'No matching events found' : 'No events scheduled'}
                 </p>
                 <p className="text-[10px] text-text-secondary max-w-xs mx-auto">
-                  {search ? 'Try a different search term.' : 'Add custom workshops on the left to populate the database.'}
+                  {search
+                    ? 'Try a different search term.'
+                    : 'Add custom workshops on the left to populate the database.'}
                 </p>
               </div>
             ) : (
               <div className="space-y-4 divide-y divide-border/60">
                 {sorted.map((event) => (
-                  <div key={event._id} className="pt-4 first:pt-0 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <div
+                    key={event._id}
+                    className="pt-4 first:pt-0 flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                  >
                     <div className="space-y-1.5 flex-1">
                       <div className="flex items-center gap-2 flex-wrap">
                         {event.imageUrl || event.image ? (
-                          // eslint-disable-next-line @next/next/no-img-element
-                          <img
-                            src={event.imageUrl || event.image}
+                          <Image
+                            src={(event.imageUrl || event.image) as string}
                             alt={event.title}
+                            width={64}
+                            height={40}
                             className="h-10 w-16 rounded object-cover border border-border shrink-0"
                           />
                         ) : (
@@ -425,9 +462,23 @@ export default function AdminEventsPage() {
                         )}
                         <div>
                           <span className="font-bold text-sm text-text block leading-tight">{event.title}</span>
-                          <span className="text-[10px] text-text-secondary">{event._id.substring(event._id.length - 6)}</span>
+                          <span className="text-[10px] text-text-secondary">
+                            {event._id.substring(event._id.length - 6)}
+                          </span>
                         </div>
-                        <Badge variant={event.category === 'Workshop' ? 'primary' : event.category === 'Hackathon' ? 'danger' : event.category === 'Ideathon' ? 'success' : 'warning'}>{event.category}</Badge>
+                        <Badge
+                          variant={
+                            event.category === 'Workshop'
+                              ? 'primary'
+                              : event.category === 'Hackathon'
+                                ? 'danger'
+                                : event.category === 'Ideathon'
+                                  ? 'success'
+                                  : 'warning'
+                          }
+                        >
+                          {event.category}
+                        </Badge>
                         {/* Status badge */}
                         <button
                           onClick={() => toggleStatus(event)}
@@ -465,7 +516,10 @@ export default function AdminEventsPage() {
                     <div className="flex sm:flex-col items-end gap-2 shrink-0">
                       <div className="flex gap-2">
                         <button
-                          onClick={() => { setShowForm(true); handleEditClick(event); }}
+                          onClick={() => {
+                            setShowForm(true);
+                            handleEditClick(event);
+                          }}
                           className="p-1.5 hover:text-text text-text-secondary bg-bg-elevated hover:bg-border/20 border border-border rounded transition-colors"
                           title="Edit event details"
                         >
@@ -490,4 +544,3 @@ export default function AdminEventsPage() {
     </div>
   );
 }
-

@@ -13,14 +13,14 @@ export default withAuth(
         if (pathname === '/admin/login') {
           return true;
         }
-        // Protect all other admin routes
-        return !!token;
+        // Protect all other admin routes and enforce the admin role
+        return !!token && token.role === 'superadmin';
       },
     },
     pages: {
       signIn: '/admin/login',
     },
-  }
+  },
 );
 
 export const config = {

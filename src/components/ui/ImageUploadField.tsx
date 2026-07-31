@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
+import Image from 'next/image';
 import { UploadCloud, Trash2, Loader2 } from 'lucide-react';
 import Button from '@/components/ui/Button';
 
@@ -23,7 +24,7 @@ export default function ImageUploadField({
 
   const handleUpload = async (file: File) => {
     if (!file) return;
-    
+
     // Size check
     if (file.size > 5 * 1024 * 1024) {
       setError('File is too large (max 5MB).');
@@ -74,7 +75,7 @@ export default function ImageUploadField({
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     if (disabled || uploading) return;
-    
+
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       handleUpload(e.dataTransfer.files[0]);
     }
@@ -88,14 +89,15 @@ export default function ImageUploadField({
   return (
     <div className="space-y-1.5 w-full">
       <label className="block text-xs font-semibold text-text-secondary">{label}</label>
-      
+
       {value ? (
         <div className="relative group rounded-lg overflow-hidden border border-border bg-bg aspect-video max-h-48 flex items-center justify-center">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Image
             src={value}
             alt="Uploaded preview"
-            className="h-full w-full object-cover"
+            fill
+            sizes="(max-width: 768px) 100vw, 400px"
+            className="object-cover"
           />
           <div className="absolute inset-0 bg-bg/70 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
             <Button
@@ -136,13 +138,11 @@ export default function ImageUploadField({
           ) : (
             <UploadCloud className="h-8 w-8 text-text-secondary mb-2" />
           )}
-          
+
           <p className="text-xs text-text font-medium">
             {uploading ? 'Uploading asset...' : 'Drag & drop image, or click to select'}
           </p>
-          <p className="text-[10px] text-text-secondary mt-1">
-            JPEG, PNG, GIF, WebP (Max 5MB)
-          </p>
+          <p className="text-[10px] text-text-secondary mt-1">JPEG, PNG, GIF, WebP (Max 5MB)</p>
         </div>
       )}
 
@@ -155,11 +155,7 @@ export default function ImageUploadField({
         disabled={disabled || uploading}
       />
 
-      {error && (
-        <p className="text-[10px] text-rose-400 font-semibold mt-1">
-          {error}
-        </p>
-      )}
+      {error && <p className="text-[10px] text-rose-400 font-semibold mt-1">{error}</p>}
     </div>
   );
 }

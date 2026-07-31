@@ -12,6 +12,12 @@ coverage/
 # Server
 server.log
 
+# Runtime data (contains PII) — seed data stays in tracked data/*.json
+.data/
+
+# Runtime uploads
+public/uploads/
+
 # IDE
 .vscode/
 .idea/

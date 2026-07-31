@@ -14,8 +14,9 @@ export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const eventId = searchParams.get('eventId');
 
-    const registrations = getAll<any>('registrations', (a, b) =>
-      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    const registrations = getAll<any>(
+      'registrations',
+      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
     );
 
     const events = getAll<any>('events');
@@ -47,7 +48,8 @@ export async function GET(req: NextRequest) {
       },
     });
   } catch (err: any) {
-    return NextResponse.json({ success: false, error: err.message }, { status: 500 });
+    console.error('Failed to export registrations:', err);
+    return NextResponse.json({ success: false, error: 'Internal server error.' }, { status: 500 });
   }
 }
 

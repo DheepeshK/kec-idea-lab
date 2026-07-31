@@ -8,7 +8,8 @@ export async function GET() {
     const items = getAll('equipment', (a, b) => (a.order || 0) - (b.order || 0) || a.name.localeCompare(b.name));
     return NextResponse.json({ success: true, data: items });
   } catch (error: any) {
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+    console.error('Failed to fetch equipment:', error);
+    return NextResponse.json({ success: false, error: 'Internal server error.' }, { status: 500 });
   }
 }
 
@@ -20,6 +21,7 @@ export async function POST(req: NextRequest) {
     const newItem = create('equipment', body);
     return NextResponse.json({ success: true, data: newItem }, { status: 201 });
   } catch (error: any) {
-    return NextResponse.json({ success: false, error: error.message }, { status: 400 });
+    console.error('Failed to create equipment:', error);
+    return NextResponse.json({ success: false, error: 'Internal server error.' }, { status: 400 });
   }
 }

@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 import { z } from 'zod';
 import ScrollReveal from '@/components/motion/ScrollReveal';
 import Card from '@/components/ui/Card';
@@ -92,17 +93,50 @@ function RegistrationModal({ event, onClose }: { event: EventItem; onClose: () =
   const [rollNoDept, setRollNoDept] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  const [website, setWebsite] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+  const dialogRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const previouslyFocused = document.activeElement as HTMLElement | null;
+
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === 'Escape') {
+        onClose();
+        return;
+      }
+      if (e.key === 'Tab') {
+        const dialog = dialogRef.current;
+        if (!dialog) return;
+        const focusable = dialog.querySelectorAll<HTMLElement>(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+        );
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
     };
+
     document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
+    dialogRef.current?.focus();
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = previousOverflow;
+      previouslyFocused?.focus();
+    };
   }, [onClose]);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -133,6 +167,7 @@ function RegistrationModal({ event, onClose }: { event: EventItem; onClose: () =
           rollNoDept,
           email,
           phone,
+          website,
         }),
       });
 
@@ -161,6 +196,8 @@ function RegistrationModal({ event, onClose }: { event: EventItem; onClose: () =
 
   return (
     <div
+      ref={dialogRef}
+      tabIndex={-1}
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
       onClick={onClose}
       role="dialog"
@@ -197,6 +234,20 @@ function RegistrationModal({ event, onClose }: { event: EventItem; onClose: () =
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
+              {/* Honeypot (hidden from humans, bots fill it) */}
+              <div className="absolute -left-[9999px] top-auto" aria-hidden="true">
+                <label htmlFor="reg-website">Website</label>
+                <input
+                  type="text"
+                  id="reg-website"
+                  name="website"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={website}
+                  onChange={(e) => setWebsite(e.target.value)}
+                />
+              </div>
+
               <div className="bg-accent/5 border border-accent/10 rounded-lg p-3 mb-2">
                 <p className="text-xs font-bold text-text">{event.title}</p>
                 <p className="text-[10px] text-text-secondary">
@@ -367,11 +418,12 @@ export default function EventsFilterableGrid({ events }: EventsFilterableGridPro
                     {/* Media Display Area */}
                     <div className="relative h-40 sm:h-52 w-full bg-bg overflow-hidden shrink-0">
                       {displayImage ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
+                        <Image
                           src={displayImage}
                           alt={evt.title}
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-103"
+                          fill
+                          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                          className="object-cover transition-transform duration-500 group-hover:scale-103"
                           referrerPolicy="no-referrer"
                         />
                       ) : (

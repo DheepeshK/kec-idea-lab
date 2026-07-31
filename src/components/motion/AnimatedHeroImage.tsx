@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
+import Image from 'next/image';
 
 export default function AnimatedHeroImage() {
   const [tilt, setTilt] = useState<string | null>(null);
@@ -20,7 +21,10 @@ export default function AnimatedHeroImage() {
   };
 
   const handleLeave = () => {
-    if (raf.current) { cancelAnimationFrame(raf.current); raf.current = 0; }
+    if (raf.current) {
+      cancelAnimationFrame(raf.current);
+      raf.current = 0;
+    }
     setTilt(null);
     setGlowOffset(null);
   };
@@ -36,11 +40,7 @@ export default function AnimatedHeroImage() {
         }}
       />
 
-      <div
-        className="relative w-full h-full z-10"
-        onMouseMove={handleMove}
-        onMouseLeave={handleLeave}
-      >
+      <div className="relative w-full h-full z-10" onMouseMove={handleMove} onMouseLeave={handleLeave}>
         <div
           className="w-full h-full animate-organic-float"
           style={{
@@ -50,11 +50,13 @@ export default function AnimatedHeroImage() {
           }}
         >
           <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-accent/40 via-accent-2/30 to-accent-3/40 p-[2.5px] shadow-2xl shadow-accent/20">
-            <div className="w-full h-full rounded-2xl bg-bg-elevated flex items-center justify-center p-6">
-              <img
+            <div className="relative w-full h-full rounded-2xl bg-bg-elevated flex items-center justify-center p-6">
+              <Image
                 src="/IDEALab.png"
                 alt="AICTE IDEA Lab"
-                className="w-full h-full object-contain"
+                fill
+                sizes="(max-width: 640px) 80vw, 460px"
+                className="object-contain"
               />
             </div>
           </div>

@@ -19,7 +19,9 @@ const SEED: Record<string, any[]> = {
 };
 
 const isVercel = !!process.env.VERCEL;
-const DATA_DIR = isVercel ? '/tmp/data' : path.join(process.cwd(), 'data');
+// Runtime writes go to a gitignored directory so student PII never lands in tracked
+// `data/*.json` seed files. Seed files stay immutable in the repo.
+const DATA_DIR = isVercel ? '/tmp/data' : path.join(process.cwd(), '.data');
 
 let seeded = false;
 

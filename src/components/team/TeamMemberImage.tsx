@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 
 export default function TeamMemberImage({ src, name }: { src: string; name: string }) {
   const [errored, setErrored] = useState(false);
@@ -10,12 +11,13 @@ export default function TeamMemberImage({ src, name }: { src: string; name: stri
   }
 
   return (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
+    <Image
       src={src}
       alt={name}
+      fill
+      sizes="(max-width: 640px) 6rem, (min-width: 640px) 8rem"
       onError={() => setErrored(true)}
-      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+      className="object-cover transition-transform duration-300 group-hover:scale-105"
       referrerPolicy="no-referrer"
     />
   );
@@ -25,7 +27,9 @@ function AvatarPlaceholder({ name }: { name: string }) {
   const initials = getInitials(name);
   const colorClass = getAccentGradient(name);
   return (
-    <div className={`h-full w-full bg-gradient-to-br ${colorClass} flex items-center justify-center font-sans font-bold text-lg tracking-wider relative overflow-hidden shadow-inner`}>
+    <div
+      className={`h-full w-full bg-gradient-to-br ${colorClass} flex items-center justify-center font-sans font-bold text-lg tracking-wider relative overflow-hidden shadow-inner`}
+    >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(255,255,255,0.18),transparent)] pointer-events-none" />
       <div className="absolute h-12 w-12 rounded-full border border-white/5 scale-[1.7] pointer-events-none opacity-45" />
       <div className="absolute h-12 w-12 rounded-full border border-white/5 scale-[2.4] pointer-events-none opacity-20" />
@@ -54,9 +58,12 @@ function getAccentGradient(name: string) {
 }
 
 function getInitials(name: string) {
-  const parts = name.split(' ').filter(p => !p.toLowerCase().includes('.') && p.trim().length > 0);
+  const parts = name.split(' ').filter((p) => !p.toLowerCase().includes('.') && p.trim().length > 0);
   if (parts.length === 0) {
-    const cleaned = name.replace(/[^A-Za-z\s]/g, '').trim().split(/\s+/);
+    const cleaned = name
+      .replace(/[^A-Za-z\s]/g, '')
+      .trim()
+      .split(/\s+/);
     if (cleaned.length > 0 && cleaned[0].length > 0) {
       return (cleaned[0][0] + (cleaned[1]?.[0] || '')).toUpperCase();
     }

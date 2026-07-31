@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useCallback } from 'react';
+import Image from 'next/image';
 import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 import Badge from '@/components/ui/Badge';
@@ -11,7 +12,20 @@ import { SkeletonList } from '@/components/ui/Skeleton';
 import { useToast } from '@/components/ui/Toast';
 import { useAdminCrud } from '@/hooks/useAdminCrud';
 import { useCtrlSave } from '@/hooks/useCtrlSave';
-import { Users, Mail, Edit, Trash2, X, Github, Linkedin, Twitter, ChevronUp, ChevronDown, Menu, XCircle } from 'lucide-react';
+import {
+  Users,
+  Mail,
+  Edit,
+  Trash2,
+  X,
+  Github,
+  Linkedin,
+  Twitter,
+  ChevronUp,
+  ChevronDown,
+  Menu,
+  XCircle,
+} from 'lucide-react';
 
 interface TeamMember {
   _id: string;
@@ -77,7 +91,10 @@ export default function AdminTeamPage() {
   };
 
   const handleCancelEdit = () => {
-    if (editingId) { setCancelTarget(true); return; }
+    if (editingId) {
+      setCancelTarget(true);
+      return;
+    }
     doCancelEdit();
   };
 
@@ -186,10 +203,13 @@ export default function AdminTeamPage() {
     }).catch(() => {});
   };
 
-  const submitHandler = useCallback((e?: React.FormEvent) => {
-    if (e) e.preventDefault();
-    handleSubmit(e || new Event('submit') as any);
-  }, [editingId, name, role, group, focusArea, photoUrl, designation, bio, email, order, linkedin, github, twitter]);
+  const submitHandler = useCallback(
+    (e?: React.FormEvent) => {
+      if (e) e.preventDefault();
+      handleSubmit(e || (new Event('submit') as any));
+    },
+    [editingId, name, role, group, focusArea, photoUrl, designation, bio, email, order, linkedin, github, twitter],
+  );
 
   useCtrlSave(() => submitHandler(), !!editingId);
 
@@ -199,7 +219,7 @@ export default function AdminTeamPage() {
       m.role.toLowerCase().includes(search.toLowerCase()) ||
       m.group.toLowerCase().includes(search.toLowerCase()) ||
       m.designation?.toLowerCase().includes(search.toLowerCase()) ||
-      m.focusArea?.toLowerCase().includes(search.toLowerCase())
+      m.focusArea?.toLowerCase().includes(search.toLowerCase()),
   );
 
   const sorted = [...filtered].sort((a, b) => {
@@ -212,7 +232,10 @@ export default function AdminTeamPage() {
 
   const toggleSort = (field: typeof sortField) => {
     if (sortField === field) setSortDir((d) => (d === 'asc' ? 'desc' : 'asc'));
-    else { setSortField(field); setSortDir('asc'); }
+    else {
+      setSortField(field);
+      setSortDir('asc');
+    }
   };
 
   const SortIcon = ({ field }: { field: typeof sortField }) => {
@@ -220,12 +243,15 @@ export default function AdminTeamPage() {
     return sortDir === 'asc' ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />;
   };
 
-  const grouped = sorted.reduce((acc, m) => {
-    const g = m.group || 'Other';
-    if (!acc[g]) acc[g] = [];
-    acc[g].push(m);
-    return acc;
-  }, {} as Record<string, typeof sorted>);
+  const grouped = sorted.reduce(
+    (acc, m) => {
+      const g = m.group || 'Other';
+      if (!acc[g]) acc[g] = [];
+      acc[g].push(m);
+      return acc;
+    },
+    {} as Record<string, typeof sorted>,
+  );
 
   return (
     <div className="space-y-8">
@@ -245,7 +271,10 @@ export default function AdminTeamPage() {
         message="You have unsaved changes in the edit form. Discard them?"
         confirmLabel="Discard"
         variant="danger"
-        onConfirm={() => { setCancelTarget(false); doCancelEdit(); }}
+        onConfirm={() => {
+          setCancelTarget(false);
+          doCancelEdit();
+        }}
         onCancel={() => setCancelTarget(false)}
       />
 
@@ -261,7 +290,7 @@ export default function AdminTeamPage() {
           className="lg:hidden flex items-center gap-2 px-4 py-2 rounded-lg bg-accent text-text text-xs font-bold"
         >
           {showForm ? <XCircle className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
-          {showForm ? 'Close Form' : (editingId ? 'Edit Member' : 'Add Member')}
+          {showForm ? 'Close Form' : editingId ? 'Edit Member' : 'Add Member'}
         </button>
       </div>
 
@@ -359,11 +388,7 @@ export default function AdminTeamPage() {
                 />
               </div>
 
-              <ImageUploadField
-                label="Profile Photograph"
-                value={photoUrl}
-                onChange={setPhotoUrl}
-              />
+              <ImageUploadField label="Profile Photograph" value={photoUrl} onChange={setPhotoUrl} />
 
               <div className="space-y-1.5">
                 <label className="block text-xs font-semibold text-text-secondary">Brief Bio</label>
@@ -430,7 +455,13 @@ export default function AdminTeamPage() {
                     Cancel
                   </Button>
                 )}
-                <Button type="submit" variant="primary" fullWidth={!editingId} className="flex-1 text-xs gap-2" disabled={formSubmitting}>
+                <Button
+                  type="submit"
+                  variant="primary"
+                  fullWidth={!editingId}
+                  className="flex-1 text-xs gap-2"
+                  disabled={formSubmitting}
+                >
                   {formSubmitting ? 'Processing...' : editingId ? 'Update Member' : 'Register Member'}
                 </Button>
               </div>
@@ -443,7 +474,9 @@ export default function AdminTeamPage() {
             <div className="flex items-center justify-between mb-4 flex-wrap gap-3">
               <div className="flex items-center gap-3">
                 <h2 className="text-lg font-bold text-text">Team</h2>
-                <span className="text-[10px] text-text-secondary bg-bg-elevated px-2 py-0.5 rounded border border-border">{sorted.length}</span>
+                <span className="text-[10px] text-text-secondary bg-bg-elevated px-2 py-0.5 rounded border border-border">
+                  {sorted.length}
+                </span>
               </div>
               <div className="w-full sm:w-64">
                 <SearchInput value={search} onChange={setSearch} placeholder="Search by name, role, group..." />
@@ -485,14 +518,18 @@ export default function AdminTeamPage() {
                     </h3>
                     <div className="space-y-4">
                       {members.map((member) => (
-                        <div key={member._id} className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-bg-elevated/20 rounded-xl p-4 border border-border/40">
+                        <div
+                          key={member._id}
+                          className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-bg-elevated/20 rounded-xl p-4 border border-border/40"
+                        >
                           <div className="space-y-1.5 flex-1">
                             <div className="flex items-center gap-2 flex-wrap">
                               {member.photoUrl || member.image ? (
-                                // eslint-disable-next-line @next/next/no-img-element
-                                <img
-                                  src={member.photoUrl || member.image}
+                                <Image
+                                  src={(member.photoUrl || member.image) as string}
                                   alt={member.name}
+                                  width={32}
+                                  height={32}
                                   className="h-8 w-8 rounded-full object-cover border border-border shrink-0 shadow-md shadow-accent/10"
                                 />
                               ) : (
@@ -502,15 +539,30 @@ export default function AdminTeamPage() {
                               )}
                               <div>
                                 <span className="font-bold text-sm text-text block leading-tight">{member.name}</span>
-                                <span className="text-[10px] text-text-secondary">{member.designation || 'Idea Lab Staff'}</span>
+                                <span className="text-[10px] text-text-secondary">
+                                  {member.designation || 'Idea Lab Staff'}
+                                </span>
                               </div>
-                              <Badge variant={member.group === 'Faculty' ? 'primary' : member.group === 'Mentor' ? 'secondary' : 'warning'}>
+                              <Badge
+                                variant={
+                                  member.group === 'Faculty'
+                                    ? 'primary'
+                                    : member.group === 'Mentor'
+                                      ? 'secondary'
+                                      : 'warning'
+                                }
+                              >
                                 {member.group}
                               </Badge>
                             </div>
                             <p className="text-xs text-text-secondary">
                               Role: <b>{member.role}</b>
-                              {member.focusArea && <> &bull; Focus: <b>{member.focusArea}</b></>}
+                              {member.focusArea && (
+                                <>
+                                  {' '}
+                                  &bull; Focus: <b>{member.focusArea}</b>
+                                </>
+                              )}
                             </p>
                             {member.email && (
                               <p className="text-[10px] text-text-secondary flex items-center gap-1 font-mono">
@@ -520,7 +572,9 @@ export default function AdminTeamPage() {
                           </div>
                           <div className="flex sm:flex-col items-end gap-3 justify-between sm:justify-start">
                             <div className="text-right space-y-1.5">
-                              <label className="block text-[10px] text-text-secondary uppercase font-bold">Sort Order</label>
+                              <label className="block text-[10px] text-text-secondary uppercase font-bold">
+                                Sort Order
+                              </label>
                               <input
                                 type="number"
                                 defaultValue={member.order}
@@ -530,7 +584,10 @@ export default function AdminTeamPage() {
                             </div>
                             <div className="flex gap-2">
                               <button
-                                onClick={() => { setShowForm(true); handleEditClick(member); }}
+                                onClick={() => {
+                                  setShowForm(true);
+                                  handleEditClick(member);
+                                }}
                                 className="p-1.5 hover:text-text text-text-secondary bg-bg-elevated hover:bg-border/20 border border-border rounded transition-colors"
                                 title="Edit member details"
                               >
@@ -558,4 +615,3 @@ export default function AdminTeamPage() {
     </div>
   );
 }
-
