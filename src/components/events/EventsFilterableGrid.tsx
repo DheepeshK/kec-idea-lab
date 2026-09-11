@@ -489,7 +489,7 @@ export default function EventsFilterableGrid({ events }: EventsFilterableGridPro
                     <button
                       id={`register-btn-${evt._id}`}
                       onClick={() => setRegisteringEvent(evt)}
-                      className="group/btn inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-accent/10 border border-accent/20 text-accent label font-semibold hover:bg-accent hover:text-white hover:border-accent transition-all duration-300 focus:outline-none"
+                      className="group/btn inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-accent/10 border border-accent/20 text-accent label font-semibold hover:bg-accent hover:text-white hover:border-accent transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
                     >
                       <span>Apply Now</span>
                       <ArrowRight className="h-3 w-3 transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />

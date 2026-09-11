@@ -6,9 +6,10 @@
   --bg: #080b18;
   --bg-elevated: #0e1428;
   --text: #f0f4f8;
-  --text-secondary: #94a3b8;
+  --text-secondary: #a7b3c8;
   --border: #1a2248;
   --accent: #d2232a;
+  --accent-text: #f87171;
   --accent-2: #f9a01b;
   --accent-3: #009444;
   --warn: #f9a01b;
@@ -22,10 +23,23 @@
   --text-secondary: #475569;
   --border: #e2e5ea;
   --accent: #0b4c8c;
+  --accent-text: #0b4c8c;
   --accent-2: #d2232a;
   --accent-3: #009444;
   --warn: #b45309;
   --success: #009444;
+}
+
+/* Brighter accent for text usage so it clears WCAG AA on dark backgrounds */
+.text-accent {
+  color: var(--accent-text);
+}
+
+/* Keep placeholders readable (Tailwind utilities often set 50% opacity) */
+input::placeholder,
+textarea::placeholder {
+  color: color-mix(in srgb, var(--text-secondary) 85%, var(--text));
+  opacity: 1;
 }
 
 html,
@@ -122,7 +136,13 @@ a {
 * {
   box-sizing: border-box;
   border-color: var(--border);
-  caret-color: transparent;
+}
+
+input,
+textarea,
+select,
+[contenteditable='true'] {
+  caret-color: var(--accent);
 }
 
 @keyframes float {
@@ -384,4 +404,20 @@ a {
 html {
   scrollbar-color: var(--border) var(--bg);
   scrollbar-width: thin;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+  }
 }

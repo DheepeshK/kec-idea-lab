@@ -4,6 +4,9 @@ export const metadata = {
     'Innovation and Entrepreneurship Development Lab at Kongu Engineering College — fostering creativity, hands-on learning, and industry collaboration.',
 };
 
+// Always pull fresh equipment/events so admin edits appear immediately
+export const revalidate = 0;
+
 import Link from 'next/link';
 import Image from 'next/image';
 import {
@@ -574,7 +577,7 @@ export default async function HomePage() {
               <ScrollReveal direction="up" delay={0.0}>
                 <Card className="p-5 border-border/50 bg-bg-elevated/30 hover:border-accent/20">
                   <div className="flex items-center gap-3 mb-2">
-                    <div className="relative w-15 h-12 rounded-md overflow-hidden bg-bg border border-border/30 shrink-0">
+                    <div className="relative w-16 h-12 rounded-md overflow-hidden bg-bg border border-border/30 shrink-0">
                       <img src="/IIC.png" alt="IIC" className="w-full h-full object-contain p-0.5" />
                     </div>
                     <span className="label text-accent">IIC @ KEC</span>
@@ -591,7 +594,7 @@ export default async function HomePage() {
               <ScrollReveal direction="up" delay={0.08}>
                 <Card className="p-5 border-border/50 bg-bg-elevated/30 hover:border-accent-2/20">
                   <div className="flex items-center gap-3 mb-2">
-                    <div className="relative w-18 h-12 rounded-md overflow-hidden bg-bg border border-border/30 shrink-0">
+                    <div className="relative w-20 h-12 rounded-md overflow-hidden bg-bg border border-border/30 shrink-0">
                       <img src="/EMDC.png" alt="EMDC" className="w-full h-full object-contain p-0.5" />
                     </div>
                     <span className="label text-accent">EMDC @ KEC</span>

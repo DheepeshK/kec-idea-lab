@@ -153,6 +153,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             backgroundColor: 'var(--bg)',
             transition: 'opacity 0.6s ease-out',
             overflow: 'hidden',
+            visibility: 'hidden',
           }}
         >
           {/* Animated gradient bg */}

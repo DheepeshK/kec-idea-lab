@@ -143,7 +143,7 @@ export default function Navbar() {
             {mounted && (
               <button
                 onClick={toggleTheme}
-                className="p-2 rounded-lg border border-border/60 text-text-secondary hover:text-accent hover:border-accent/40 hover:bg-accent/5 transition-all duration-300"
+                className="p-2 rounded-lg border border-border/60 text-text-secondary hover:text-accent hover:border-accent/40 hover:bg-accent/5 transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
                 aria-label="Toggle Theme"
                 id="navbar-theme-toggle"
               >
@@ -157,7 +157,7 @@ export default function Navbar() {
             {mounted && (
               <button
                 onClick={toggleTheme}
-                className="p-2 rounded-lg border border-border text-text hover:bg-border/20 transition-colors"
+                className="p-2 rounded-lg border border-border text-text hover:bg-border/20 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
                 aria-label="Toggle Theme"
               >
                 {isDark ? <Sun className="h-4 w-4 text-warn" /> : <Moon className="h-4 w-4 text-accent" />}
@@ -167,8 +167,10 @@ export default function Navbar() {
             <button
               ref={buttonRef}
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2 rounded-lg border border-border text-text-secondary hover:text-text hover:bg-border/20 transition-colors"
+              className="p-2 rounded-lg border border-border text-text-secondary hover:text-text hover:bg-border/20 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
               aria-label="Toggle menu"
+              aria-expanded={isOpen}
+              aria-controls="mobile-nav-menu"
             >
               {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>

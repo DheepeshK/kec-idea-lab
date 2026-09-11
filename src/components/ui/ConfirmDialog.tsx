@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useRef } from 'react';
 import { AlertTriangle, X } from 'lucide-react';
 import Button from '@/components/ui/Button';
 
@@ -14,6 +14,8 @@ interface ConfirmDialogProps {
   onCancel: () => void;
 }
 
+const FOCUSABLE = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+
 export default function ConfirmDialog({
   open,
   title,
@@ -23,46 +25,78 @@ export default function ConfirmDialog({
   onConfirm,
   onCancel,
 }: ConfirmDialogProps) {
+  const dialogRef = useRef<HTMLDivElement>(null);
+
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onCancel();
+      if (e.key === 'Escape') {
+        e.stopPropagation();
+        onCancel();
+        return;
+      }
+      if (e.key === 'Tab' && dialogRef.current) {
+        const focusable = dialogRef.current.querySelectorAll<HTMLElement>(FOCUSABLE);
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
     },
-    [onCancel]
+    [onCancel],
   );
 
   useEffect(() => {
     if (open) {
       document.addEventListener('keydown', handleKeyDown);
       document.body.style.overflow = 'hidden';
+      dialogRef.current?.focus();
+      const previousActive = document.activeElement as HTMLElement | null;
+      return () => {
+        document.removeEventListener('keydown', handleKeyDown);
+        document.body.style.overflow = '';
+        previousActive?.focus?.();
+      };
     }
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = '';
-    };
   }, [open, handleKeyDown]);
 
   if (!open) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onCancel} aria-hidden="true" />
       <div
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-        onClick={onCancel}
-      />
-      <div className="relative bg-bg-elevated border border-border rounded-2xl shadow-2xl shadow-accent/10 w-full max-w-md p-6 space-y-4 animate-in fade-in zoom-in-95 duration-200">
+        ref={dialogRef}
+        role="alertdialog"
+        aria-modal="true"
+        aria-labelledby="confirm-dialog-title"
+        aria-describedby="confirm-dialog-message"
+        tabIndex={-1}
+        className="relative bg-bg-elevated border border-border rounded-2xl shadow-2xl shadow-accent/10 w-full max-w-md p-6 space-y-4 animate-in fade-in zoom-in-95 duration-200 focus:outline-none"
+      >
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3">
             <div className="p-2 rounded-full bg-accent-2/10 border border-accent-2/20">
               <AlertTriangle className="h-5 w-5 text-accent-2" />
             </div>
             <div>
-              <h3 className="font-bold text-text text-sm">{title}</h3>
-              <p className="text-xs text-text-secondary mt-1">{message}</p>
+              <h3 id="confirm-dialog-title" className="font-bold text-text text-sm">
+                {title}
+              </h3>
+              <p id="confirm-dialog-message" className="text-xs text-text-secondary mt-1">
+                {message}
+              </p>
             </div>
           </div>
           <button
             onClick={onCancel}
-            className="p-1 hover:bg-border/20 rounded transition-colors text-text-secondary hover:text-text"
+            aria-label="Close dialog"
+            className="p-1 hover:bg-border/20 rounded transition-colors text-text-secondary hover:text-text focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/60"
           >
             <X className="h-4 w-4" />
           </button>

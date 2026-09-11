@@ -61,7 +61,7 @@ export default function AdminTeamPage() {
 
   const [name, setName] = useState('');
   const [role, setRole] = useState('');
-  const [group, setGroup] = useState<string>('Student');
+  const [group, setGroup] = useState<string>('Student Ambassadors');
   const [focusArea, setFocusArea] = useState('');
   const [photoUrl, setPhotoUrl] = useState('');
   const [designation, setDesignation] = useState('');
@@ -78,7 +78,7 @@ export default function AdminTeamPage() {
     setEditingId(member._id);
     setName(member.name || '');
     setRole(member.role || '');
-    setGroup(member.group || 'Student');
+    setGroup(member.group || 'Student Ambassadors');
     setFocusArea(member.focusArea || '');
     setPhotoUrl(member.photoUrl || member.image || '');
     setDesignation(member.designation || '');
@@ -102,7 +102,7 @@ export default function AdminTeamPage() {
     setEditingId(null);
     setName('');
     setRole('');
-    setGroup('Student');
+    setGroup('Student Ambassadors');
     setFocusArea('');
     setPhotoUrl('');
     setDesignation('');
@@ -160,7 +160,7 @@ export default function AdminTeamPage() {
         setEditingId(null);
         setName('');
         setRole('');
-        setGroup('Student');
+        setGroup('Student Ambassadors');
         setFocusArea('');
         setPhotoUrl('');
         setDesignation('');

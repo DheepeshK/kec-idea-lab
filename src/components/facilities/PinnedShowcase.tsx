@@ -25,6 +25,12 @@ interface PinnedShowcaseProps {
 
 const TABS = ['All', 'Rapid Prototyping', 'Machining', 'Electronics & IoT'];
 
+const slugify = (text: string) =>
+  text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+
 const matchesTab = (category: string, activeTab: string) => {
   if (activeTab === 'All') return true;
   return (category || '').toLowerCase().trim() === activeTab.toLowerCase().trim();
@@ -68,7 +74,7 @@ export default function PinnedShowcase({ items }: PinnedShowcaseProps) {
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`px-4 py-2 text-xs font-sans font-bold tracking-wider rounded-full border transition-all duration-300 uppercase focus:outline-none ${
+            className={`px-4 py-2 text-xs font-sans font-bold tracking-wider rounded-full border transition-all duration-300 uppercase focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-2 focus-visible:ring-offset-bg ${
               activeTab === tab
                 ? 'bg-accent text-white border-accent/60 shadow-md shadow-accent/20 scale-103'
                 : 'bg-bg-elevated/40 text-text-secondary border-border hover:text-text hover:border-text-secondary/30'
@@ -86,7 +92,11 @@ export default function PinnedShowcase({ items }: PinnedShowcaseProps) {
             const displayImage = item.imageUrl || item.image;
             return (
               <ScrollReveal key={item._id} direction="up" delay={idx * 0.04}>
-                <Card className="h-full flex flex-col p-0 overflow-hidden group" hoverEffect={true}>
+                <Card
+                  id={slugify(item.name)}
+                  className="h-full flex flex-col p-0 overflow-hidden group scroll-mt-28"
+                  hoverEffect={true}
+                >
                   {/* Image Section */}
                   <div className="relative h-40 sm:h-52 w-full bg-bg-elevated overflow-hidden shrink-0">
                     {displayImage ? (

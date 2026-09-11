@@ -180,7 +180,7 @@ export default function Footer() {
             </div>
             <div className="flex items-center gap-2.5">
               <Mail className="h-4 w-4 text-accent shrink-0" />
-              <span>kecidealab@kongu.ac.in</span>
+              <span>idealab@kongu.ac.in</span>
             </div>
           </div>
         </div>

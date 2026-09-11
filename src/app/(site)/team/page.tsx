@@ -6,7 +6,7 @@ export const metadata = {
 
 import ScrollReveal from '@/components/motion/ScrollReveal';
 import TeamMemberImage from '@/components/team/TeamMemberImage';
-import { Mail, Shield, Cpu, Award, Zap, Code } from 'lucide-react';
+import { Mail, Shield, Cpu, Award, Zap, Code, Users } from 'lucide-react';
 import { getAll } from '@/lib/store';
 
 // Disable caching so we always pull fresh records from MongoDB
@@ -230,13 +230,20 @@ export default async function TeamPage() {
     'Student Ambassadors': 'hover:border-brand-red/30',
   };
 
+  const knownGroups = Object.keys(sectionMeta);
+
   const sectionsOrder = [
-    'Chief Mentor',
-    'Coordinator',
-    'Co-ordinator',
-    'Implementation team: Tech gurus',
-    'Student Ambassadors',
+    ...knownGroups,
+    ...Object.keys(finalGrouped).filter((group) => finalGrouped[group].length > 0 && !knownGroups.includes(group)),
   ];
+
+  const getMeta = (group: string) =>
+    sectionMeta[group] || {
+      label: group,
+      sub: 'Contributing to the IDEA Lab ecosystem',
+      icon: Users,
+      maxCount: 0,
+    };
 
   return (
     <div id="team-page-container" className="min-h-screen bg-bg text-text py-12 sm:py-16 relative overflow-hidden">
@@ -264,7 +271,7 @@ export default async function TeamPage() {
 
           {/* Affiliation logos */}
           <ScrollReveal direction="up" delay={0.14}>
-            <div className="flex items-center justify-center gap-6 pt-2 flex-nowrap">
+            <div className="flex items-center justify-center gap-6 pt-2 flex-wrap">
               {[
                 { src: '/AICTE.png', alt: 'AICTE' },
                 { src: '/KEC_new2.png', alt: 'KEC' },
@@ -285,7 +292,7 @@ export default async function TeamPage() {
         <div className="space-y-10">
           {sectionsOrder.map((sectionKey) => {
             const list = finalGrouped[sectionKey as keyof typeof finalGrouped] || [];
-            const meta = sectionMeta[sectionKey];
+            const meta = getMeta(sectionKey);
             if (list.length === 0) return null;
 
             const SectionIcon = meta.icon;

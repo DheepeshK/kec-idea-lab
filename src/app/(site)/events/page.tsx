@@ -7,12 +7,16 @@ export const metadata = {
   description: 'Workshops, hackathons, ideathons, and open lab days at the AICTE IDEA Lab, Kongu Engineering College.',
 };
 
+// Always pull fresh events so admin edits appear immediately
+export const revalidate = 0;
+
 // High-fidelity fallback list representing each of the 4 categories
 const fallbackEvents = [
   {
     _id: 'fallback-event-1',
     title: '3D Printer Operation & Maintenance Bootcamp',
-    description: 'Learn slicer configurations, bed leveling, dual-extrusion, and standard FDM hardware troubleshooting.',
+    description:
+      'Learn slicer configurations, bed leveling, dual-extrusion, and standard FDM hardware troubleshooting.',
     date: '2026-07-15T09:00:00.000Z',
     time: '09:00 AM - 04:00 PM',
     location: 'AICTE-KEC Idea Lab, 3D Printing Zone',
@@ -34,7 +38,8 @@ const fallbackEvents = [
   {
     _id: 'fallback-event-3',
     title: 'IoT Embedded Systems & Micro-Soldering Hack',
-    description: 'A 24-hour hardware hackathon targeting agriculture and healthcare challenges. Micro-controllers provided.',
+    description:
+      'A 24-hour hardware hackathon targeting agriculture and healthcare challenges. Micro-controllers provided.',
     date: '2026-08-05T08:30:00.000Z',
     time: '08:30 AM onwards',
     location: 'Idea Lab Main Hall & PCB Bay',
@@ -45,7 +50,8 @@ const fallbackEvents = [
   {
     _id: 'fallback-event-4',
     title: 'Smart Cities & Assistive Tech Ideathon',
-    description: 'Brainstorm and design hardware-centered IoT products for smart cities, renewable energy, and disability aid.',
+    description:
+      'Brainstorm and design hardware-centered IoT products for smart cities, renewable energy, and disability aid.',
     date: '2026-08-19T09:30:00.000Z',
     time: '09:30 AM - 05:00 PM',
     location: 'Seminar Hall II, Kongu Campus',
@@ -56,7 +62,8 @@ const fallbackEvents = [
   {
     _id: 'fallback-event-5',
     title: 'Public Open House & Machinery Showcase',
-    description: 'Open Lab Days for school pupils and industrial visitors to witness automated printing and CNC router demos.',
+    description:
+      'Open Lab Days for school pupils and industrial visitors to witness automated printing and CNC router demos.',
     date: '2026-09-10T10:00:00.000Z',
     time: '10:00 AM - 04:00 PM',
     location: 'Entire AICTE-KEC Idea Lab Facility',
@@ -81,22 +88,21 @@ export default async function EventsPage() {
         {/* Page Head Header Block */}
         <div className="text-center max-w-3xl mx-auto space-y-4">
           <ScrollReveal direction="up">
-            <span className="label text-accent block mb-1">
-              Active Knowledge Sharing
-            </span>
+            <span className="label text-accent block mb-1">Active Knowledge Sharing</span>
             <h1 className="text-4xl sm:text-5xl font-extrabold text-text tracking-tight leading-none">
               Lab Events & Bootcamps
             </h1>
           </ScrollReveal>
           <ScrollReveal direction="up" delay={0.08}>
             <p className="body-text">
-              Accelerate your product engineering and design skills. Register for our hands-on hardware training workshops, collaborative hackathons, ideation camps, and open lab days.
+              Accelerate your product engineering and design skills. Register for our hands-on hardware training
+              workshops, collaborative hackathons, ideation camps, and open lab days.
             </p>
           </ScrollReveal>
 
           {/* Affiliation logos */}
           <ScrollReveal direction="up" delay={0.14}>
-            <div className="flex items-center justify-center gap-4 sm:gap-6 pt-2 flex-nowrap">
+            <div className="flex items-center justify-center gap-4 sm:gap-6 pt-2 flex-wrap">
               {[
                 { src: '/AICTE.png', alt: 'AICTE' },
                 { src: '/KEC_new2.png', alt: 'KEC' },

@@ -91,15 +91,17 @@ export default function ImageUploadField({
       <label className="block text-xs font-semibold text-text-secondary">{label}</label>
 
       {value ? (
-        <div className="relative group rounded-lg overflow-hidden border border-border bg-bg aspect-video max-h-48 flex items-center justify-center">
-          <Image
-            src={value}
-            alt="Uploaded preview"
-            fill
-            sizes="(max-width: 768px) 100vw, 400px"
-            className="object-cover"
-          />
-          <div className="absolute inset-0 bg-bg/70 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+        <div className="space-y-2">
+          <div className="relative rounded-lg overflow-hidden border border-border bg-bg aspect-video max-h-48 flex items-center justify-center">
+            <Image
+              src={value}
+              alt="Uploaded preview"
+              fill
+              sizes="(max-width: 768px) 100vw, 400px"
+              className="object-cover"
+            />
+          </div>
+          <div className="flex gap-2">
             <Button
               type="button"
               variant="outline"
