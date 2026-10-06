@@ -74,6 +74,92 @@ export default function RelationshipDiagram() {
     tl.to(parentNode, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(1.7)' }, '-=0.2');
     tl.to(paths, { strokeDashoffset: 0, duration: 1.0, ease: 'power2.out', stagger: 0.1 }, '-=0.2');
     tl.to(nodes, { opacity: 1, scale: 1, duration: 0.5, stagger: 0.1, ease: 'back.out(1.5)' }, '-=0.8');
+
+    const startEnergyFlow = () => {
+      const svg = container.querySelector('svg');
+      if (!svg) return;
+
+      const svgEl = svg as SVGSVGElement;
+      const svgNS = 'http://www.w3.org/2000/svg';
+      const master = gsap.timeline({ repeat: -1, repeatDelay: 0.45 });
+
+      const collegePath = pathCollegeRef.current;
+      const childPaths = [path1Ref.current, path2Ref.current, path3Ref.current, path4Ref.current].filter(
+        (p): p is SVGPathElement => Boolean(p && p.isConnected),
+      );
+
+      const addParticle = (path: SVGPathElement, startAt: number, duration: number) => {
+        const len = path.getTotalLength();
+        const particle = document.createElementNS(svgNS, 'ellipse');
+        particle.setAttribute('cx', '0');
+        particle.setAttribute('cy', '0');
+        particle.setAttribute('rx', '7');
+        particle.setAttribute('ry', '2.4');
+        particle.setAttribute('fill', c.line);
+        particle.setAttribute('filter', 'url(#blurPulse)');
+        particle.setAttribute('opacity', '0');
+        if (collegeNode) svgEl.insertBefore(particle, collegeNode);
+        else svgEl.appendChild(particle);
+
+        const state = { d: 0 };
+        const render = () => {
+          const at = Math.min(state.d * len, len - 0.01);
+          const p = path.getPointAtLength(at);
+          const p2 = path.getPointAtLength(Math.min(at + 1, len));
+          const angle = (Math.atan2(p2.y - p.y, p2.x - p.x) * 180) / Math.PI;
+          particle.setAttribute('transform', `translate(${p.x} ${p.y}) rotate(${angle})`);
+        };
+        render();
+
+        master.set(particle, { opacity: 0 }, startAt);
+        master.to(particle, { opacity: 1, duration: 0.2 }, startAt);
+        master.to(state, { d: 1, duration, ease: 'none', onUpdate: render }, startAt);
+        master.to(particle, { opacity: 0, duration: 0.2 }, startAt + duration - 0.2);
+      };
+
+      const flashOutline = (node: SVGGElement, color: string, startAt: number, duration = 0.9) => {
+        const card = node.querySelector('rect');
+        if (!card) return;
+        const bb = card.getBBox();
+        const perimeter = 2 * (bb.width + bb.height);
+
+        const streak = card.cloneNode(true) as SVGRectElement;
+        streak.setAttribute('fill', 'none');
+        streak.setAttribute('stroke', color);
+        streak.setAttribute('stroke-width', '5');
+        streak.setAttribute('stroke-linecap', 'round');
+        streak.setAttribute('stroke-dasharray', `${Math.round(perimeter * 0.3)} ${Math.round(perimeter)}`);
+        streak.setAttribute('stroke-dashoffset', '0');
+        streak.setAttribute('opacity', '0');
+        if (collegeNode) svgEl.insertBefore(streak, collegeNode);
+        else svgEl.appendChild(streak);
+
+        master.fromTo(
+          streak,
+          { strokeDashoffset: 0, opacity: 1 },
+          { strokeDashoffset: -perimeter, opacity: 0, duration, ease: 'power1.out' },
+          startAt,
+        );
+      };
+
+      const D1 = 1.0;
+      const D2 = 1.15;
+      const childNodes = [child1Ref.current, child2Ref.current, child3Ref.current, child4Ref.current].filter(
+        (n): n is SVGGElement => Boolean(n),
+      );
+      const childColors = [c.iic, c.emdc, c.tbi, c.idealab];
+
+      if (collegePath) addParticle(collegePath, 0, D1);
+      if (parentNode) flashOutline(parentNode, c.ief, D1 - 0.1, 0.8);
+
+      childPaths.forEach((path, i) => {
+        addParticle(path, D1, D2);
+        const target = childNodes[i];
+        if (target) flashOutline(target, childColors[i], D1 + D2 - 0.15 + i * 0.1, 0.7);
+      });
+    };
+
+    tl.call(startEnergyFlow);
   }, []);
 
   const c = {
@@ -93,7 +179,10 @@ export default function RelationshipDiagram() {
   };
 
   return (
-    <div ref={containerRef} className="w-full rounded-2xl border border-border p-4 md:p-8 relative overflow-hidden bg-bg-elevated/40">
+    <div
+      ref={containerRef}
+      className="w-full rounded-2xl border border-border p-4 md:p-8 relative overflow-hidden bg-bg-elevated/40"
+    >
       <div className="absolute top-4 left-4 label text-accent flex items-center gap-1.5">
         <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
         IEF Structural Relationship
@@ -108,74 +197,252 @@ export default function RelationshipDiagram() {
             <filter id="glow" x="-10%" y="-10%" width="120%" height="120%">
               <feDropShadow dx="0" dy="4" stdDeviation="6" floodColor={c.line} floodOpacity="0.15" />
             </filter>
-            <filter id="glow-hl" x="-20%" y="-20%" width="140%" height="140%">
-              <feDropShadow dx="0" dy="0" stdDeviation="10" floodColor={c.idealab} floodOpacity="0.4" />
+            <filter id="blurPulse" x="-80%" y="-80%" width="260%" height="260%">
+              <feGaussianBlur stdDeviation="3" />
             </filter>
           </defs>
 
           {/* Connectors */}
-          <path ref={pathCollegeRef} d="M 400 122 L 400 145" fill="none" stroke={c.line} strokeWidth="2" strokeLinecap="round" strokeDasharray="4 3" />
-          <path ref={path1Ref} d="M 400 235 C 400 270, 107 270, 107 310" fill="none" stroke={c.line} strokeWidth="2.5" strokeLinecap="round" />
-          <path ref={path2Ref} d="M 400 235 C 400 270, 302 270, 302 310" fill="none" stroke={c.line} strokeWidth="2.5" strokeLinecap="round" />
-          <path ref={path3Ref} d="M 400 235 C 400 270, 497 270, 497 310" fill="none" stroke={c.line} strokeWidth="2.5" strokeLinecap="round" />
-          <path ref={path4Ref} d="M 400 235 C 400 270, 695 270, 695 310" fill="none" stroke={c.line} strokeWidth="2.5" strokeLinecap="round" />
+          <path
+            ref={pathCollegeRef}
+            d="M 400 122 L 400 145"
+            fill="none"
+            stroke={c.line}
+            strokeWidth="2"
+            strokeLinecap="round"
+          />
+          <path
+            ref={path1Ref}
+            d="M 400 235 C 400 270, 107 270, 107 310"
+            fill="none"
+            stroke={c.line}
+            strokeWidth="2.5"
+            strokeLinecap="round"
+          />
+          <path
+            ref={path2Ref}
+            d="M 400 235 C 400 270, 302 270, 302 310"
+            fill="none"
+            stroke={c.line}
+            strokeWidth="2.5"
+            strokeLinecap="round"
+          />
+          <path
+            ref={path3Ref}
+            d="M 400 235 C 400 270, 497 270, 497 310"
+            fill="none"
+            stroke={c.line}
+            strokeWidth="2.5"
+            strokeLinecap="round"
+          />
+          <path
+            ref={path4Ref}
+            d="M 400 235 C 400 270, 695 270, 695 310"
+            fill="none"
+            stroke={c.line}
+            strokeWidth="2.5"
+            strokeLinecap="round"
+          />
 
           {/* College Node */}
           <g ref={collegeNodeRef} filter="url(#glow)">
             <rect x="180" y="12" width="440" height="110" rx="14" fill={c.bg} stroke={c.kec} strokeWidth="2.5" />
             <rect x="340" y="2" width="120" height="20" rx="10" fill={c.bgElevated} stroke={c.border} strokeWidth="1" />
-            <text x="400" y="16" textAnchor="middle" fill={c.textMuted} fontSize="9" fontFamily="monospace" fontWeight="bold" letterSpacing="2">INSTITUTION</text>
+            <text
+              x="400"
+              y="16"
+              textAnchor="middle"
+              fill={c.textMuted}
+              fontSize="9"
+              fontFamily="monospace"
+              fontWeight="bold"
+              letterSpacing="2"
+            >
+              INSTITUTION
+            </text>
             <image href="/KEC_new2.png" x="325" y="4" width="150" height="110" />
-            <text x="400" y="100" textAnchor="middle" fill={c.text} fontSize="16" fontWeight="800" fontFamily="sans-serif" letterSpacing="1">Kongu Engineering College</text>
-            <text x="400" y="115" textAnchor="middle" fill={c.textMuted} fontSize="10" fontFamily="sans-serif" fontWeight="500">(Autonomous) Affiliated to Anna University &amp; approved by AICTE</text>
+            <text
+              x="400"
+              y="100"
+              textAnchor="middle"
+              fill={c.text}
+              fontSize="16"
+              fontWeight="800"
+              fontFamily="sans-serif"
+              letterSpacing="1"
+            >
+              Kongu Engineering College
+            </text>
+            <text
+              x="400"
+              y="115"
+              textAnchor="middle"
+              fill={c.textMuted}
+              fontSize="10"
+              fontFamily="sans-serif"
+              fontWeight="500"
+            >
+              (Autonomous) Affiliated to Anna University &amp; approved by AICTE
+            </text>
           </g>
 
           {/* IEF Parent Node */}
           <g ref={parentNodeRef} filter="url(#glow)">
             <rect x="230" y="155" width="340" height="80" rx="16" fill={c.bg} stroke={c.ief} strokeWidth="2.5" />
-            <rect x="350" y="145" width="100" height="20" rx="10" fill={c.bgElevated} stroke={c.border} strokeWidth="1" />
-            <text x="400" y="159" textAnchor="middle" fill={c.textMuted} fontSize="9" fontFamily="monospace" fontWeight="bold" letterSpacing="1">PARENT FORUM</text>
-            <text x="400" y="190" textAnchor="middle" fill={c.text} fontSize="17" fontWeight="800" fontFamily="sans-serif" letterSpacing="0.5">IEF @ KEC</text>
-            <text x="400" y="215" textAnchor="middle" fill={c.textMuted} fontSize="11" fontFamily="sans-serif" fontWeight="500">Innovation &amp; Entrepreneurship Forum</text>
+            <rect
+              x="350"
+              y="145"
+              width="100"
+              height="20"
+              rx="10"
+              fill={c.bgElevated}
+              stroke={c.border}
+              strokeWidth="1"
+            />
+            <text
+              x="400"
+              y="159"
+              textAnchor="middle"
+              fill={c.textMuted}
+              fontSize="9"
+              fontFamily="monospace"
+              fontWeight="bold"
+              letterSpacing="1"
+            >
+              PARENT FORUM
+            </text>
+            <text
+              x="400"
+              y="190"
+              textAnchor="middle"
+              fill={c.text}
+              fontSize="17"
+              fontWeight="800"
+              fontFamily="sans-serif"
+              letterSpacing="0.5"
+            >
+              IEF @ KEC
+            </text>
+            <text
+              x="400"
+              y="215"
+              textAnchor="middle"
+              fill={c.textMuted}
+              fontSize="11"
+              fontFamily="sans-serif"
+              fontWeight="500"
+            >
+              Innovation &amp; Entrepreneurship Forum
+            </text>
           </g>
 
           {/* IIC Node */}
           <g ref={child1Ref} filter="url(#glow)">
             <rect x="20" y="310" width="175" height="130" rx="14" fill={c.bg} stroke={c.iic} strokeWidth="2" />
             <image href="/IIC.png" x="50" y="300" width="100" height="100" />
-            <text x="107" y="396" textAnchor="middle" fill={c.text} fontSize="15" fontWeight="bold" fontFamily="sans-serif">IIC @ KEC</text>
-            <text x="107" y="416" textAnchor="middle" fill={c.textMuted} fontSize="10" fontFamily="sans-serif">Institution&apos;s Innovation</text>
-            <text x="107" y="432" textAnchor="middle" fill={c.textMuted} fontSize="10" fontFamily="sans-serif">Council (Fosters culture)</text>
+            <text
+              x="107"
+              y="396"
+              textAnchor="middle"
+              fill={c.text}
+              fontSize="15"
+              fontWeight="bold"
+              fontFamily="sans-serif"
+            >
+              IIC @ KEC
+            </text>
+            <text x="107" y="416" textAnchor="middle" fill={c.textMuted} fontSize="10" fontFamily="sans-serif">
+              Institution&apos;s Innovation
+            </text>
+            <text x="107" y="432" textAnchor="middle" fill={c.textMuted} fontSize="10" fontFamily="sans-serif">
+              Council (Fosters culture)
+            </text>
           </g>
 
           {/* EMDC Node */}
           <g ref={child2Ref} filter="url(#glow)">
             <rect x="215" y="310" width="175" height="130" rx="14" fill={c.bg} stroke={c.emdc} strokeWidth="2" />
             <image href="/EMDC.png" x="277" y="322" width="52" height="52" />
-            <text x="302" y="396" textAnchor="middle" fill={c.text} fontSize="15" fontWeight="bold" fontFamily="sans-serif">EMDC @ KEC</text>
-            <text x="302" y="416" textAnchor="middle" fill={c.textMuted} fontSize="10" fontFamily="sans-serif">Entrepreneurship &amp; Management</text>
-            <text x="302" y="432" textAnchor="middle" fill={c.textMuted} fontSize="10" fontFamily="sans-serif">Development Centre (Training)</text>
+            <text
+              x="302"
+              y="396"
+              textAnchor="middle"
+              fill={c.text}
+              fontSize="15"
+              fontWeight="bold"
+              fontFamily="sans-serif"
+            >
+              EMDC @ KEC
+            </text>
+            <text x="302" y="416" textAnchor="middle" fill={c.textMuted} fontSize="10" fontFamily="sans-serif">
+              Entrepreneurship &amp; Management
+            </text>
+            <text x="302" y="432" textAnchor="middle" fill={c.textMuted} fontSize="10" fontFamily="sans-serif">
+              Development Centre (Training)
+            </text>
           </g>
 
           {/* TBI Node */}
           <g ref={child3Ref} filter="url(#glow)">
             <rect x="410" y="310" width="175" height="130" rx="14" fill={c.bg} stroke={c.tbi} strokeWidth="2" />
             <image href="/TBI.png" x="445" y="295" width="100" height="100" />
-            <text x="497" y="396" textAnchor="middle" fill={c.text} fontSize="15" fontWeight="bold" fontFamily="sans-serif">TBI @ KEC</text>
-            <text x="497" y="416" textAnchor="middle" fill={c.textMuted} fontSize="10" fontFamily="sans-serif">Technology Business</text>
-            <text x="497" y="432" textAnchor="middle" fill={c.textMuted} fontSize="10" fontFamily="sans-serif">Incubator (Incubation &amp; Funding)</text>
+            <text
+              x="497"
+              y="396"
+              textAnchor="middle"
+              fill={c.text}
+              fontSize="15"
+              fontWeight="bold"
+              fontFamily="sans-serif"
+            >
+              TBI @ KEC
+            </text>
+            <text x="497" y="416" textAnchor="middle" fill={c.textMuted} fontSize="10" fontFamily="sans-serif">
+              Technology Business
+            </text>
+            <text x="497" y="432" textAnchor="middle" fill={c.textMuted} fontSize="10" fontFamily="sans-serif">
+              Incubator (Incubation &amp; Funding)
+            </text>
           </g>
 
           {/* IDEA Lab Node */}
-          <g ref={child4Ref} filter="url(#glow-hl)">
-            <rect x="605" y="310" width="180" height="130" rx="14" fill={c.bg} stroke={c.idealab} strokeWidth="2.5" />
-            <rect x="660" y="300" width="70" height="18" rx="9" fill={c.bgElevated} stroke={c.border} strokeWidth="1" />
-            <text x="695" y="313" textAnchor="middle" fill={c.idealab} fontSize="8" fontFamily="monospace" fontWeight="bold">NEW FACILITY</text>
+          <g ref={child4Ref} filter="url(#glow)">
+            <rect x="605" y="310" width="180" height="130" rx="14" fill={c.bg} stroke={c.idealab} strokeWidth="2" />
             <image href="/AICTE.png" x="655" y="324" width="40" height="40" />
             <image href="/IDEALab.png" x="701" y="324" width="40" height="40" />
-            <text x="695" y="390" textAnchor="middle" fill={c.text} fontSize="15" fontWeight="bold" fontFamily="sans-serif">AICTE IDEA LAB</text>
-            <text x="695" y="412" textAnchor="middle" fill={c.textMuted} fontSize="10" fontFamily="sans-serif" fontWeight="500">Product Development Hub</text>
-            <text x="695" y="428" textAnchor="middle" fill={c.idealab} fontSize="10" fontFamily="monospace" fontWeight="bold">(All types of fabrication)</text>
+            <text
+              x="695"
+              y="390"
+              textAnchor="middle"
+              fill={c.text}
+              fontSize="15"
+              fontWeight="bold"
+              fontFamily="sans-serif"
+            >
+              AICTE IDEA LAB
+            </text>
+            <text
+              x="695"
+              y="412"
+              textAnchor="middle"
+              fill={c.textMuted}
+              fontSize="10"
+              fontFamily="sans-serif"
+              fontWeight="500"
+            >
+              Product Development Hub
+            </text>
+            <text
+              x="695"
+              y="428"
+              textAnchor="middle"
+              fill={c.idealab}
+              fontSize="10"
+              fontFamily="monospace"
+              fontWeight="bold"
+            >
+              (All types of fabrication)
+            </text>
           </g>
         </svg>
       </div>

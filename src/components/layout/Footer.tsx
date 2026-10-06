@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Mail, Phone, MapPin, Twitter, Linkedin, Github, Instagram } from 'lucide-react';
+import { Mail, Phone, MapPin } from 'lucide-react';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -14,19 +14,36 @@ export default function Footer() {
     { name: 'Contact', href: '/contact' },
   ];
 
+  const relatedOrgs = [
+    {
+      name: 'AICTE',
+      desc: 'All India Council for Technical Education',
+      href: 'https://www.aicte.gov.in/',
+    },
+    {
+      name: 'IDEALNET',
+      desc: 'AICTE IDEA Lab Network',
+      href: 'https://idealnet.aicte.gov.in/',
+    },
+    {
+      name: 'Kongu Engineering College',
+      desc: 'Perundurai, Erode — TN',
+      href: 'https://www.kongu.ac.in',
+    },
+  ];
+
   return (
     <footer
       className="bg-bg-elevated text-text-secondary border-t border-border/60 py-12 px-6 transition-colors duration-300 relative overflow-hidden"
       id="site-footer"
     >
-      {/* Subtle gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-accent/[0.02] to-accent-3/[0.02] pointer-events-none" />
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12">
-        {/* Lab Branding & Meta-description */}
-        <div className="md:col-span-5 space-y-4">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-8">
+        {/* Branding */}
+        <div className="md:col-span-4 space-y-5">
           <div className="flex items-center gap-2.5 text-text">
-            <div className="relative w-9 h-9 rounded-lg overflow-hidden border border-accent/20 shrink-0 bg-bg">
-              <img src="/IDEALab.png" alt="IDEA Lab" className="w-full h-full object-contain p-1" />
+            <div className="relative w-11 h-11 shrink-0">
+              <img src="/IDEALab.png" alt="IDEA Lab" className="w-full h-full object-contain" />
             </div>
             <span className="font-display font-extrabold text-base tracking-tight">
               IDEA Lab <span className="text-accent">@ KEC</span>
@@ -34,155 +51,75 @@ export default function Footer() {
           </div>
 
           <p className="text-xs leading-relaxed max-w-sm">
-            AICTE-KEC IDEA Lab is a state-of-the-art co-creation, hardware fabrication, and rapid prototyping playground
-            housed inside Kongu Engineering College.
+            AICTE-funded hardware fabrication and rapid-prototyping lab at Kongu Engineering College — part of the IEF @
+            KEC innovation ecosystem.
           </p>
 
-          <p className="text-xs font-semibold text-text-secondary">
-            IDEA Lab sits under <span className="text-text">IEF @ KEC</span> (Innovation and Entrepreneurship Forum)
-            alongside the <span className="text-text">IIC</span> (Institution&apos;s Innovation Council) ,{' '}
-            <span className="text-text">EMDC</span> (Entrepreneurship and Management Development Center) and{' '}
-            <span className="text-text">TBI</span> (Technology Business Incubator) to form a holistic innovation
-            ecosystem for students and faculty.
-          </p>
-
-          {/* Partner logos */}
-          <div className="flex items-center gap-4 pt-2 flex-wrap">
+          <div className="flex items-center gap-4 flex-wrap">
             {[
-              { src: '/AICTE.png', alt: 'AICTE' },
-              { src: '/KEC_new2.png', alt: 'KEC' },
-              { src: '/IDEALab.png', alt: 'IDEA Lab' },
-              { src: '/IIC.png', alt: 'IIC' },
-              { src: '/EMDC.png', alt: 'EMDC' },
-              { src: '/TBI.png', alt: 'TBI' },
+              { src: '/AICTE.png', alt: 'AICTE', href: 'https://www.aicte.gov.in/', size: 'w-16 h-16' },
+              { src: '/KEC_new2.png', alt: 'KEC', href: 'https://www.kongu.ac.in', size: 'w-40 h-16' },
             ].map((logo) => (
-              <div
+              <a
                 key={logo.alt}
-                className="relative w-14 h-14 rounded-md overflow-hidden opacity-85 hover:opacity-100 transition-opacity bg-bg border border-border/30"
+                href={logo.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`relative ${logo.size} opacity-90 hover:opacity-100 transition-opacity`}
+                aria-label={`Visit ${logo.alt} website`}
               >
-                <img src={logo.src} alt={logo.alt} className="w-full h-full object-contain p-1" />
-              </div>
+                <img src={logo.src} alt={logo.alt} className="w-full h-full object-contain" />
+              </a>
             ))}
           </div>
-
-          {/* Social Icons Placeholders (Clearly marked as placeholder) */}
-          <div className="flex items-center gap-3 pt-2">
-            {/* SOCIAL LINK PLACEHOLDER - TWITTER */}
-            <span
-              className="p-2 rounded-lg border border-border opacity-50 cursor-not-allowed"
-              aria-label="Twitter / X Profile (coming soon)"
-              role="img"
-            >
-              <Twitter className="h-4 w-4" />
-            </span>
-
-            {/* SOCIAL LINK PLACEHOLDER - LINKEDIN */}
-            <span
-              className="p-2 rounded-lg border border-border opacity-50 cursor-not-allowed"
-              aria-label="LinkedIn Profile (coming soon)"
-              role="img"
-            >
-              <Linkedin className="h-4 w-4" />
-            </span>
-
-            {/* SOCIAL LINK PLACEHOLDER - INSTAGRAM */}
-            <span
-              className="p-2 rounded-lg border border-border opacity-50 cursor-not-allowed"
-              aria-label="Instagram Profile (coming soon)"
-              role="img"
-            >
-              <Instagram className="h-4 w-4" />
-            </span>
-
-            {/* SOCIAL LINK PLACEHOLDER - GITHUB */}
-            <span
-              className="p-2 rounded-lg border border-border opacity-50 cursor-not-allowed"
-              aria-label="GitHub Repository (coming soon)"
-              role="img"
-            >
-              <Github className="h-4 w-4" />
-            </span>
-          </div>
         </div>
 
-        {/* Affiliations */}
+        {/* Quick links */}
+        <div className="md:col-span-2 space-y-4">
+          <h3 className="text-text font-display font-bold text-xs tracking-wider uppercase">Quick Links</h3>
+          <ul className="space-y-2.5 text-sm">
+            {quickLinks.map((link) => (
+              <li key={link.href}>
+                <Link href={link.href} className="hover:text-accent transition-colors">
+                  {link.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Related organizations */}
         <div className="md:col-span-3 space-y-4">
           <h3 className="text-text font-display font-bold text-xs tracking-wider uppercase">Related Organizations</h3>
-          <div className="space-y-3 text-xs">
-            <div className="flex items-start gap-2.5">
-              <div className="w-8 h-8 rounded-md overflow-hidden bg-bg border border-border/30 shrink-0 flex items-center justify-center p-1">
-                <img src="/AICTE.png" alt="AICTE" className="w-full h-full object-contain" />
-              </div>
-              <div>
-                <p className="font-semibold text-text">AICTE</p>
-                <p className="text-text-secondary/70">
-                  All India Council for Technical Education — governing body for technical education in India.
-                </p>
-                <a
-                  href="https://www.aicte.gov.in/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-accent hover:underline text-[11px]"
-                >
-                  www.aicte.gov.in
+          <ul className="space-y-3">
+            {relatedOrgs.map((org) => (
+              <li key={org.name}>
+                <a href={org.href} target="_blank" rel="noopener noreferrer" className="group block">
+                  <p className="font-semibold text-text group-hover:text-accent transition-colors">{org.name}</p>
+                  <p className="text-[11px] text-text-secondary/70">{org.desc}</p>
                 </a>
-              </div>
-            </div>
-            <div className="flex items-start gap-2.5">
-              <div className="w-8 h-8 rounded-md overflow-hidden bg-bg border border-border/30 shrink-0 flex items-center justify-center p-1">
-                <img src="/IDEALab.png" alt="IDEALNET" className="w-full h-full object-contain" />
-              </div>
-              <div>
-                <p className="font-semibold text-text">IDEALNET</p>
-                <p className="text-text-secondary/70">
-                  AICTE IDEA Lab Network — a pan-India network of innovation labs fostering hands-on learning.
-                </p>
-                <a
-                  href="https://idealnet.aicte.gov.in/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-accent hover:underline text-[11px]"
-                >
-                  www.idealnet.aicte.gov.in
-                </a>
-              </div>
-            </div>
-            <div className="flex items-start gap-2.5">
-              <div className="w-8 h-8 rounded-md overflow-hidden bg-bg border border-border/30 shrink-0 flex items-center justify-center p-1">
-                <img src="/KEC_new2.png" alt="KEC" className="w-full h-full object-contain" />
-              </div>
-              <div>
-                <p className="font-semibold text-text">Kongu Engineering College</p>
-                <a
-                  href="https://www.kongu.ac.in"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-accent hover:underline"
-                >
-                  www.kongu.ac.in
-                </a>
-              </div>
-            </div>
-          </div>
+              </li>
+            ))}
+          </ul>
         </div>
 
-        {/* Contact Info blocks */}
-        <div className="md:col-span-4 space-y-4">
+        {/* Contact */}
+        <div className="md:col-span-3 space-y-4">
           <h3 className="text-text font-display font-bold text-xs tracking-wider uppercase">Contact & Visit</h3>
-          <div className="space-y-3 text-xs">
-            <div className="flex items-start gap-2.5">
+          <ul className="space-y-3.5 text-sm">
+            <li className="flex items-start gap-3">
               <MapPin className="h-4 w-4 text-accent shrink-0 mt-0.5" />
-              <span>AICTE - IDEA Lab, Kongu Engineering College, Perundurai, Erode - 638060, Tamil Nadu, India.</span>
-            </div>
-            <div className="flex items-center gap-2.5">
+              <span>AICTE-IDEA Lab, Kongu Engineering College, Perundurai, Erode — 638060, TN, India.</span>
+            </li>
+            <li className="flex items-center gap-3">
               <Phone className="h-4 w-4 text-accent shrink-0" />
               <span>+91 4294 226555</span>
-            </div>
-            <div className="flex items-center gap-2.5">
+            </li>
+            <li className="flex items-center gap-3">
               <Mail className="h-4 w-4 text-accent shrink-0" />
-              <span>idealab@kongu.ac.in</span>
-            </div>
-          </div>
+              <span>kecidealab@kongu.ac.in</span>
+            </li>
+          </ul>
         </div>
       </div>
 

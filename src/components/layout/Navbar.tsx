@@ -90,31 +90,32 @@ export default function Navbar() {
           {/* Logo Brand area */}
           <div className="flex items-center gap-3">
             <Link href="/" className="flex items-center gap-2.5 group">
-              <div className="relative w-9 h-9 rounded-lg overflow-hidden border border-accent/20 group-hover:border-accent/40 transition-all duration-300 shrink-0 bg-bg-elevated">
-                <img src="/IDEALab.png" alt="IDEA Lab" className="w-full h-full object-contain p-1" />
+              <div className="relative w-11 h-11 shrink-0">
+                <img src="/IDEALab.png" alt="IDEA Lab" className="w-full h-full object-contain" />
               </div>
               <div className="flex flex-col">
                 <span className="font-display font-extrabold text-sm sm:text-base tracking-tight text-text leading-none">
-                  IDEA Lab <span className="text-accent">@ KEC</span>
+                  AICTE IDEA Lab <span className="text-accent">@ KEC</span>
                 </span>
                 <span className="label text-text-secondary mt-1 leading-none">IEF @ KEC</span>
               </div>
             </Link>
             {/* Partner logo strip */}
-            <div className="hidden sm:flex items-center gap-2 pl-3 border-l border-border/40">
+            <div className="hidden sm:flex items-center gap-3 pl-3 border-l border-border/40">
               {[
-                { src: '/AICTE.png', alt: 'AICTE' },
-                { src: '/KEC_new2.png', alt: 'KEC' },
-                { src: '/IIC.png', alt: 'IIC' },
-                { src: '/EMDC.png', alt: 'EMDC' },
-                { src: '/TBI.png', alt: 'TBI' },
+                { src: '/AICTE.png', alt: 'AICTE', href: 'https://www.aicte.gov.in/', size: 'w-12 h-12' },
+                { src: '/KEC_new2.png', alt: 'KEC', href: 'https://www.kongu.ac.in', size: 'w-32 h-12' },
               ].map((logo) => (
-                <div
+                <a
                   key={logo.alt}
-                  className="relative w-10 h-10 rounded overflow-hidden opacity-85 hover:opacity-100 transition-opacity bg-bg-elevated border border-border/20"
+                  href={logo.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`relative ${logo.size}`}
+                  aria-label={`Visit ${logo.alt} website`}
                 >
-                  <img src={logo.src} alt={logo.alt} className="w-full h-full object-contain p-0.5" />
-                </div>
+                  <img src={logo.src} alt={logo.alt} className="w-full h-full object-contain" />
+                </a>
               ))}
             </div>
           </div>
