@@ -8,8 +8,8 @@ export const metadata = {
     'Explore our state-of-the-art equipment — 3D printers, laser cutters, CNC routers, PCB fabrication, and electronics testing tools.',
 };
 
-// Always pull fresh equipment so admin edits appear immediately
-export const revalidate = 0;
+// Cache the public page briefly instead of rebuilding it for every visitor.
+export const revalidate = 60;
 
 // High-fidelity fallback list of 5 equipments with complete specifications (including placeholder warning indicators)
 const fallbackEquipment = [

@@ -7,8 +7,8 @@ export const metadata = {
   description: 'Workshops, hackathons, ideathons, and open lab days at the AICTE IDEA Lab, Kongu Engineering College.',
 };
 
-// Always pull fresh events so admin edits appear immediately
-export const revalidate = 0;
+// Cache the public page briefly instead of rebuilding it for every visitor.
+export const revalidate = 60;
 
 // High-fidelity fallback list representing each of the 4 categories
 const fallbackEvents = [

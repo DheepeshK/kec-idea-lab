@@ -4,8 +4,8 @@ export const metadata = {
     'Innovation and Entrepreneurship Development Lab at Kongu Engineering College — fostering creativity, hands-on learning, and industry collaboration.',
 };
 
-// Always pull fresh equipment/events so admin edits appear immediately
-export const revalidate = 0;
+// Cache the public page briefly instead of rebuilding it for every visitor.
+export const revalidate = 60;
 
 import Link from 'next/link';
 import Image from 'next/image';
@@ -252,9 +252,6 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-center gap-6 md:gap-12 flex-wrap">
             {[
-              { src: '/AICTE.png', alt: 'AICTE' },
-              { src: '/KEC_new2.png', alt: 'KEC' },
-              { src: '/IDEALab.png', alt: 'IDEA Lab' },
               { src: '/IIC.png', alt: 'IIC' },
               { src: '/EMDC.png', alt: 'EMDC' },
               { src: '/TBI.png', alt: 'TBI' },

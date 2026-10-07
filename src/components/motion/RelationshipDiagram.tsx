@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { useTheme } from 'next-themes';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -10,9 +9,6 @@ if (typeof window !== 'undefined') {
 }
 
 export default function RelationshipDiagram() {
-  const { theme } = useTheme();
-  const isDark = theme === 'dark';
-
   const containerRef = useRef<HTMLDivElement>(null);
   const path1Ref = useRef<SVGPathElement>(null);
   const path2Ref = useRef<SVGPathElement>(null);
@@ -163,19 +159,19 @@ export default function RelationshipDiagram() {
   }, []);
 
   const c = {
-    bg: isDark ? '#0f172a' : '#f8fafc',
-    bgElevated: isDark ? '#1e293b' : '#e2e8f0',
-    text: isDark ? '#f1f5f9' : '#0f172a',
-    textMuted: isDark ? '#94a3b8' : '#475569',
-    border: isDark ? '#475569' : '#cbd5e1',
-    kec: isDark ? '#3b82f6' : '#1d4ed8',
-    ief: isDark ? '#8b5cf6' : '#6d28d9',
-    iic: isDark ? '#0ea5e9' : '#0369a1',
-    emdc: isDark ? '#10b981' : '#047857',
-    tbi: isDark ? '#f59e0b' : '#b45309',
-    aicte: isDark ? '#f97316' : '#c2410c',
-    idealab: isDark ? '#818cf8' : '#4f46e5',
-    line: isDark ? '#6366f1' : '#818cf8',
+    bg: '#f8fafc',
+    bgElevated: '#e2e8f0',
+    text: '#0f172a',
+    textMuted: '#475569',
+    border: '#cbd5e1',
+    kec: '#1d4ed8',
+    ief: '#6d28d9',
+    iic: '#0369a1',
+    emdc: '#047857',
+    tbi: '#b45309',
+    aicte: '#c2410c',
+    idealab: '#4f46e5',
+    line: '#818cf8',
   };
 
   return (

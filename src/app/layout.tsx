@@ -1,9 +1,7 @@
 import type { Metadata } from 'next';
 import { Plus_Jakarta_Sans, DM_Sans, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
-import Script from 'next/script';
 import SessionWrapper from '@/components/layout/SessionWrapper';
-import ThemeProvider from '@/components/theme/ThemeProvider';
 import NavigationProgress from '@/components/layout/NavigationProgress';
 import SplashScreen from '@/components/layout/SplashScreen';
 
@@ -126,20 +124,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     >
       <body>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }} />
-        <Script id="theme-boot" strategy="beforeInteractive">{`
-          (function() {
-            var key = 'idealab-theme';
-            try {
-              var stored = localStorage.getItem(key);
-              if (!stored || stored === 'system') {
-                var mq = window.matchMedia('(prefers-color-scheme: light)');
-                document.documentElement.setAttribute('data-theme', mq.matches ? 'light' : 'dark');
-              } else {
-                document.documentElement.setAttribute('data-theme', stored);
-              }
-            } catch(e) {}
-          })();
-        `}</Script>
         <div
           id="splash"
           style={{
@@ -390,9 +374,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </div>
         </div>
         <NavigationProgress />
-        <ThemeProvider>
-          <SessionWrapper>{children}</SessionWrapper>
-        </ThemeProvider>
+        <SessionWrapper>{children}</SessionWrapper>
         <SplashScreen />
       </body>
     </html>

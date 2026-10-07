@@ -2,7 +2,9 @@
 
 import { useEffect } from 'react';
 
-const MIN_DISPLAY_MS = 800;
+// The splash is decorative, so it should never delay access to page content.
+const MIN_DISPLAY_MS = 150;
+const FADE_OUT_MS = 150;
 const STORAGE_KEY = 'splash-shown';
 
 export default function SplashScreen() {
@@ -29,7 +31,7 @@ export default function SplashScreen() {
 
       setTimeout(() => {
         el.style.opacity = '0';
-        setTimeout(() => el.remove(), 600);
+        setTimeout(() => el.remove(), FADE_OUT_MS);
       }, remaining);
     };
 

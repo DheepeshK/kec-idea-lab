@@ -9,8 +9,8 @@ import TeamMemberImage from '@/components/team/TeamMemberImage';
 import { Mail, Shield, Cpu, Award, Zap, Code, Users } from 'lucide-react';
 import { getAll } from '@/lib/store';
 
-// Disable caching so we always pull fresh records from MongoDB
-export const revalidate = 0;
+// Cache the public page briefly instead of rebuilding it for every visitor.
+export const revalidate = 60;
 
 interface DBTeamMember {
   _id: string;
