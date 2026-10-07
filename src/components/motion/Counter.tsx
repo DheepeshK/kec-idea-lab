@@ -9,11 +9,12 @@ interface CounterProps {
   suffix?: string;
 }
 
-function easeOutQuad(t: number): number {
-  return 1 - Math.pow(1 - t, 2);
+// Smooth easeInOutQuad gives a gentle start, steady climb, and graceful deceleration
+function easeInOutQuad(t: number): number {
+  return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
 }
 
-export default function Counter({ end, duration = 2, prefix = '', suffix = '' }: CounterProps) {
+export default function Counter({ end, duration = 3.8, prefix = '', suffix = '' }: CounterProps) {
   const ref = useRef<HTMLSpanElement>(null);
   const animated = useRef(false);
 
@@ -38,13 +39,13 @@ export default function Counter({ end, duration = 2, prefix = '', suffix = '' }:
           raf = requestAnimationFrame(function animate(ts: number) {
             if (!startTime) startTime = ts;
             const p = Math.min((ts - startTime) / (duration * 1000), 1);
-            el!.textContent = `${prefix}${Math.round(easeOutQuad(p) * end)}${suffix}`;
+            el!.textContent = `${prefix}${Math.round(easeInOutQuad(p) * end)}${suffix}`;
             if (p < 1) raf = requestAnimationFrame(animate);
           });
           observer.disconnect();
         }
       },
-      { threshold: 0.3 }
+      { threshold: 0.3 },
     );
 
     observer.observe(el);

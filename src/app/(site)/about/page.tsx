@@ -6,7 +6,6 @@ export const metadata = {
 
 import ScrollReveal from '@/components/motion/ScrollReveal';
 import Card from '@/components/ui/Card';
-import RelationshipDiagram from '@/components/motion/RelationshipDiagram';
 import {
   GraduationCap,
   Wrench,
@@ -264,27 +263,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* SECTION 3: Animated Relationship Diagram */}
-        <section className="space-y-12">
-          <div className="text-center max-w-2xl mx-auto space-y-2">
-            <ScrollReveal direction="up">
-              <span className="label text-accent-3 block">Institutional Synergies</span>
-              <h2 className="text-text text-gradient-brand">Forum Connectivity Diagram</h2>
-            </ScrollReveal>
-            <ScrollReveal direction="up" delay={0.08}>
-              <p className="text-text-secondary text-xs sm:text-sm">
-                How our fabrication lab acts in concert with other business and ranking wings at Kongu Engineering
-                College.
-              </p>
-            </ScrollReveal>
-          </div>
-
-          <div className="w-full">
-            <RelationshipDiagram />
-          </div>
-        </section>
-
-        {/* SECTION 4: Faculty Coordinator placeholder block */}
+        {/* SECTION 3: Faculty Coordinator placeholder block */}
         <section className="space-y-8">
           <div className="text-center max-w-2xl mx-auto space-y-2">
             <ScrollReveal direction="up">

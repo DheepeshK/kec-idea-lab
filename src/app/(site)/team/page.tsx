@@ -120,42 +120,61 @@ const fallbackTeam: DBTeamMember[] = [
     email: 'kamalakannan.mech@kongu.ac.in',
     socials: { linkedin: 'https://linkedin.com' },
   },
-  // 5. Student Ambassadors (3)
+  // 5. Student Ambassadors (5)
   {
     _id: 'fallback-amb-1',
-    name: 'Adithya R',
-    role: 'Lead Student Tech-Ambassador',
+    name: 'Dheepesh K',
+    role: 'Chairman',
     group: 'Student Ambassadors',
-    focusArea: 'Autonomous Robotics & Pneumatics Automation Systems',
-    photoUrl: '/images/team/adithya.webp',
-    designation: 'Final Year, Dept. of Mechatronics',
+    focusArea: '',
+    photoUrl: '',
+    designation: 'II - Year, Department of Mechatronics Engineering',
     order: 8,
-    email: 'adithya.mct@kongu.edu',
-    socials: { linkedin: 'https://linkedin.com', github: 'https://github.com' },
+    email: 'dheepeshk.25mts@kongu.edu',
   },
   {
     _id: 'fallback-amb-2',
-    name: 'Janani S',
-    role: 'Student Tech-Ambassador',
+    name: 'Prithisha P S',
+    role: 'Co-Chairman',
     group: 'Student Ambassadors',
-    focusArea: 'Embedded Linux, Custom PCB Design & Signal Integrity',
-    photoUrl: '/images/team/janani.webp',
-    designation: 'Pre-final Year, Dept. of ECE',
+    focusArea: '',
+    photoUrl: '',
+    designation: 'II - Year, Department of Computer Science & Design',
     order: 9,
-    email: 'janani.ece@kongu.edu',
-    socials: { linkedin: 'https://linkedin.com', github: 'https://github.com' },
+    email: 'prithishaps.25csd@kongu.edu',
   },
   {
     _id: 'fallback-amb-3',
-    name: 'Karthik M',
-    role: 'Student Tech-Ambassador',
+    name: 'Eniya A',
+    role: 'Treasurer',
     group: 'Student Ambassadors',
-    focusArea: 'Generative AI Systems & Smart Smart-City Prototypes',
-    photoUrl: '/images/team/mkarthik.webp',
-    designation: 'Final Year, Dept. of Computer Science',
+    focusArea: '',
+    photoUrl: '',
+    designation: 'II - Year, Department of Electronics & Communication Engineering',
     order: 10,
-    email: 'karthik.cse@kongu.edu',
-    socials: { github: 'https://github.com' },
+    email: 'eniyaa.25ece@kongu.edu',
+  },
+  {
+    _id: 'fallback-amb-4',
+    name: 'Ranjani',
+    role: 'Joint Treasurer',
+    group: 'Student Ambassadors',
+    focusArea: '',
+    photoUrl: '',
+    designation: 'II - Year, Department of Computer Science & Engineering',
+    order: 11,
+    email: 'ranjani.25cse@kongu.edu',
+  },
+  {
+    _id: 'fallback-amb-5',
+    name: 'Atitya Ram S',
+    role: 'Co-ordinator',
+    group: 'Student Ambassadors',
+    focusArea: '',
+    photoUrl: '',
+    designation: 'III - Year, Department of Computer Science & Engineering',
+    order: 12,
+    email: 'atityarams.25cse@kongu.edu',
   },
 ];
 
@@ -164,9 +183,7 @@ export default async function TeamPage() {
   const teamList = dbTeam.length > 0 ? dbTeam : fallbackTeam;
 
   const finalGrouped: { [key: string]: DBTeamMember[] } = {
-    'Chief Mentor': [],
-    Coordinator: [],
-    'Co-ordinator': [],
+    'Faculty Leadership': [],
     'Implementation team: Tech gurus': [],
     'Student Ambassadors': [],
     Faculty: [],
@@ -175,30 +192,36 @@ export default async function TeamPage() {
   };
 
   for (const member of teamList) {
-    if (finalGrouped[member.group]) {
-      finalGrouped[member.group].push({ ...member });
+    const g = member.group || '';
+    const r = member.role || '';
+    if (
+      g === 'Chief Mentor' ||
+      g === 'Coordinator' ||
+      g === 'Co-ordinator' ||
+      g === 'Faculty Leadership' ||
+      g === 'Leadership' ||
+      (!g.includes('Student') &&
+        (r.includes('Chief Mentor') ||
+          r.includes('Coordinator') ||
+          r.includes('Co-ordinator') ||
+          r.includes('Co-coordinator')))
+    ) {
+      finalGrouped['Faculty Leadership'].push({ ...member });
+    } else if (finalGrouped[g]) {
+      finalGrouped[g].push({ ...member });
+    } else {
+      if (!finalGrouped[g]) finalGrouped[g] = [];
+      finalGrouped[g].push({ ...member });
     }
   }
 
   // Helper config for visual headers
   const sectionMeta: { [key: string]: { label: string; sub: string; icon: any; maxCount: number } } = {
-    'Chief Mentor': {
-      label: 'Chief Mentor',
-      sub: 'Providing visionary guidance and strategic leadership',
+    'Faculty Leadership': {
+      label: 'Laboratory Leadership',
+      sub: 'Providing visionary guidance and administrative coordination directing the IDEA Lab',
       icon: Award,
-      maxCount: 1,
-    },
-    Coordinator: {
-      label: 'Coordinator',
-      sub: 'Directing resource deployment and project alignment',
-      icon: Shield,
-      maxCount: 1,
-    },
-    'Co-ordinator': {
-      label: 'Co-coordinator',
-      sub: 'Supervising operations and scheduling execution',
-      icon: Cpu,
-      maxCount: 1,
+      maxCount: 3,
     },
     'Implementation team: Tech gurus': {
       label: 'Implementation Team: Tech Gurus',
@@ -208,13 +231,14 @@ export default async function TeamPage() {
     },
     'Student Ambassadors': {
       label: 'Student Ambassadors',
-      sub: 'Elite peer-mentors leading at the ground level and coordinating hackathons and active project designs',
+      sub: 'Student leadership driving innovation, coordination, and lab activities',
       icon: Code,
-      maxCount: 3,
+      maxCount: 5,
     },
   };
 
   const iconColorMap: Record<string, string> = {
+    'Faculty Leadership': 'text-accent',
     'Chief Mentor': 'text-accent',
     Coordinator: 'text-accent-2',
     'Co-ordinator': 'text-accent-3',
@@ -223,6 +247,7 @@ export default async function TeamPage() {
   };
 
   const borderColorMap: Record<string, string> = {
+    'Faculty Leadership': 'hover:border-accent/30',
     'Chief Mentor': 'hover:border-accent/30',
     Coordinator: 'hover:border-accent-2/30',
     'Co-ordinator': 'hover:border-accent-3/30',
@@ -312,76 +337,280 @@ export default async function TeamPage() {
                 </div>
 
                 {/* Cards */}
-                <div className={`grid ${isSingle ? 'grid-cols-1' : 'grid-cols-1 sm:grid-cols-2'} gap-5`}>
-                  {list.map((member, idx) => {
-                    const avatarUrl = member.photoUrl || member.image;
+                {sectionKey === 'Faculty Leadership' ? (
+                  (() => {
+                    // Tier function mapping Leadership roles:
+                    // 1. Chief Mentor -> Tier 1 (1 card centered)
+                    // 2. Coordinator & 2. Co-coordinator -> Tier 2 (2 cards side-by-side)
+                    const getLeadershipRank = (m: DBTeamMember) => {
+                      const r = (m.role || '').toLowerCase();
+                      const g = (m.group || '').toLowerCase();
+                      if (r.includes('chief mentor') || g.includes('chief mentor')) {
+                        return { tier: 1, priority: 1 };
+                      }
+                      if (
+                        r.includes('co-ordinator') ||
+                        r.includes('co-coordinator') ||
+                        r.includes('cocoordinator') ||
+                        g.includes('co-ordinator')
+                      ) {
+                        return { tier: 2, priority: 2 };
+                      }
+                      if (r.includes('coordinator') || g.includes('coordinator')) {
+                        return { tier: 2, priority: 1 };
+                      }
+                      if (m.order === 1) return { tier: 1, priority: 1 };
+                      if (m.order === 2) return { tier: 2, priority: 1 };
+                      return { tier: 2, priority: 2 };
+                    };
+
+                    const tier1 = list.filter((m) => getLeadershipRank(m).tier === 1);
+                    const tier2 = list
+                      .filter((m) => getLeadershipRank(m).tier === 2)
+                      .sort(
+                        (a, b) => getLeadershipRank(a).priority - getLeadershipRank(b).priority || a.order - b.order,
+                      );
+
                     const cardBorder = borderColorMap[sectionKey] || 'hover:border-accent/20';
 
-                    if (isSingle) {
+                    const renderLeadershipCard = (member: DBTeamMember, idx: number, isFeatured = false) => {
+                      const avatarUrl = member.photoUrl || member.image;
                       return (
-                        <ScrollReveal key={member._id} direction="up" delay={0.05}>
+                        <ScrollReveal key={member._id || `${member.name}-${idx}`} direction="up" delay={idx * 0.05}>
                           <div
-                            className={`bg-bg-elevated/30 border border-border/60 rounded-2xl p-4 sm:p-6 flex flex-col sm:flex-row items-center sm:items-center gap-4 sm:gap-6 text-center sm:text-left group ${cardBorder} hover:bg-bg-elevated/40 hover:shadow-xl hover:shadow-accent/10 transition-all duration-300`}
+                            className={`bg-bg-elevated/30 border border-border/60 rounded-xl p-4 sm:p-5 flex flex-col sm:flex-row items-center sm:items-center gap-3 sm:gap-5 text-center sm:text-left group ${cardBorder} hover:bg-bg-elevated/40 hover:shadow-lg hover:shadow-accent/10 transition-all duration-300 ${
+                              isFeatured ? 'border-accent/30 shadow-md shadow-accent/5' : ''
+                            }`}
                           >
-                            <div className="relative h-32 w-32 sm:h-48 sm:w-48 rounded-2xl overflow-hidden shrink-0 border-2 border-border/60 group-hover:border-accent/40 transition-colors shadow-xl shadow-black/25">
+                            <div className="relative h-24 w-24 sm:h-32 sm:w-32 rounded-xl overflow-hidden shrink-0 border-2 border-border/60 group-hover:border-accent/30 transition-colors shadow-lg shadow-black/15">
                               <TeamMemberImage src={avatarUrl || ''} name={member.name} />
                             </div>
                             <div className="flex-1 min-w-0 space-y-1">
                               <h3 className="font-bold text-text group-hover:text-accent transition-colors">
                                 {member.name}
                               </h3>
-                              <p className="text-accent text-sm font-semibold">{member.role}</p>
+                              <p className="text-accent text-xs font-semibold">{member.role}</p>
                               {member.designation && (
-                                <p className="text-text-secondary text-xs">{member.designation}</p>
+                                <p className="text-text-secondary text-[11px]">{member.designation}</p>
                               )}
                               {member.email && (
                                 <a
                                   href={`mailto:${member.email}`}
-                                  className="text-xs text-text-secondary hover:text-accent font-mono inline-flex items-center gap-1.5 transition-colors pt-1"
+                                  className="text-[11px] text-text-secondary hover:text-accent font-mono inline-flex items-center gap-1 transition-colors pt-1"
                                 >
-                                  <Mail className="h-3.5 w-3.5" />
-                                  <span>{member.email}</span>
+                                  <Mail className="h-3 w-3" />
+                                  <span className="truncate max-w-[180px]" title={member.email}>
+                                    {member.email}
+                                  </span>
                                 </a>
                               )}
                             </div>
                           </div>
                         </ScrollReveal>
                       );
-                    }
+                    };
 
                     return (
-                      <ScrollReveal key={member._id} direction="up" delay={idx * 0.05}>
-                        <div
-                          className={`bg-bg-elevated/30 border border-border/60 rounded-xl p-4 sm:p-5 flex flex-col sm:flex-row items-center sm:items-center gap-3 sm:gap-5 text-center sm:text-left group ${cardBorder} hover:bg-bg-elevated/40 hover:shadow-lg hover:shadow-accent/10 transition-all duration-300`}
-                        >
-                          <div className="relative h-24 w-24 sm:h-32 sm:w-32 rounded-xl overflow-hidden shrink-0 border-2 border-border/60 group-hover:border-accent/30 transition-colors shadow-lg shadow-black/15">
-                            <TeamMemberImage src={avatarUrl || ''} name={member.name} />
+                      <div className="space-y-6">
+                        {/* 1. Chief Mentor (Tier 1: Aligned Centered / 1 Card) */}
+                        {tier1.length > 0 && (
+                          <div className="flex justify-center w-full">
+                            <div className="w-full max-w-xl">
+                              {tier1.map((m, i) => renderLeadershipCard(m, i, true))}
+                            </div>
                           </div>
-                          <div className="flex-1 min-w-0 space-y-1">
-                            <h3 className="font-bold text-text group-hover:text-accent transition-colors">
-                              {member.name}
-                            </h3>
-                            <p className="text-accent text-xs font-semibold">{member.role}</p>
-                            {member.designation && (
-                              <p className="text-text-secondary text-[11px]">{member.designation}</p>
-                            )}
-                            {member.email && (
-                              <a
-                                href={`mailto:${member.email}`}
-                                className="text-[11px] text-text-secondary hover:text-accent font-mono inline-flex items-center gap-1 transition-colors pt-1"
-                              >
-                                <Mail className="h-3 w-3" />
-                                <span className="truncate max-w-[180px]" title={member.email}>
-                                  {member.email}
-                                </span>
-                              </a>
-                            )}
+                        )}
+
+                        {/* 2. Coordinator & 2. Co-coordinator (Tier 2: 2 Cards Side-by-Side) */}
+                        {tier2.length > 0 && (
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 w-full">
+                            {tier2.map((m, i) => renderLeadershipCard(m, i))}
                           </div>
-                        </div>
-                      </ScrollReveal>
+                        )}
+                      </div>
                     );
-                  })}
-                </div>
+                  })()
+                ) : sectionKey === 'Student Ambassadors' ? (
+                  (() => {
+                    // Tier function mapping the positions:
+                    // 1. Chairman -> Tier 1
+                    // 2. Co-Chairman, 2. Treasurer -> Tier 2
+                    // 3. Joint Treasurer, 3. Co-ordinator -> Tier 3
+                    const getRank = (m: DBTeamMember) => {
+                      const r = (m.role || '').toLowerCase();
+                      if (r.includes('co-chairman') || r.includes('co chairman') || r.includes('vice chairman')) {
+                        return { tier: 2, priority: 1 };
+                      }
+                      if (
+                        r.includes('joint treasurer') ||
+                        r.includes('joint-treasurer') ||
+                        r.includes('assistant treasurer') ||
+                        r.includes('asst treasurer')
+                      ) {
+                        return { tier: 3, priority: 1 };
+                      }
+                      if (r.includes('treasurer')) {
+                        return { tier: 2, priority: 2 };
+                      }
+                      if (r.includes('chairman') || r.includes('chairperson')) {
+                        return { tier: 1, priority: 1 };
+                      }
+                      if (r.includes('coordinator') || r.includes('co-ordinator')) {
+                        return { tier: 3, priority: 2 };
+                      }
+                      if (m.order === 1) return { tier: 1, priority: 1 };
+                      if (m.order === 2) return { tier: 2, priority: 1 };
+                      if (m.order === 3) return { tier: 2, priority: 2 };
+                      if (m.order === 4) return { tier: 3, priority: 1 };
+                      return { tier: 3, priority: 2 };
+                    };
+
+                    const tier1 = list.filter((m) => getRank(m).tier === 1);
+                    const tier2 = list
+                      .filter((m) => getRank(m).tier === 2)
+                      .sort((a, b) => getRank(a).priority - getRank(b).priority || a.order - b.order);
+                    const tier3 = list
+                      .filter((m) => getRank(m).tier === 3)
+                      .sort((a, b) => getRank(a).priority - getRank(b).priority || a.order - b.order);
+
+                    const cardBorder = borderColorMap[sectionKey] || 'hover:border-accent/20';
+
+                    const renderAmbassadorCard = (member: DBTeamMember, idx: number, isFeatured = false) => {
+                      const avatarUrl = member.photoUrl || member.image;
+                      return (
+                        <ScrollReveal key={member._id || `${member.name}-${idx}`} direction="up" delay={idx * 0.05}>
+                          <div
+                            className={`bg-bg-elevated/30 border border-border/60 rounded-xl p-4 sm:p-5 flex flex-col sm:flex-row items-center sm:items-center gap-3 sm:gap-5 text-center sm:text-left group ${cardBorder} hover:bg-bg-elevated/40 hover:shadow-lg hover:shadow-accent/10 transition-all duration-300 ${
+                              isFeatured ? 'border-accent/30 shadow-md shadow-accent/5' : ''
+                            }`}
+                          >
+                            <div className="relative h-24 w-24 sm:h-32 sm:w-32 rounded-xl overflow-hidden shrink-0 border-2 border-border/60 group-hover:border-accent/30 transition-colors shadow-lg shadow-black/15">
+                              <TeamMemberImage src={avatarUrl || ''} name={member.name} />
+                            </div>
+                            <div className="flex-1 min-w-0 space-y-1">
+                              <h3 className="font-bold text-text group-hover:text-accent transition-colors">
+                                {member.name}
+                              </h3>
+                              <p className="text-accent text-xs font-semibold">{member.role}</p>
+                              {member.designation && (
+                                <p className="text-text-secondary text-[11px]">{member.designation}</p>
+                              )}
+                              {member.email && (
+                                <a
+                                  href={`mailto:${member.email}`}
+                                  className="text-[11px] text-text-secondary hover:text-accent font-mono inline-flex items-center gap-1 transition-colors pt-1"
+                                >
+                                  <Mail className="h-3 w-3" />
+                                  <span className="truncate max-w-[180px]" title={member.email}>
+                                    {member.email}
+                                  </span>
+                                </a>
+                              )}
+                            </div>
+                          </div>
+                        </ScrollReveal>
+                      );
+                    };
+
+                    return (
+                      <div className="space-y-6">
+                        {/* 1. Chairman (Tier 1: Aligned Centered / 1 Card) */}
+                        {tier1.length > 0 && (
+                          <div className="flex justify-center w-full">
+                            <div className="w-full max-w-xl">
+                              {tier1.map((m, i) => renderAmbassadorCard(m, i, true))}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* 2. Co-Chairman & 2. Treasurer (Tier 2: 2 Cards Side-by-Side) */}
+                        {tier2.length > 0 && (
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 w-full">
+                            {tier2.map((m, i) => renderAmbassadorCard(m, i))}
+                          </div>
+                        )}
+
+                        {/* 3. Joint Treasurer & 3. Co-ordinator (Tier 3: 2 Cards Side-by-Side) */}
+                        {tier3.length > 0 && (
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 w-full">
+                            {tier3.map((m, i) => renderAmbassadorCard(m, i))}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })()
+                ) : (
+                  <div className={`grid ${isSingle ? 'grid-cols-1' : 'grid-cols-1 sm:grid-cols-2'} gap-5`}>
+                    {list.map((member, idx) => {
+                      const avatarUrl = member.photoUrl || member.image;
+                      const cardBorder = borderColorMap[sectionKey] || 'hover:border-accent/20';
+
+                      if (isSingle) {
+                        return (
+                          <ScrollReveal key={member._id} direction="up" delay={0.05}>
+                            <div
+                              className={`bg-bg-elevated/30 border border-border/60 rounded-2xl p-4 sm:p-6 flex flex-col sm:flex-row items-center sm:items-center gap-4 sm:gap-6 text-center sm:text-left group ${cardBorder} hover:bg-bg-elevated/40 hover:shadow-xl hover:shadow-accent/10 transition-all duration-300`}
+                            >
+                              <div className="relative h-32 w-32 sm:h-48 sm:w-48 rounded-2xl overflow-hidden shrink-0 border-2 border-border/60 group-hover:border-accent/40 transition-colors shadow-xl shadow-black/25">
+                                <TeamMemberImage src={avatarUrl || ''} name={member.name} />
+                              </div>
+                              <div className="flex-1 min-w-0 space-y-1">
+                                <h3 className="font-bold text-text group-hover:text-accent transition-colors">
+                                  {member.name}
+                                </h3>
+                                <p className="text-accent text-sm font-semibold">{member.role}</p>
+                                {member.designation && (
+                                  <p className="text-text-secondary text-xs">{member.designation}</p>
+                                )}
+                                {member.email && (
+                                  <a
+                                    href={`mailto:${member.email}`}
+                                    className="text-xs text-text-secondary hover:text-accent font-mono inline-flex items-center gap-1.5 transition-colors pt-1"
+                                  >
+                                    <Mail className="h-3.5 w-3.5" />
+                                    <span>{member.email}</span>
+                                  </a>
+                                )}
+                              </div>
+                            </div>
+                          </ScrollReveal>
+                        );
+                      }
+
+                      return (
+                        <ScrollReveal key={member._id} direction="up" delay={idx * 0.05}>
+                          <div
+                            className={`bg-bg-elevated/30 border border-border/60 rounded-xl p-4 sm:p-5 flex flex-col sm:flex-row items-center sm:items-center gap-3 sm:gap-5 text-center sm:text-left group ${cardBorder} hover:bg-bg-elevated/40 hover:shadow-lg hover:shadow-accent/10 transition-all duration-300`}
+                          >
+                            <div className="relative h-24 w-24 sm:h-32 sm:w-32 rounded-xl overflow-hidden shrink-0 border-2 border-border/60 group-hover:border-accent/30 transition-colors shadow-lg shadow-black/15">
+                              <TeamMemberImage src={avatarUrl || ''} name={member.name} />
+                            </div>
+                            <div className="flex-1 min-w-0 space-y-1">
+                              <h3 className="font-bold text-text group-hover:text-accent transition-colors">
+                                {member.name}
+                              </h3>
+                              <p className="text-accent text-xs font-semibold">{member.role}</p>
+                              {member.designation && (
+                                <p className="text-text-secondary text-[11px]">{member.designation}</p>
+                              )}
+                              {member.email && (
+                                <a
+                                  href={`mailto:${member.email}`}
+                                  className="text-[11px] text-text-secondary hover:text-accent font-mono inline-flex items-center gap-1 transition-colors pt-1"
+                                >
+                                  <Mail className="h-3 w-3" />
+                                  <span className="truncate max-w-[180px]" title={member.email}>
+                                    {member.email}
+                                  </span>
+                                </a>
+                              )}
+                            </div>
+                          </div>
+                        </ScrollReveal>
+                      );
+                    })}
+                  </div>
+                )}
               </section>
             );
           })}

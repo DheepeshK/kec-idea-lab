@@ -49,6 +49,7 @@ export default function AnimatedHeroImage() {
             animation: tilt ? 'none' : undefined,
           }}
         >
+          {/* Main IDEA Lab Banner */}
           <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-accent/40 via-accent-2/30 to-accent-3/40 p-[2.5px] shadow-2xl shadow-accent/20">
             <div className="relative w-full h-full rounded-2xl bg-bg-elevated flex items-center justify-center p-6">
               <Image
@@ -57,6 +58,22 @@ export default function AnimatedHeroImage() {
                 fill
                 sizes="(max-width: 640px) 80vw, 460px"
                 className="object-contain"
+              />
+            </div>
+          </div>
+
+          {/* Smaller AICTE Banner on Top-Right */}
+          <div
+            className="absolute -top-4 -right-4 sm:-top-6 sm:-right-6 w-40 h-40 sm:w-28 sm:h-28 rounded-2xl bg-gradient-to-br from-accent/40 via-accent-2/30 to-accent-3/40 p-[2px] shadow-2xl shadow-accent/25 z-20"
+            style={{ transform: 'translateZ(30px)' }}
+          >
+            <div className="relative w-full h-full rounded-[14px] bg-bg-elevated flex items-center justify-center p-3">
+              <Image
+                src="/AICTE.png"
+                alt="AICTE Logo"
+                fill
+                sizes="(max-width: 650px) 130px, 150px"
+                className="object-contain p-1"
               />
             </div>
           </div>

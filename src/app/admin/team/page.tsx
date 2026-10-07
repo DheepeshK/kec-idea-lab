@@ -363,6 +363,47 @@ export default function AdminTeamPage() {
                   placeholder="Lab Faculty In-Charge / Technical Mentor"
                   className={`w-full bg-bg border rounded-lg px-3 py-2 text-sm text-text placeholder-text-secondary focus:outline-none transition-all duration-300 focus:shadow-lg focus:shadow-accent/5 ${errors.role ? 'border-accent' : 'border-border focus:border-accent'}`}
                 />
+                {(group === 'Chief Mentor' ||
+                  group === 'Coordinator' ||
+                  group === 'Co-ordinator' ||
+                  group === 'Faculty Leadership') && (
+                  <div className="flex flex-wrap items-center gap-1.5 pt-1">
+                    <span className="text-[10px] text-text-secondary mr-1">Position Presets:</span>
+                    {['Chief Mentor', 'Coordinator', 'Co-coordinator'].map((preset) => (
+                      <button
+                        key={preset}
+                        type="button"
+                        onClick={() => setRole(preset)}
+                        className={`text-[10px] px-2.5 py-0.5 rounded-full border transition-all ${
+                          role === preset
+                            ? 'bg-accent/15 border-accent text-accent font-semibold'
+                            : 'border-border/60 text-text-secondary hover:text-text hover:border-border'
+                        }`}
+                      >
+                        {preset}
+                      </button>
+                    ))}
+                  </div>
+                )}
+                {group === 'Student Ambassadors' && (
+                  <div className="flex flex-wrap items-center gap-1.5 pt-1">
+                    <span className="text-[10px] text-text-secondary mr-1">Position Presets:</span>
+                    {['Chairman', 'Co-Chairman', 'Treasurer', 'Joint Treasurer', 'Co-ordinator'].map((preset) => (
+                      <button
+                        key={preset}
+                        type="button"
+                        onClick={() => setRole(preset)}
+                        className={`text-[10px] px-2.5 py-0.5 rounded-full border transition-all ${
+                          role === preset
+                            ? 'bg-accent/15 border-accent text-accent font-semibold'
+                            : 'border-border/60 text-text-secondary hover:text-text hover:border-border'
+                        }`}
+                      >
+                        {preset}
+                      </button>
+                    ))}
+                  </div>
+                )}
                 {errors.role && <p className="text-[10px] text-accent font-semibold mt-0.5">{errors.role}</p>}
               </div>
 

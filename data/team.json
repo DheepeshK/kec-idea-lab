@@ -119,8 +119,8 @@
     "bio": ""
   },
   {
-    "name": "Mr. Dheepesh. K",
-    "role": "Student Coordinator",
+    "name": "Dheepesh K",
+    "role": "Chairman",
     "group": "Student Ambassadors",
     "focusArea": "",
     "photoUrl": "",
@@ -136,8 +136,8 @@
     "_id": "mrhunmg8"
   },
   {
-    "name": "Ms. Prithisha. P. S",
-    "role": "Student Coordinator",
+    "name": "Prithisha P S",
+    "role": "Co-Chairman",
     "group": "Student Ambassadors",
     "focusArea": "",
     "photoUrl": "",
@@ -151,5 +151,56 @@
       "twitter": ""
     },
     "_id": "mrhuq4u2"
+  },
+  {
+    "name": "Eniya A",
+    "role": "Treasurer",
+    "group": "Student Ambassadors",
+    "focusArea": "",
+    "photoUrl": "",
+    "designation": "II - Year, Department of Electronics & Communication Engineering",
+    "bio": "",
+    "email": "eniyaa.25ece@kongu.edu",
+    "order": 10,
+    "socials": {
+      "linkedin": "",
+      "github": "",
+      "twitter": ""
+    },
+    "_id": "mrh_eniya"
+  },
+  {
+    "name": "Ranjani",
+    "role": "Joint Treasurer",
+    "group": "Student Ambassadors",
+    "focusArea": "",
+    "photoUrl": "",
+    "designation": "II - Year, Department of Computer Science & Engineering",
+    "bio": "",
+    "email": "ranjani.25cse@kongu.edu",
+    "order": 11,
+    "socials": {
+      "linkedin": "",
+      "github": "",
+      "twitter": ""
+    },
+    "_id": "mrh_ranjani"
+  },
+  {
+    "name": "Atitya Ram S",
+    "role": "Co-ordinator",
+    "group": "Student Ambassadors",
+    "focusArea": "",
+    "photoUrl": "",
+    "designation": "III - Year, Department of Computer Science & Engineering",
+    "bio": "",
+    "email": "atityarams.25cse@kongu.edu",
+    "order": 12,
+    "socials": {
+      "linkedin": "",
+      "github": "",
+      "twitter": ""
+    },
+    "_id": "mrh_atitya"
   }
 ]
