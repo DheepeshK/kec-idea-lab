@@ -82,7 +82,7 @@ npm start
 
 - **Home:** Hero section, animated stats, featured equipment, upcoming events
 - **About:** Mission, vision, IEF ecosystem
-- **Facilities:** Tabbed equipment browser with specs and availability
+- **Labs:** Tabbed equipment browser with specs and availability
 - **Team:** Faculty coordinators, tech gurus, student ambassadors
 - **Events:** Filterable event grid with registration
 - **Calendar:** Yearly schedule with quarter-based grouping

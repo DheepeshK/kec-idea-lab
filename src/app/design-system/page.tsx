@@ -92,9 +92,7 @@ export default function DesignSystemPage() {
           <div className="flex items-center gap-4 shrink-0">
             <div className="text-right hidden sm:block">
               <span className="text-[10px] font-mono text-text-secondary block">ACTIVE ENVIRONMENT</span>
-              <span className="text-xs font-mono text-accent-2 font-bold uppercase block">
-                {theme === 'dark' ? '● DARK MODE' : '○ LIGHT MODE'}
-              </span>
+              <span className="text-xs font-mono text-accent-2 font-bold uppercase block">○ LIGHT MODE</span>
             </div>
           </div>
         </div>

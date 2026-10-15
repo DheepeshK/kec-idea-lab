@@ -47,7 +47,7 @@ export default function Navbar() {
   const navLinks = [
     { name: 'Home', href: '/' },
     { name: 'About', href: '/about' },
-    { name: 'Facilities', href: '/facilities' },
+    { name: 'LABS', href: '/labs' },
     { name: 'Team', href: '/team' },
     { name: 'Calendar', href: '/calendar' },
     { name: 'Events', href: '/events' },
@@ -66,8 +66,8 @@ export default function Navbar() {
       <nav
         className={`relative w-full border-b transition-all duration-300 ${
           isScrolled
-            ? 'glass-nav-scrolled border-border/70 shadow-lg shadow-black/[0.04]'
-            : 'glass-nav border-border/40 shadow-sm shadow-black/[0.02]'
+            ? 'glass-nav-scrolled border-border/70 shadow-[0_12px_32px_rgba(0,0,0,0.14)]'
+            : 'glass-nav border-border/40 shadow-[0_4px_20px_rgba(0,0,0,0.08)]'
         }`}
         id="site-navbar"
       >
@@ -94,7 +94,7 @@ export default function Navbar() {
             </div>
 
             {/* Desktop Nav links inside frosted glass capsule */}
-            <div className="hidden md:flex ml-auto items-center justify-end gap-1.5 bg-white/40 backdrop-blur-md p-1.5 rounded-full border border-white/60 shadow-[inset_0_1px_3px_rgba(0,0,0,0.03)] ring-1 ring-black/[0.03]">
+            <div className="hidden md:flex ml-auto items-center justify-end gap-1.5 bg-white/60 backdrop-blur-md p-1.5 rounded-full border border-white/70 shadow-lg shadow-black/10 ring-1 ring-black/[0.05]">
               {navLinks.map((link) => {
                 const active = isActive(link.href);
                 return (
@@ -103,8 +103,8 @@ export default function Navbar() {
                     href={link.href}
                     className={`px-4 py-1.5 rounded-full text-xs lg:text-sm font-semibold transition-all duration-200 relative ${
                       active
-                        ? 'text-accent bg-accent/10 border border-accent/25 shadow-sm shadow-accent/10'
-                        : 'text-text-secondary hover:text-accent hover:bg-white/70 hover:shadow-sm border border-transparent'
+                        ? 'text-white bg-accent border border-accent shadow-sm shadow-accent/20'
+                        : 'text-text-secondary hover:text-white hover:bg-accent hover:border-accent hover:shadow-md hover:shadow-accent/25 border border-transparent'
                     }`}
                   >
                     <span>{link.name}</span>
@@ -145,8 +145,8 @@ export default function Navbar() {
                     href={link.href}
                     className={`block px-4 py-2.5 rounded-xl text-sm font-semibold transition-all ${
                       active
-                        ? 'bg-accent/15 text-accent border border-accent/20 shadow-sm'
-                        : 'text-text-secondary hover:bg-accent/[0.06] hover:text-accent'
+                        ? 'bg-accent text-white border border-accent shadow-sm shadow-accent/20'
+                        : 'text-text-secondary hover:bg-accent hover:text-white'
                     }`}
                   >
                     {link.name}

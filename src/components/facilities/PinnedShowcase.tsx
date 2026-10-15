@@ -69,7 +69,7 @@ export default function PinnedShowcase({ items }: PinnedShowcaseProps) {
   return (
     <div className="space-y-12">
       {/* Category Filter Tabs */}
-      <div className="flex flex-wrap justify-center gap-2 max-w-2xl mx-auto">
+      {/* <div className="flex flex-wrap justify-center gap-2 max-w-2xl mx-auto">
         {TABS.map((tab) => (
           <button
             key={tab}
@@ -83,7 +83,7 @@ export default function PinnedShowcase({ items }: PinnedShowcaseProps) {
             {tab}
           </button>
         ))}
-      </div>
+      </div> */}
 
       {/* Equipment Grid */}
       {filteredItems.length > 0 ? (

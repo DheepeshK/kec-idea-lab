@@ -32,6 +32,15 @@ const nextConfig = {
       },
     ];
   },
+  async redirects() {
+    return [
+      {
+        source: '/facilities',
+        destination: '/labs',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

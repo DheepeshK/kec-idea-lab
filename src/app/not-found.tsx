@@ -23,10 +23,10 @@ export default function NotFound() {
             Back to Home
           </Link>
           <Link
-            href="/facilities"
+            href="/labs"
             className="inline-flex items-center justify-center px-5 py-2.5 text-sm font-medium rounded-lg border-2 border-border/60 bg-transparent hover:border-accent/40 hover:text-accent text-text-secondary transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-bg focus-visible:ring-accent"
           >
-            Explore Facilities
+            Explore Labs
           </Link>
         </div>
       </div>

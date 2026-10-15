@@ -3,7 +3,7 @@ import type { MetadataRoute } from 'next';
 const siteUrl = process.env.NEXTAUTH_URL?.replace(/\/+$/, '') || 'http://localhost:3000';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticRoutes = ['', '/about', '/facilities', '/team', '/events', '/calendar', '/contact'];
+  const staticRoutes = ['', '/about', '/labs', '/team', '/events', '/calendar', '/contact'];
 
   return staticRoutes.map((route) => ({
     url: `${siteUrl}${route}`,

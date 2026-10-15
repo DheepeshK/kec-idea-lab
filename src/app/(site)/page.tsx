@@ -41,38 +41,40 @@ export default async function HomePage() {
               <ScrollReveal direction="right">
                 <span className="label inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-accent/10 text-accent border border-accent/20 shadow-sm shadow-accent/20">
                   <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
-                  KEC IDEA Hub
+                  INITIATIVE BY KEC
                 </span>
               </ScrollReveal>
 
               <ScrollReveal direction="right" delay={0.08}>
                 <h1 className="text-text animate-gradient">
-                  Where ideas <br className="hidden sm:inline" />
-                  become <span className="text-gradient-brand">working prototypes.</span>
+                  Welcome to <br className="hidden sm:inline" />
+                  <span className="text-gradient-brand">AICTE-IDEA Lab @ KEC</span>
                 </h1>
               </ScrollReveal>
 
               <ScrollReveal direction="right" delay={0.16}>
                 <p className="body-text text-base sm:text-lg max-w-2xl">
-                  IDEA Lab @ KEC is Kongu Engineering College&apos;s AICTE-established facility — under the Innovation &
-                  Entrepreneurship Forum @ KEC. We bridge the gap between imagination and physical engineering.
+                  Kongu Engineering College proudly welcomes innovators, students, and researchers to the AICTE-IDEA Lab
+                  — established under the Innovation & Entrepreneurship Forum (IEF). We empower creative minds with
+                  state-of-the-art labs, multidisciplinary mentorship, and hands-on prototyping resources to transform
+                  ideas into tangible engineering solutions.
                 </p>
               </ScrollReveal>
 
               <ScrollReveal direction="right" delay={0.24}>
                 <div className="flex flex-wrap gap-4 pt-4">
                   <MagneticButton>
-                    <Link href="/facilities">
+                    <Link href="/labs">
                       <Button variant="primary" size="lg" className="gap-2 text-sm uppercase tracking-wide px-6">
-                        Explore Facilities <ArrowRight className="h-4 w-4" />
+                        ACCESS TO LABS <ArrowRight className="h-4 w-4" />
                       </Button>
                     </Link>
                   </MagneticButton>
-                  <Link href="/about">
+                  {/* <Link href="/about">
                     <Button variant="outline" size="lg" className="text-sm uppercase tracking-wide px-6">
                       Our Info
                     </Button>
-                  </Link>
+                  </Link> */}
                 </div>
               </ScrollReveal>
             </div>
@@ -83,26 +85,6 @@ export default async function HomePage() {
                 <AnimatedHeroImage />
               </ScrollReveal>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 1.5: PARTNER LOGO STRIP */}
-      <section className="bg-bg-elevated/40 border-b border-border/40 py-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-center gap-6 md:gap-12 flex-wrap">
-            {[
-              { src: '/IIC.png', alt: 'IIC' },
-              { src: '/EMDC.png', alt: 'EMDC' },
-              { src: '/TBI.png', alt: 'TBI' },
-            ].map((logo) => (
-              <div
-                key={logo.alt}
-                className="relative h-16 sm:h-20 w-auto opacity-70 hover:opacity-100 transition-opacity"
-              >
-                <img src={logo.src} alt={logo.alt} className="h-full w-auto object-contain" />
-              </div>
-            ))}
           </div>
         </div>
       </section>
@@ -272,6 +254,26 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* PARTNER LOGO STRIP */}
+      <section className="bg-bg-elevated/40 border-y border-border/40 py-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-center gap-6 md:gap-12 flex-wrap">
+            {[
+              { src: '/IIC.png', alt: 'IIC' },
+              { src: '/EMDC.png', alt: 'EMDC' },
+              { src: '/TBI.png', alt: 'TBI' },
+            ].map((logo) => (
+              <div
+                key={logo.alt}
+                className="relative h-16 sm:h-20 w-auto opacity-70 hover:opacity-100 transition-opacity"
+              >
+                <img src={logo.src} alt={logo.alt} className="h-full w-auto object-contain" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* SECTION 6: CLOSING CTA BANNER */}
       <section className="bg-gradient-to-r from-accent/20 via-bg to-accent-3/20 border-t border-border py-20 lg:py-24 relative overflow-hidden animate-gradient">
         {/* Subtle decorative background light */}
@@ -297,7 +299,7 @@ export default async function HomePage() {
                   </Button>
                 </Link>
               </MagneticButton>
-              <Link href="/facilities">
+              <Link href="/labs">
                 <Button variant="outline" size="lg" className="uppercase tracking-wide px-8">
                   View Equipments
                 </Button>
