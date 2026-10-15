@@ -120,12 +120,12 @@ const fallbackTeam: DBTeamMember[] = [
     email: 'kamalakannan.mech@kongu.ac.in',
     socials: { linkedin: 'https://linkedin.com' },
   },
-  // 5. Student Ambassadors (5)
+  // 5. Student Team (5)
   {
     _id: 'fallback-amb-1',
     name: 'Dheepesh K',
     role: 'Chairman',
-    group: 'Student Ambassadors',
+    group: 'Student Team',
     focusArea: '',
     photoUrl: '',
     designation: 'II - Year, Department of Mechatronics Engineering',
@@ -136,7 +136,7 @@ const fallbackTeam: DBTeamMember[] = [
     _id: 'fallback-amb-2',
     name: 'Prithisha P S',
     role: 'Co-Chairman',
-    group: 'Student Ambassadors',
+    group: 'Student Team',
     focusArea: '',
     photoUrl: '',
     designation: 'II - Year, Department of Computer Science & Design',
@@ -147,7 +147,7 @@ const fallbackTeam: DBTeamMember[] = [
     _id: 'fallback-amb-3',
     name: 'Eniya A',
     role: 'Treasurer',
-    group: 'Student Ambassadors',
+    group: 'Student Team',
     focusArea: '',
     photoUrl: '',
     designation: 'II - Year, Department of Electronics & Communication Engineering',
@@ -158,7 +158,7 @@ const fallbackTeam: DBTeamMember[] = [
     _id: 'fallback-amb-4',
     name: 'Ranjani',
     role: 'Joint Treasurer',
-    group: 'Student Ambassadors',
+    group: 'Student Team',
     focusArea: '',
     photoUrl: '',
     designation: 'II - Year, Department of Computer Science & Engineering',
@@ -169,7 +169,7 @@ const fallbackTeam: DBTeamMember[] = [
     _id: 'fallback-amb-5',
     name: 'Atitya Ram S',
     role: 'Co-ordinator',
-    group: 'Student Ambassadors',
+    group: 'Student Team',
     focusArea: '',
     photoUrl: '',
     designation: 'III - Year, Department of Computer Science & Engineering',
@@ -185,7 +185,7 @@ export default async function TeamPage() {
   const finalGrouped: { [key: string]: DBTeamMember[] } = {
     'Faculty Leadership': [],
     'Implementation team: Tech gurus': [],
-    'Student Ambassadors': [],
+    'Student Team': [],
     Faculty: [],
     Mentor: [],
     Student: [],
@@ -207,6 +207,8 @@ export default async function TeamPage() {
           r.includes('Co-coordinator')))
     ) {
       finalGrouped['Faculty Leadership'].push({ ...member });
+    } else if (g === 'Student Ambassadors' || g === 'Student Team' || g.includes('Student')) {
+      finalGrouped['Student Team'].push({ ...member });
     } else if (finalGrouped[g]) {
       finalGrouped[g].push({ ...member });
     } else {
@@ -229,8 +231,8 @@ export default async function TeamPage() {
       icon: Zap,
       maxCount: 4,
     },
-    'Student Ambassadors': {
-      label: 'Student Ambassadors',
+    'Student Team': {
+      label: 'Student Team',
       sub: 'Student leadership driving innovation, coordination, and lab activities',
       icon: Code,
       maxCount: 5,
@@ -243,6 +245,7 @@ export default async function TeamPage() {
     Coordinator: 'text-accent-2',
     'Co-ordinator': 'text-accent-3',
     'Implementation team: Tech gurus': 'text-brand-navy',
+    'Student Team': 'text-brand-red',
     'Student Ambassadors': 'text-brand-red',
   };
 
@@ -252,6 +255,7 @@ export default async function TeamPage() {
     Coordinator: 'hover:border-accent-2/30',
     'Co-ordinator': 'hover:border-accent-3/30',
     'Implementation team: Tech gurus': 'hover:border-brand-navy/30',
+    'Student Team': 'hover:border-brand-red/30',
     'Student Ambassadors': 'hover:border-brand-red/30',
   };
 
@@ -283,9 +287,9 @@ export default async function TeamPage() {
         <div className="text-center max-w-2xl mx-auto space-y-3">
           <ScrollReveal direction="up">
             <span className="text-[11px] text-accent font-bold uppercase tracking-[0.2em] block">
-              Pillars of Innovation
+              Administrative Team
             </span>
-            <h1 className="">Meet the AICTE KEC IDEA Lab Team</h1>
+            <h1 className="">Administration Team</h1>
           </ScrollReveal>
           <ScrollReveal direction="up" delay={0.08}>
             <p className="body-text max-w-lg mx-auto">
@@ -295,7 +299,7 @@ export default async function TeamPage() {
           </ScrollReveal>
 
           {/* Affiliation logos */}
-          <ScrollReveal direction="up" delay={0.14}>
+          {/* <ScrollReveal direction="up" delay={0.14}>
             <div className="flex items-center justify-center gap-6 pt-2 flex-wrap">
               {[
                 { src: '/AICTE.png', alt: 'AICTE' },
@@ -310,7 +314,7 @@ export default async function TeamPage() {
                 </div>
               ))}
             </div>
-          </ScrollReveal>
+          </ScrollReveal> */}
         </div>
 
         {/* Sections */}
@@ -325,12 +329,14 @@ export default async function TeamPage() {
 
             return (
               <section key={sectionKey} className="space-y-4">
-                {/* Section Header — compact */}
-                <div className="flex items-center gap-3 border-b border-border/60 pb-2">
-                  <div className={`p-1.5 rounded-lg ${iconColorMap[sectionKey] || 'text-accent'} bg-current/5`}>
+                {/* Section Header — centered */}
+                <div className="flex items-center justify-center gap-3 border-b border-border/60 pb-2.5 text-center">
+                  <div
+                    className={`p-1.5 rounded-lg ${iconColorMap[sectionKey] || 'text-accent'} bg-current/5 shrink-0`}
+                  >
                     <SectionIcon className="h-4 w-4" />
                   </div>
-                  <div>
+                  <div className="text-left">
                     <h2 className="text-base sm:text-lg font-bold text-text">{meta.label}</h2>
                     <p className="text-[11px] text-text-secondary">{meta.sub}</p>
                   </div>
@@ -430,7 +436,7 @@ export default async function TeamPage() {
                       </div>
                     );
                   })()
-                ) : sectionKey === 'Student Ambassadors' ? (
+                ) : sectionKey === 'Student Team' || sectionKey === 'Student Ambassadors' ? (
                   (() => {
                     // Tier function mapping the positions:
                     // 1. Chairman -> Tier 1

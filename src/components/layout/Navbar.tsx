@@ -93,38 +93,57 @@ export default function Navbar() {
               </a>
             </div>
 
-            {/* Desktop Nav links inside frosted glass capsule */}
-            <div className="hidden md:flex ml-auto items-center justify-end gap-1.5 bg-white/60 backdrop-blur-md p-1.5 rounded-full border border-white/70 shadow-lg shadow-black/10 ring-1 ring-black/[0.05]">
-              {navLinks.map((link) => {
-                const active = isActive(link.href);
-                return (
-                  <Link
-                    key={link.name}
-                    href={link.href}
-                    className={`px-4 py-1.5 rounded-full text-xs lg:text-sm font-semibold transition-all duration-200 relative ${
-                      active
-                        ? 'text-white bg-accent border border-accent shadow-sm shadow-accent/20'
-                        : 'text-text-secondary hover:text-white hover:bg-accent hover:border-accent hover:shadow-md hover:shadow-accent/25 border border-transparent'
-                    }`}
-                  >
-                    <span>{link.name}</span>
-                  </Link>
-                );
-              })}
-            </div>
+            {/* Right side items: Nav Links + AICTE Logo */}
+            <div className="flex items-center gap-3 sm:gap-4 ml-auto">
+              {/* Desktop Nav links inside frosted glass capsule */}
+              <div className="hidden md:flex items-center justify-end gap-1.5 bg-white/60 backdrop-blur-md p-1.5 rounded-full border border-white/70 shadow-lg shadow-black/10 ring-1 ring-black/[0.05]">
+                {navLinks.map((link) => {
+                  const active = isActive(link.href);
+                  return (
+                    <Link
+                      key={link.name}
+                      href={link.href}
+                      className={`px-4 py-1.5 rounded-full text-xs lg:text-sm font-semibold transition-all duration-200 relative ${
+                        active
+                          ? 'text-white bg-accent border border-accent shadow-sm shadow-accent/20'
+                          : 'text-text-secondary hover:text-white hover:bg-accent hover:border-accent hover:shadow-md hover:shadow-accent/25 border border-transparent'
+                      }`}
+                    >
+                      <span>{link.name}</span>
+                    </Link>
+                  );
+                })}
+              </div>
 
-            {/* Mobile Actions and Hamburger */}
-            <div className="flex items-center gap-2 md:hidden">
-              <button
-                ref={buttonRef}
-                onClick={() => setIsOpen(!isOpen)}
-                className="p-2.5 rounded-xl border border-border/60 bg-white/70 backdrop-blur-md text-text hover:text-accent hover:bg-white/95 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 shadow-sm"
-                aria-label="Toggle menu"
-                aria-expanded={isOpen}
-                aria-controls="mobile-nav-menu"
+              {/* AICTE Logo in the top right corner */}
+              <a
+                href="https://www.aicte.gov.in/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center rounded-2xl border border-white/80 bg-white/85 backdrop-blur-xl p-1.5 sm:p-2 shadow-lg shadow-black/10 transition-all duration-300 hover:scale-105 hover:bg-white hover:shadow-xl ring-1 ring-black/[0.04] shrink-0"
+                aria-label="Visit AICTE Official Website"
+                title="All India Council for Technical Education (AICTE)"
               >
-                {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-              </button>
+                <img
+                  src="/AICTE.png"
+                  alt="AICTE Logo"
+                  className="h-8 w-10 sm:h-12 sm:w-12 object-contain drop-shadow-sm"
+                />
+              </a>
+
+              {/* Mobile Actions and Hamburger */}
+              <div className="flex items-center gap-2 md:hidden">
+                <button
+                  ref={buttonRef}
+                  onClick={() => setIsOpen(!isOpen)}
+                  className="p-2.5 rounded-xl border border-border/60 bg-white/70 backdrop-blur-md text-text hover:text-accent hover:bg-white/95 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 shadow-sm"
+                  aria-label="Toggle menu"
+                  aria-expanded={isOpen}
+                  aria-controls="mobile-nav-menu"
+                >
+                  {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+                </button>
+              </div>
             </div>
           </div>
         </div>

@@ -61,7 +61,7 @@ export default function AdminTeamPage() {
 
   const [name, setName] = useState('');
   const [role, setRole] = useState('');
-  const [group, setGroup] = useState<string>('Student Ambassadors');
+  const [group, setGroup] = useState<string>('Student Team');
   const [focusArea, setFocusArea] = useState('');
   const [photoUrl, setPhotoUrl] = useState('');
   const [designation, setDesignation] = useState('');
@@ -78,7 +78,7 @@ export default function AdminTeamPage() {
     setEditingId(member._id);
     setName(member.name || '');
     setRole(member.role || '');
-    setGroup(member.group || 'Student Ambassadors');
+    setGroup(member.group || 'Student Team');
     setFocusArea(member.focusArea || '');
     setPhotoUrl(member.photoUrl || member.image || '');
     setDesignation(member.designation || '');
@@ -102,7 +102,7 @@ export default function AdminTeamPage() {
     setEditingId(null);
     setName('');
     setRole('');
-    setGroup('Student Ambassadors');
+    setGroup('Student Team');
     setFocusArea('');
     setPhotoUrl('');
     setDesignation('');
@@ -160,7 +160,7 @@ export default function AdminTeamPage() {
         setEditingId(null);
         setName('');
         setRole('');
-        setGroup('Student Ambassadors');
+        setGroup('Student Team');
         setFocusArea('');
         setPhotoUrl('');
         setDesignation('');
@@ -337,6 +337,7 @@ export default function AdminTeamPage() {
                     <option value="Coordinator">Coordinator</option>
                     <option value="Co-ordinator">Co-ordinator</option>
                     <option value="Implementation team: Tech gurus">Implementation team: Tech gurus</option>
+                    <option value="Student Team">Student Team</option>
                     <option value="Student Ambassadors">Student Ambassadors</option>
                     <option value="Faculty">Faculty</option>
                     <option value="Mentor">Mentor</option>
@@ -385,7 +386,7 @@ export default function AdminTeamPage() {
                     ))}
                   </div>
                 )}
-                {group === 'Student Ambassadors' && (
+                {(group === 'Student Team' || group === 'Student Ambassadors') && (
                   <div className="flex flex-wrap items-center gap-1.5 pt-1">
                     <span className="text-[10px] text-text-secondary mr-1">Position Presets:</span>
                     {['Chairman', 'Co-Chairman', 'Treasurer', 'Joint Treasurer', 'Co-ordinator'].map((preset) => (
